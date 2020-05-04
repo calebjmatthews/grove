@@ -1,0 +1,9 @@
+Init:
+  - Load sprites
+  - Create box objects
+  - Display sprites according to box locations
+
+Game loop:
+  - Check for keyboard input
+  - Reposition player box based on keyboard input
+  - Update sprite to match new box location
