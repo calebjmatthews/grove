@@ -27,8 +27,8 @@ function loadTextures() : Promise<boolean> {
   return new Promise((resolve) => {
     pixiLoader.add(jplayer1.default)
     .load(() => {
-      createSprites();
       createPlayerBox();
+      createSprites();
       resolve(true);
     });
   })
@@ -39,8 +39,11 @@ function createSprites() {
 
   //Add the cat to the stage
   pixiApp.stage.addChild(player);
-  player.scale.x = 4;
-  player.scale.y = 4;
+  let pBox = boxes[SpriteNames.PLAYER];
+  player.x = pBox.x;
+  player.y = pBox.y;
+  player.width = pBox.width;
+  player.height = pBox.height;
 
   sprites[SpriteNames.PLAYER] = player;
 }

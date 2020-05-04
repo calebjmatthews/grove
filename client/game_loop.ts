@@ -1,4 +1,5 @@
 import { pixiApp } from './pixi_app';
+import { boxes } from './boxes';
 import { sprites } from './sprites';
 import { SpriteNames } from './enums/sprite_names';
 
@@ -13,5 +14,7 @@ function gameLoop(delta: number) {
 }
 
 function play(delta: number) {
-  sprites[SpriteNames.PLAYER].x += 1;
+  let pBox = sprites[SpriteNames.PLAYER];
+  pBox.x += 1;
+  sprites[SpriteNames.PLAYER].x = pBox.x;
 }
