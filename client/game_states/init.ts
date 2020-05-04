@@ -85,44 +85,40 @@ function createKeyboard() {
   left.press = () => {
     // Change the pBox's velocity when the key is pressed
     pBox.vx = -5;
-    pBox.vy = 0;
   };
 
   left.release = () => {
     // If the left arrow has been released, and the right arrow isn't down,
     //  and the pBox isn't moving vertically:
     //  Stop the pBox
-    if (!right.isDown && pBox.vy === 0) {
+    if (!right.isDown) {
       pBox.vx = 0;
     }
   };
 
   up.press = () => {
     pBox.vy = -5;
-    pBox.vx = 0;
   };
   up.release = () => {
-    if (!down.isDown && pBox.vx === 0) {
+    if (!down.isDown) {
       pBox.vy = 0;
     }
   };
 
   right.press = () => {
     pBox.vx = 5;
-    pBox.vy = 0;
   };
   right.release = () => {
-    if (!left.isDown && pBox.vy === 0) {
+    if (!left.isDown) {
       pBox.vx = 0;
     }
   };
 
   down.press = () => {
     pBox.vy = 5;
-    pBox.vx = 0;
   };
   down.release = () => {
-    if (!up.isDown && pBox.vx === 0) {
+    if (!up.isDown) {
       pBox.vy = 0;
     }
   };
