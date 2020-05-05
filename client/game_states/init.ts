@@ -16,7 +16,6 @@ import { PieceNames } from '../enums/piece_names';
 const jplayer1 = require('../assets/jplayer1.png');
 const bush = require('../assets/bush.png');
 const bush2 = require('../assets/bush2.png');
-const bush3 = require('../assets/bush3.png');
 import { PLAYER_SPEED } from '../constants';
 
 let initializing = false;
@@ -45,7 +44,7 @@ export default function init() {
 
 function loadTextures() : Promise<boolean> {
   return new Promise((resolve) => {
-    pixiLoader.add([jplayer1.default, bush.default, bush2.default, bush3.default])
+    pixiLoader.add([jplayer1.default, bush.default, bush2.default])
     .load(() => {
       createPlayerBox();
       createBushBoxes(20);
@@ -78,12 +77,10 @@ function createBushBoxes(numBushes: number) {
     if (bushBox != null) {
       let newBush = new PieceAnimated({
         box: bushBox,
-        spriteNames: [bush.default, bush2.default, bush3.default],
+        spriteNames: [bush.default, bush2.default],
         animationSteps: [
           new AS({ spriteIndex: 0, duration: 100 }),
-          new AS({ spriteIndex: 1, duration: 10 }),
-          new AS({ spriteIndex: 0, duration: 100 }),
-          new AS({ spriteIndex: 2, duration: 10 })
+          new AS({ spriteIndex: 1, duration: 10 })
         ],
         animationCurrrent: 0,
         animationAge: 0
