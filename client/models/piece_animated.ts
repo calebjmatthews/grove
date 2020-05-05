@@ -28,6 +28,11 @@ export default class PieceAnimated extends Piece implements PieceAnimatedInterfa
     }
     return newStepIndex;
   }
+
+  setRandomAge() {
+    let cAnimationStep = this.animationSteps[this.animationCurrrent];
+    this.animationAge = Math.floor(Math.random() * cAnimationStep.duration);
+  }
 }
 
 interface PieceAnimatedInterface {

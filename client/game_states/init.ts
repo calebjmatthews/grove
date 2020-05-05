@@ -79,8 +79,8 @@ function createBushBoxes(numBushes: number) {
         box: bushBox,
         spriteNames: [bush.default, bush2.default],
         animationSteps: [
-          new AS({ spriteIndex: 0, duration: 100 }),
-          new AS({ spriteIndex: 1, duration: 10 })
+          new AS({ spriteIndex: 0, duration: 400 }),
+          new AS({ spriteIndex: 1, duration: 20 })
         ],
         animationCurrrent: 0,
         animationAge: 0
@@ -125,6 +125,7 @@ function createSprites() {
         }
         sprites[pieceName + ',' + index] = newSprite;
       });
+      piece.setRandomAge();
     }
   })
 
