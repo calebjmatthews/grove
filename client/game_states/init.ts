@@ -1,8 +1,11 @@
 import * as PIXI from 'pixi.js';
 
 import Piece from '../models/piece';
+import PieceAnimated from '../models/piece_animated';
 import Box from '../models/box';
 import Key from '../models/key';
+import AnimationStep from '../models/animation_step';
+const AS = AnimationStep;
 import play from './play';
 import { pixiApp } from '../instances/pixi_app';
 import { pixiLoader } from '../instances/pixi_loader';
@@ -12,6 +15,8 @@ import { pixiState } from '../instances/pixi_state';
 import { PieceNames } from '../enums/piece_names';
 const jplayer1 = require('../assets/jplayer1.png');
 const bush = require('../assets/bush.png');
+const bush2 = require('../assets/bush2.png');
+const bush3 = require('../assets/bush3.png');
 import { PLAYER_SPEED } from '../constants';
 
 let initializing = false;
@@ -40,7 +45,7 @@ export default function init() {
 
 function loadTextures() : Promise<boolean> {
   return new Promise((resolve) => {
-    pixiLoader.add([jplayer1.default, bush.default])
+    pixiLoader.add([jplayer1.default, bush.default, bush2.default, bush3.default])
     .load(() => {
       createPlayerBox();
       createBushBoxes(20);
@@ -71,11 +76,19 @@ function createBushBoxes(numBushes: number) {
   for (let index = 0; index < numBushes; index++) {
     let bushBox = createBushBox(index);
     if (bushBox != null) {
-      let newBush = new Piece({
+      let newBush = new PieceAnimated({
         box: bushBox,
-        spriteNames: [bush.default]
+        spriteNames: [bush.default, bush2.default, bush3.default],
+        animationSteps: [
+          new AS({ spriteIndex: 0, duration: 100 }),
+          new AS({ spriteIndex: 1, duration: 10 }),
+          new AS({ spriteIndex: 0, duration: 100 }),
+          new AS({ spriteIndex: 2, duration: 10 })
+        ],
+        animationCurrrent: 0,
+        animationAge: 0
       })
-      map.pieces[PieceNames.BUSH + index] = newBush;
+      map.pieces[PieceNames.BUSH + ',' + index] = newBush;
     }
   }
 
@@ -103,14 +116,30 @@ function createSprites() {
   Object.keys(map.pieces).map((pieceName) => {
     let piece = map.pieces[pieceName];
     let box = piece.box;
-    let boxSprite = new PIXI.Sprite(pixiLoader.resources[piece.spriteNames[0]].texture);
-    pixiApp.stage.addChild(boxSprite);
-    boxSprite.x = box.x;
-    boxSprite.y = box.y;
-    boxSprite.width = box.width;
-    boxSprite.height = box.height;
-    sprites[pieceName] = boxSprite;
+    if (piece.spriteNames.length == 1) {
+      let newSprite = createSprite(piece.spriteNames[0], box);
+      sprites[pieceName] = newSprite;
+    }
+    else if (piece.spriteNames.length > 1) {
+      piece.spriteNames.map((spriteName, index) => {
+        let newSprite = createSprite(spriteName, box);
+        if (index > 0) {
+          newSprite.visible = false;
+        }
+        sprites[pieceName + ',' + index] = newSprite;
+      });
+    }
   })
+
+  function createSprite(spriteName: string, box: Box) {
+    let newSprite = new PIXI.Sprite(pixiLoader.resources[spriteName].texture);
+    pixiApp.stage.addChild(newSprite);
+    newSprite.x = box.x;
+    newSprite.y = box.y;
+    newSprite.width = box.width;
+    newSprite.height = box.height;
+    return newSprite;
+  }
 }
 
 function createKeyboard() {

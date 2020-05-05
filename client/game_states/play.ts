@@ -1,4 +1,5 @@
 import Box from '../models/box';
+import PieceAnimated from '../models/piece_animated';
 import { map } from '../instances/map';
 import { sprites } from '../instances/sprites';
 import { PieceNames } from '../enums/piece_names';
@@ -35,4 +36,21 @@ export default function play(delta: number) {
   pBox.y = pendingBox.y;
   sprites[PieceNames.PLAYER].x = pendingBox.x;
   sprites[PieceNames.PLAYER].y = pendingBox.y;
+
+  Object.keys(map.pieces).map((pieceName) => {
+    let piece : PieceAnimated = map.pieces[pieceName];
+    if (piece.animationAge != undefined) {
+      let oldAnimationStep = piece.animationSteps[piece.animationCurrrent];
+      let newStepIndex = piece.ageAnimation();
+      if (newStepIndex != null) {
+        let newAnimationStep = piece.animationSteps[newStepIndex];
+        sprites[pieceName + ',' + oldAnimationStep.spriteIndex].visible = false;
+        console.log("pieceName + ',' + newStepIndex");
+        console.log(pieceName + ',' + newStepIndex);
+        console.log('sprites');
+        console.log(sprites);
+        sprites[pieceName + ',' + newAnimationStep.spriteIndex].visible = true;
+      }
+    }
+  })
 }

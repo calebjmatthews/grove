@@ -1,10 +1,11 @@
 import Box from './box';
 import Piece from './piece';
+import PieceAnimated from './piece_animated';
 import Collision from '../models/collision';
 import { PieceNames } from '../enums/piece_names';
 
 export default class Map {
-  pieces: { [pieceName: string] : Piece } = {};
+  pieces: { [pieceName: string] : any } = {};
 
   detectCollision(box: Box) : Collision[] {
     let collisions: Collision[] = [];
