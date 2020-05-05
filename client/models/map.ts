@@ -1,17 +1,18 @@
 import Box from './box';
+import Piece from './piece';
 import Collision from '../models/collision';
-import { BoxNames } from '../enums/box_names';
+import { PieceNames } from '../enums/piece_names';
 
 export default class Map {
-  boxes: { [boxName: string] : Box } = {};
+  pieces: { [pieceName: string] : Piece } = {};
 
   detectCollision(box: Box) : Collision[] {
     let collisions: Collision[] = [];
-    Object.keys(this.boxes).map((boxName) => {
-      let tBox = this.boxes[boxName];
+    Object.keys(this.pieces).map((pieceName) => {
+      let tBox = this.pieces[pieceName].box;
       // So a pending player box cannot collide with the existing
-      if ((box.boxName == BoxNames.PLAYER && tBox.boxName != box.boxName)
-        || box.boxName != BoxNames.PLAYER) {
+      if ((box.boxName == PieceNames.PLAYER && tBox.boxName != box.boxName)
+        || box.boxName != PieceNames.PLAYER) {
         if (box.x < tBox.x + tBox.width &&
           box.x + box.width > tBox.x &&
           box.y < tBox.y + tBox.height &&

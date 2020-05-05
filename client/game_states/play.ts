@@ -1,11 +1,11 @@
 import Box from '../models/box';
 import { map } from '../instances/map';
 import { sprites } from '../instances/sprites';
-import { BoxNames } from '../enums/box_names';
+import { PieceNames } from '../enums/piece_names';
 import { Directions } from '../enums/directions';
 
 export default function play(delta: number) {
-  let pendingBox = new Box(map.boxes[BoxNames.PLAYER]);
+  let pendingBox = new Box(map.pieces[PieceNames.PLAYER].box);
   pendingBox.x += (pendingBox.vx * (1 + delta));
   pendingBox.y += (pendingBox.vy * (1 + delta));
   let collisions = map.detectCollision(pendingBox);
@@ -30,9 +30,9 @@ export default function play(delta: number) {
       }
     });
   }
-  let pBox = map.boxes[BoxNames.PLAYER];
+  let pBox = map.pieces[PieceNames.PLAYER].box;
   pBox.x = pendingBox.x;
   pBox.y = pendingBox.y;
-  sprites[BoxNames.PLAYER].x = pendingBox.x;
-  sprites[BoxNames.PLAYER].y = pendingBox.y;
+  sprites[PieceNames.PLAYER].x = pendingBox.x;
+  sprites[PieceNames.PLAYER].y = pendingBox.y;
 }

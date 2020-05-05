@@ -7,7 +7,6 @@ export default class Box {
   vy: number;
   width: number;
   height: number;
-  spriteName: string;
   boxName: string;
 
   constructor(box: BoxInterface) {
@@ -50,6 +49,5 @@ interface BoxInterface {
   vy: number;
   width: number;
   height: number;
-  spriteName: string;
   boxName: string;
 }

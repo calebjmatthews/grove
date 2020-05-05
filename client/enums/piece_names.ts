@@ -1,4 +1,4 @@
-export enum BoxNames {
+export enum PieceNames {
   PLAYER = 'PLAYER',
   BUSH = 'BUSH'
 }

@@ -1,5 +1,6 @@
 import * as PIXI from 'pixi.js';
 
+import Piece from '../models/piece';
 import Box from '../models/box';
 import Key from '../models/key';
 import play from './play';
@@ -8,7 +9,7 @@ import { pixiLoader } from '../instances/pixi_loader';
 import { map } from '../instances/map';
 import { sprites } from '../instances/sprites';
 import { pixiState } from '../instances/pixi_state';
-import { BoxNames } from '../enums/box_names';
+import { PieceNames } from '../enums/piece_names';
 const jplayer1 = require('../assets/jplayer1.png');
 const bush = require('../assets/bush.png');
 import { PLAYER_SPEED } from '../constants';
@@ -51,24 +52,30 @@ function loadTextures() : Promise<boolean> {
 }
 
 function createPlayerBox() {
-  let playerBox = new Box({
-    x: ((window.innerWidth / 2) - 32),
-    vx: 0,
-    y: ((window.innerHeight / 2) - 32),
-    vy: 0,
-    width: 64,
-    height: 64,
-    spriteName: jplayer1.default,
-    boxName: BoxNames.PLAYER
+  let playerPiece = new Piece({
+    box: new Box({
+      x: ((window.innerWidth / 2) - 32),
+      vx: 0,
+      y: ((window.innerHeight / 2) - 32),
+      vy: 0,
+      width: 64,
+      height: 64,
+      boxName: PieceNames.PLAYER
+    }),
+    spriteNames: [jplayer1.default]
   });
-  map.boxes[BoxNames.PLAYER] = playerBox;
+  map.pieces[PieceNames.PLAYER] = playerPiece;
 }
 
 function createBushBoxes(numBushes: number) {
   for (let index = 0; index < numBushes; index++) {
-    let newBush = createBushBox(index);
-    if (newBush != null) {
-      map.boxes[BoxNames.BUSH + index] = newBush;
+    let bushBox = createBushBox(index);
+    if (bushBox != null) {
+      let newBush = new Piece({
+        box: bushBox,
+        spriteNames: [bush.default]
+      })
+      map.pieces[PieceNames.BUSH + index] = newBush;
     }
   }
 
@@ -82,8 +89,7 @@ function createBushBoxes(numBushes: number) {
         vy: 0,
         width: 64,
         height: 64,
-        spriteName: bush.default,
-        boxName: BoxNames.BUSH
+        boxName: PieceNames.BUSH
       });
       if (map.detectCollision(testBush) == null) {
         return testBush;
@@ -94,16 +100,16 @@ function createBushBoxes(numBushes: number) {
 }
 
 function createSprites() {
-  Object.keys(map.boxes).map((boxName) => {
-    let box = map.boxes[boxName];
-    let boxSprite = new PIXI.Sprite(pixiLoader.resources[box.spriteName].texture);
+  Object.keys(map.pieces).map((pieceName) => {
+    let piece = map.pieces[pieceName];
+    let box = piece.box;
+    let boxSprite = new PIXI.Sprite(pixiLoader.resources[piece.spriteNames[0]].texture);
     pixiApp.stage.addChild(boxSprite);
-    let pBox = map.boxes[boxName];
-    boxSprite.x = pBox.x;
-    boxSprite.y = pBox.y;
-    boxSprite.width = pBox.width;
-    boxSprite.height = pBox.height;
-    sprites[boxName] = boxSprite;
+    boxSprite.x = box.x;
+    boxSprite.y = box.y;
+    boxSprite.width = box.width;
+    boxSprite.height = box.height;
+    sprites[pieceName] = boxSprite;
   })
 }
 
@@ -113,7 +119,7 @@ function createKeyboard() {
   let right = new Key("ArrowRight");
   let down = new Key("ArrowDown");
 
-  let pBox = map.boxes[BoxNames.PLAYER];
+  let pBox = map.pieces[PieceNames.PLAYER].box;
 
   left.press = () => {
     // Change the pBox's velocity when the key is pressed
