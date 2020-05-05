@@ -1,4 +1,4 @@
-export enum SpriteNames {
+export enum BoxNames {
   PLAYER = 'PLAYER',
   BUSH = 'BUSH'
 }

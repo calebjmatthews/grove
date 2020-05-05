@@ -6,6 +6,7 @@ export default class Box {
   width: number;
   height: number;
   spriteName: string;
+  boxName: string;
 
   constructor(box: Box) {
     Object.assign(this, box);

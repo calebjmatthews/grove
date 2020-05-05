@@ -5,5 +5,8 @@ Init:
 
 Game loop:
   - Check for keyboard input
-  - Reposition player box based on keyboard input
+  - Set velocity based on keyboard input
+  - Check collisions of pending position based on velocity
+    - If no collision, reposition player box to this position
+    - If collision, reposition player box at edge of colliding object
   - Update sprite to match new box location

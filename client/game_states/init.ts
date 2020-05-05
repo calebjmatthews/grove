@@ -8,7 +8,7 @@ import { pixiLoader } from '../instances/pixi_loader';
 import { map } from '../instances/map';
 import { sprites } from '../instances/sprites';
 import { pixiState } from '../instances/pixi_state';
-import { SpriteNames } from '../enums/sprite_names';
+import { BoxNames } from '../enums/box_names';
 const jplayer1 = require('../assets/jplayer1.png');
 const bush = require('../assets/bush.png');
 
@@ -57,16 +57,17 @@ function createPlayerBox() {
     vy: 0,
     width: 64,
     height: 64,
-    spriteName: jplayer1.default
+    spriteName: jplayer1.default,
+    boxName: BoxNames.PLAYER
   });
-  map.boxes[SpriteNames.PLAYER] = playerBox;
+  map.boxes[BoxNames.PLAYER] = playerBox;
 }
 
 function createBushBoxes(numBushes: number) {
   for (let index = 0; index < numBushes; index++) {
     let newBush = createBushBox(index);
     if (newBush != null) {
-      map.boxes[SpriteNames.BUSH + index] = newBush;
+      map.boxes[BoxNames.BUSH + index] = newBush;
     }
   }
 
@@ -80,7 +81,8 @@ function createBushBoxes(numBushes: number) {
         vy: 0,
         width: 64,
         height: 64,
-        spriteName: bush.default
+        spriteName: bush.default,
+        boxName: BoxNames.BUSH
       });
       if (map.detectCollision(testBush) == null) {
         return testBush;
@@ -110,7 +112,7 @@ function createKeyboard() {
   let right = new Key("ArrowRight");
   let down = new Key("ArrowDown");
 
-  let pBox = map.boxes[SpriteNames.PLAYER];
+  let pBox = map.boxes[BoxNames.PLAYER];
 
   left.press = () => {
     // Change the pBox's velocity when the key is pressed
