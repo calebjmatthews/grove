@@ -1,3 +1,4 @@
 export enum SpriteNames {
-  PLAYER = 'PLAYER'
+  PLAYER = 'PLAYER',
+  BUSH = 'BUSH'
 }

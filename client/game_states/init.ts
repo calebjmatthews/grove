@@ -5,11 +5,12 @@ import Key from '../models/key';
 import play from './play';
 import { pixiApp } from '../instances/pixi_app';
 import { pixiLoader } from '../instances/pixi_loader';
-import { boxes } from '../instances/boxes';
+import { map } from '../instances/map';
 import { sprites } from '../instances/sprites';
 import { pixiState } from '../instances/pixi_state';
 import { SpriteNames } from '../enums/sprite_names';
 const jplayer1 = require('../assets/jplayer1.png');
+const bush = require('../assets/bush.png');
 
 let initializing = false;
 
@@ -37,9 +38,10 @@ export default function init() {
 
 function loadTextures() : Promise<boolean> {
   return new Promise((resolve) => {
-    pixiLoader.add(jplayer1.default)
+    pixiLoader.add([jplayer1.default, bush.default])
     .load(() => {
       createPlayerBox();
+      createBushBoxes(20);
       createSprites();
       createKeyboard();
       resolve(true);
@@ -47,31 +49,59 @@ function loadTextures() : Promise<boolean> {
   })
 }
 
-function createSprites() {
-  let player = new PIXI.Sprite(pixiLoader.resources[jplayer1.default].texture);
-
-  //Add the pBox to the stage
-  pixiApp.stage.addChild(player);
-  let pBox = boxes[SpriteNames.PLAYER];
-  player.x = pBox.x;
-  player.y = pBox.y;
-  player.width = pBox.width;
-  player.height = pBox.height;
-
-  sprites[SpriteNames.PLAYER] = player;
-}
-
 function createPlayerBox() {
   let playerBox = new Box({
-    x: 0,
+    x: ((window.innerWidth / 2) - 32),
     vx: 0,
-    y: 0,
+    y: ((window.innerHeight / 2) - 32),
     vy: 0,
     width: 64,
     height: 64,
     spriteName: jplayer1.default
   });
-  boxes[SpriteNames.PLAYER] = playerBox;
+  map.boxes[SpriteNames.PLAYER] = playerBox;
+}
+
+function createBushBoxes(numBushes: number) {
+  for (let index = 0; index < numBushes; index++) {
+    let newBush = createBushBox(index);
+    if (newBush != null) {
+      map.boxes[SpriteNames.BUSH + index] = newBush;
+    }
+  }
+
+  function createBushBox(index: number) {
+    let testBush: Box = null;
+    for (let loop = 0; loop < 100; loop++) {
+      testBush = new Box({
+        x: ((window.innerWidth * Math.random()) - 32),
+        vx: 0,
+        y: ((window.innerHeight * Math.random()) - 32),
+        vy: 0,
+        width: 64,
+        height: 64,
+        spriteName: bush.default
+      });
+      if (map.detectCollision(testBush) == null) {
+        return testBush;
+      }
+    }
+    return null;
+  }
+}
+
+function createSprites() {
+  Object.keys(map.boxes).map((boxName) => {
+    let box = map.boxes[boxName];
+    let boxSprite = new PIXI.Sprite(pixiLoader.resources[box.spriteName].texture);
+    pixiApp.stage.addChild(boxSprite);
+    let pBox = map.boxes[boxName];
+    boxSprite.x = pBox.x;
+    boxSprite.y = pBox.y;
+    boxSprite.width = pBox.width;
+    boxSprite.height = pBox.height;
+    sprites[boxName] = boxSprite;
+  })
 }
 
 function createKeyboard() {
@@ -80,7 +110,7 @@ function createKeyboard() {
   let right = new Key("ArrowRight");
   let down = new Key("ArrowDown");
 
-  let pBox = boxes[SpriteNames.PLAYER];
+  let pBox = map.boxes[SpriteNames.PLAYER];
 
   left.press = () => {
     // Change the pBox's velocity when the key is pressed
