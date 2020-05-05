@@ -11,6 +11,7 @@ import { pixiState } from '../instances/pixi_state';
 import { BoxNames } from '../enums/box_names';
 const jplayer1 = require('../assets/jplayer1.png');
 const bush = require('../assets/bush.png');
+import { PLAYER_SPEED } from '../constants';
 
 let initializing = false;
 
@@ -116,20 +117,19 @@ function createKeyboard() {
 
   left.press = () => {
     // Change the pBox's velocity when the key is pressed
-    pBox.vx = -5;
+    pBox.vx = -PLAYER_SPEED;
   };
 
   left.release = () => {
-    // If the left arrow has been released, and the right arrow isn't down,
-    //  and the pBox isn't moving vertically:
-    //  Stop the pBox
+    // If the left arrow has been released, and the right arrow isn't down
+    //  stop the pBox
     if (!right.isDown) {
       pBox.vx = 0;
     }
   };
 
   up.press = () => {
-    pBox.vy = -5;
+    pBox.vy = -PLAYER_SPEED;
   };
   up.release = () => {
     if (!down.isDown) {
@@ -138,7 +138,7 @@ function createKeyboard() {
   };
 
   right.press = () => {
-    pBox.vx = 5;
+    pBox.vx = PLAYER_SPEED;
   };
   right.release = () => {
     if (!left.isDown) {
@@ -147,7 +147,7 @@ function createKeyboard() {
   };
 
   down.press = () => {
-    pBox.vy = 5;
+    pBox.vy = PLAYER_SPEED;
   };
   down.release = () => {
     if (!up.isDown) {
