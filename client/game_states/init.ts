@@ -13,7 +13,8 @@ import { map } from '../instances/map';
 import { sprites } from '../instances/sprites';
 import { pixiState } from '../instances/pixi_state';
 import { PieceNames } from '../enums/piece_names';
-const jplayer1 = require('../assets/jplayer1.png');
+const playerpng = require('../assets/player.png');
+const playerjson = require('../assets/player.json');
 const bush = require('../assets/bush.png');
 const bush2 = require('../assets/bush2.png');
 import { PLAYER_SPEED } from '../constants';
@@ -44,11 +45,13 @@ export default function init() {
 
 function loadTextures() : Promise<boolean> {
   return new Promise((resolve) => {
-    pixiLoader.add([jplayer1.default, bush.default, bush2.default])
+    pixiLoader.add([playerpng.default, bush.default, bush2.default])
     .load(() => {
       createPlayerBox();
       createBushBoxes(20);
+      createSpritesFromTilesheet();
       createSprites();
+      displaySprites();
       createKeyboard();
       resolve(true);
     });
@@ -66,7 +69,7 @@ function createPlayerBox() {
       height: 64,
       boxName: PieceNames.PLAYER
     }),
-    spriteNames: [jplayer1.default]
+    spriteNames: ["jplayer1.png"]
   });
   map.pieces[PieceNames.PLAYER] = playerPiece;
 }
@@ -109,34 +112,72 @@ function createBushBoxes(numBushes: number) {
   }
 }
 
+function createSpritesFromTilesheet() {
+  Object.keys(playerjson.frames).map((name) => {
+    let frame: {h: number, w: number, x: number, y:number} =
+      playerjson.frames[name].frame;
+    let rectange = new PIXI.Rectangle(frame.x, frame.y, frame.w, frame.h);
+    let resource = pixiLoader.resources[playerpng.default];
+    let texture = new PIXI.Texture(resource.texture.baseTexture, rectange);
+    let newSprite = new PIXI.Sprite(texture);
+    newSprite.visible = false;
+    pixiApp.stage.addChild(newSprite);
+    sprites[name] = newSprite;
+  })
+}
+
 function createSprites() {
   Object.keys(map.pieces).map((pieceName) => {
-    let piece = map.pieces[pieceName];
+    let piece: PieceAnimated = map.pieces[pieceName];
     let box = piece.box;
     if (piece.spriteNames.length == 1) {
-      let newSprite = createSprite(piece.spriteNames[0], box);
-      sprites[pieceName] = newSprite;
+      let resource = pixiLoader.resources[piece.spriteNames[0]];
+      if (resource) {
+        let newSprite = new PIXI.Sprite(resource.texture);
+        pixiApp.stage.addChild(newSprite);
+        newSprite.visible = false;
+        sprites[pieceName] = newSprite;
+      }
     }
     else if (piece.spriteNames.length > 1) {
       piece.spriteNames.map((spriteName, index) => {
-        let newSprite = createSprite(spriteName, box);
-        if (index > 0) {
+        let resource = pixiLoader.resources[spriteName];
+        if (resource) {
+          let newSprite = new PIXI.Sprite(resource.texture);
+          pixiApp.stage.addChild(newSprite);
           newSprite.visible = false;
+          sprites[pieceName + ',' + index] = newSprite;
         }
-        sprites[pieceName + ',' + index] = newSprite;
+      });
+      piece.setRandomAge();
+    }
+  });
+}
+
+function displaySprites() {
+  Object.keys(map.pieces).map((pieceName) => {
+    let piece: PieceAnimated = map.pieces[pieceName];
+    let box = piece.box;
+    if (piece.spriteNames.length == 1) {
+      displaySprite(piece.spriteNames[0], box, 0);
+    }
+    else if (piece.spriteNames.length > 1) {
+      piece.spriteNames.map((spriteName, index) => {
+        displaySprite((pieceName + ',' + index), box, index);
       });
       piece.setRandomAge();
     }
   })
 
-  function createSprite(spriteName: string, box: Box) {
-    let newSprite = new PIXI.Sprite(pixiLoader.resources[spriteName].texture);
-    pixiApp.stage.addChild(newSprite);
-    newSprite.x = box.x;
-    newSprite.y = box.y;
-    newSprite.width = box.width;
-    newSprite.height = box.height;
-    return newSprite;
+  function displaySprite(spriteName: string, box: Box, index: number) {
+    let dSprite = sprites[spriteName];
+    dSprite.x = box.x;
+    dSprite.y = box.y;
+    dSprite.width = box.width;
+    dSprite.height = box.height;
+    if (index == 0) {
+      dSprite.visible = true;
+    }
   }
 }
 

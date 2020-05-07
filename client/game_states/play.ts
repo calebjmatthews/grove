@@ -34,8 +34,8 @@ export default function play(delta: number) {
   let pBox = map.pieces[PieceNames.PLAYER].box;
   pBox.x = pendingBox.x;
   pBox.y = pendingBox.y;
-  sprites[PieceNames.PLAYER].x = pendingBox.x;
-  sprites[PieceNames.PLAYER].y = pendingBox.y;
+  sprites['jplayer1.png'].x = pendingBox.x;
+  sprites['jplayer1.png'].y = pendingBox.y;
 
   Object.keys(map.pieces).map((pieceName) => {
     let piece : PieceAnimated = map.pieces[pieceName];
@@ -45,10 +45,6 @@ export default function play(delta: number) {
       if (newStepIndex != null) {
         let newAnimationStep = piece.animationSteps[newStepIndex];
         sprites[pieceName + ',' + oldAnimationStep.spriteIndex].visible = false;
-        console.log("pieceName + ',' + newStepIndex");
-        console.log(pieceName + ',' + newStepIndex);
-        console.log('sprites');
-        console.log(sprites);
         sprites[pieceName + ',' + newAnimationStep.spriteIndex].visible = true;
       }
     }
