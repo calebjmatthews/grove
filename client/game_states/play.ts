@@ -66,11 +66,13 @@ export default function play(delta: number) {
     }
     else if (piece.animationAge != undefined) {
       let oldAnimationStep = piece.animationSteps[piece.animationCurrrent];
+      let oldSpriteName = piece.spriteNames[oldAnimationStep.spriteIndex];
       let newStepIndex = piece.ageAnimation();
       if (newStepIndex != null) {
         let newAnimationStep = piece.animationSteps[newStepIndex];
-        sprites[pieceName + ',' + oldAnimationStep.spriteIndex].visible = false;
-        sprites[pieceName + ',' + newAnimationStep.spriteIndex].visible = true;
+        let newSpriteName = piece.spriteNames[newAnimationStep.spriteIndex];
+        sprites[oldSpriteName + ',' + piece.id].visible = false;
+        sprites[newSpriteName + ',' + piece.id].visible = true;
       }
     }
   })

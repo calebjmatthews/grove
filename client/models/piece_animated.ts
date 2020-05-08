@@ -36,6 +36,8 @@ export default class PieceAnimated extends Piece implements PieceAnimatedInterfa
 }
 
 interface PieceAnimatedInterface {
+  name: string;
+  id: number;
   box: Box;
   spriteNames: string[];
   animationSteps: AnimationStep[];

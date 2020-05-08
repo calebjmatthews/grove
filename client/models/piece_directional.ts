@@ -66,6 +66,8 @@ export default class PieceDirectional extends PieceAnimated implements
 }
 
 interface PieceDirectionalInterface {
+  name: string;
+  id: number;
   box: Box;
   spriteNames: string[];
   animationSteps: AnimationStep[];

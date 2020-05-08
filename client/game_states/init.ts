@@ -18,8 +18,8 @@ import { PieceTypes } from '../enums/piece_types';
 import { Directions } from '../enums/directions';
 const playerpng = require('../assets/player.png');
 const playerjson = require('../assets/player.json');
-const bush = require('../assets/bush.png');
-const bush2 = require('../assets/bush2.png');
+const forestworldpng = require('../assets/forestworld.png');
+const forestworldjson = require('../assets/forestworld.json');
 import { PLAYER_SPEED } from '../constants';
 
 let initializing = false;
@@ -48,12 +48,13 @@ export default function init() {
 
 function loadTextures() : Promise<boolean> {
   return new Promise((resolve) => {
-    pixiLoader.add([playerpng.default, bush.default, bush2.default])
+    pixiLoader.add([playerpng.default, forestworldpng.default])
     .load(() => {
       createPlayerBox();
       createBushBoxes(20);
-      createSpritesFromTilesheet();
-      createSprites();
+      createSpritesFromTilesheet(playerpng, playerjson);
+      createSpritesFromTilesheet(forestworldpng, forestworldjson);
+      createBushSprites();
       displaySprites();
       createKeyboard();
       resolve(true);
@@ -80,6 +81,8 @@ function createPlayerBox() {
     new AS({ spriteIndex: 9, duration: 10}), new AS({ spriteIndex: 11, duration: 10})
   ]
   let playerPiece = new PieceDirectional({
+    name: PieceNames.PLAYER,
+    id: 0,
     box: new Box({
       x: ((window.innerWidth / 2) - 32),
       vx: 0,
@@ -107,8 +110,10 @@ function createBushBoxes(numBushes: number) {
     let bushBox = createBushBox(index);
     if (bushBox != null) {
       let newBush = new PieceAnimated({
+        name: PieceNames.BUSH,
+        id: index,
         box: bushBox,
-        spriteNames: [bush.default, bush2.default],
+        spriteNames: ["forestworld37.png", "forestworld48.png"],
         animationSteps: [
           new AS({ spriteIndex: 0, duration: 400 }),
           new AS({ spriteIndex: 1, duration: 20 })
@@ -140,12 +145,12 @@ function createBushBoxes(numBushes: number) {
   }
 }
 
-function createSpritesFromTilesheet() {
-  Object.keys(playerjson.frames).map((name) => {
+function createSpritesFromTilesheet(sheetPng: any, sheetJson: any) {
+  Object.keys(sheetJson.frames).map((name) => {
     let frame: {h: number, w: number, x: number, y:number} =
-      playerjson.frames[name].frame;
+      sheetJson.frames[name].frame;
     let rectange = new PIXI.Rectangle(frame.x, frame.y, frame.w, frame.h);
-    let resource = pixiLoader.resources[playerpng.default];
+    let resource = pixiLoader.resources[sheetPng.default];
     let texture = new PIXI.Texture(resource.texture.baseTexture, rectange);
     let newSprite = new PIXI.Sprite(texture);
     newSprite.visible = false;
@@ -154,29 +159,17 @@ function createSpritesFromTilesheet() {
   })
 }
 
-function createSprites() {
+function createBushSprites() {
   Object.keys(map.pieces).map((pieceName) => {
-    let piece: PieceDirectional = map.pieces[pieceName];
-    let box = piece.box;
-    if (piece.spriteNames.length == 1) {
-      let resource = pixiLoader.resources[piece.spriteNames[0]];
-      if (resource) {
-        let newSprite = new PIXI.Sprite(resource.texture);
-        pixiApp.stage.addChild(newSprite);
-        newSprite.visible = false;
-        sprites[pieceName] = newSprite;
-      }
-    }
-    else if (piece.type == PieceTypes.CARDINAL) {
-    }
-    else if (piece.spriteNames.length > 1) {
-      piece.spriteNames.map((spriteName, index) => {
-        let resource = pixiLoader.resources[spriteName];
-        if (resource) {
-          let newSprite = new PIXI.Sprite(resource.texture);
+    let piece: PieceAnimated = map.pieces[pieceName];
+    if (piece.name == PieceNames.BUSH) {
+      piece.spriteNames.map((spriteName) => {
+        let sprite = sprites[spriteName];
+        if (sprite) {
+          let newSprite = new PIXI.Sprite(sprite.texture);
           pixiApp.stage.addChild(newSprite);
           newSprite.visible = false;
-          sprites[pieceName + ',' + index] = newSprite;
+          sprites[spriteName + ',' + piece.id] = newSprite;
         }
       });
       piece.setRandomAge();
@@ -198,7 +191,7 @@ function displaySprites() {
     }
     else if (piece.spriteNames.length > 1) {
       piece.spriteNames.map((spriteName, index) => {
-        displaySprite((pieceName + ',' + index), box, index);
+        displaySprite((spriteName + ',' + piece.id), box, index);
       });
       piece.setRandomAge();
     }
