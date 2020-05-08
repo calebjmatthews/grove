@@ -102,7 +102,7 @@ function createPlayerBox() {
     animationStepMap: animationStepMap,
     directionCurrent: Directions.DOWN
   });
-  map.pieces[PieceNames.PLAYER] = playerPiece;
+  map.playerPiece = playerPiece;
 }
 
 function createBushBoxes(numBushes: number) {
@@ -121,7 +121,7 @@ function createBushBoxes(numBushes: number) {
         animationCurrrent: 0,
         animationAge: 0
       })
-      map.pieces[PieceNames.BUSH + ',' + index] = newBush;
+      map.piecesAnimated[PieceNames.BUSH + ',' + index] = newBush;
     }
   }
 
@@ -160,8 +160,8 @@ function createSpritesFromTilesheet(sheetPng: any, sheetJson: any) {
 }
 
 function createBushSprites() {
-  Object.keys(map.pieces).map((pieceName) => {
-    let piece: PieceAnimated = map.pieces[pieceName];
+  Object.keys(map.piecesAnimated).map((pieceName) => {
+    let piece: PieceAnimated = map.piecesAnimated[pieceName];
     if (piece.name == PieceNames.BUSH) {
       piece.spriteNames.map((spriteName) => {
         let sprite = sprites[spriteName];
@@ -178,16 +178,14 @@ function createBushSprites() {
 }
 
 function displaySprites() {
-  Object.keys(map.pieces).map((pieceName) => {
-    let piece: PieceDirectional = map.pieces[pieceName];
+  map.playerPiece.spriteNames.map((spriteName, index) => {
+    displaySprite(spriteName, map.playerPiece.box, index);
+  });
+  Object.keys(map.piecesAnimated).map((pieceName) => {
+    let piece = map.piecesAnimated[pieceName];
     let box = piece.box;
     if (piece.spriteNames.length == 1) {
       displaySprite(piece.spriteNames[0], box, 0);
-    }
-    else if (piece.type == PieceTypes.CARDINAL) {
-      piece.spriteNames.map((spriteName, index) => {
-        displaySprite(spriteName, box, index);
-      });
     }
     else if (piece.spriteNames.length > 1) {
       piece.spriteNames.map((spriteName, index) => {
@@ -215,7 +213,7 @@ function createKeyboard() {
   let right = new Key("ArrowRight");
   let down = new Key("ArrowDown");
 
-  let pBox = map.pieces[PieceNames.PLAYER].box;
+  let pBox = map.playerPiece.box;
 
   left.press = () => {
     // Change the pBox's velocity when the key is pressed
