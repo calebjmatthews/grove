@@ -1,11 +1,11 @@
-import Box from '../models/box';
-import PieceAnimated from '../models/piece_animated';
-import PieceDirectional from '../models/piece_directional';
-import { map } from '../instances/map';
-import { sprites } from '../instances/sprites';
-import { PieceNames } from '../enums/piece_names';
-import { PieceTypes } from '../enums/piece_types';
-import { Directions } from '../enums/directions';
+import Box from '../../models/box';
+import PieceAnimated from '../../models/piece_animated';
+import PieceDirectional from '../../models/piece_directional';
+import { map } from '../../instances/map';
+import { sprites } from '../../instances/sprites';
+import { PieceNames } from '../../enums/piece_names';
+import { PieceTypes } from '../../enums/piece_types';
+import { Directions } from '../../enums/directions';
 
 export default function play(delta: number) {
   let pendingBox = new Box(map.piecePlayer.box);

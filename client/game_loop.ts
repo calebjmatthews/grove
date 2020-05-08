@@ -1,5 +1,5 @@
 import { pixiApp } from './instances/pixi_app';
-import init from './game_states/init';
+import init from './game_states/init/init';
 import { pixiState } from './instances/pixi_state';
 
 export default function initGameLoop() {
