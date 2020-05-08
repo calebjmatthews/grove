@@ -6,7 +6,7 @@ import Collision from '../models/collision';
 import { PieceNames } from '../enums/piece_names';
 
 export default class Map {
-  playerPiece: PieceDirectional = null;
+  piecePlayer: PieceDirectional = null;
   piecesAnimated: { [pieceName: string] : PieceAnimated } = {};
 
   detectCollision(box: Box) : Collision[] {

@@ -8,7 +8,7 @@ import { PieceTypes } from '../enums/piece_types';
 import { Directions } from '../enums/directions';
 
 export default function play(delta: number) {
-  let pendingBox = new Box(map.playerPiece.box);
+  let pendingBox = new Box(map.piecePlayer.box);
   pendingBox.x += (pendingBox.vx * (1 + delta));
   pendingBox.y += (pendingBox.vy * (1 + delta));
   let collisions = map.detectCollision(pendingBox);
@@ -34,7 +34,7 @@ export default function play(delta: number) {
     });
   }
 
-  let pPiece = map.playerPiece;
+  let pPiece = map.piecePlayer;
   let pBox = pPiece.box;
   let diffX = pBox.x - pendingBox.x;
   let diffY = pBox.y - pendingBox.y;
