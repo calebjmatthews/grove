@@ -10,3 +10,19 @@ Game loop:
     - If no collision, reposition player box to this position
     - If collision, reposition player box at edge of colliding object
   - Update sprite to match new box location
+
+Directional pieces:
+  - Determine direction based on original xy position and subsequent xy position
+  - If same direction as previous, age animation
+  - If new direction, start new animation at random point
+  - If no direction, change sprite to standing facing previous direction
+
+Player walking:
+  Down:
+    25, 1, 25, 2
+  Left:
+    8, 7, 8, 33
+  Up:
+    5, 27, 6, 27
+  Right:
+    4, 3, 4, 34

@@ -1,8 +1,10 @@
 import Box from '../models/box';
 import PieceAnimated from '../models/piece_animated';
+import PieceDirectional from '../models/piece_directional';
 import { map } from '../instances/map';
 import { sprites } from '../instances/sprites';
 import { PieceNames } from '../enums/piece_names';
+import { PieceTypes } from '../enums/piece_types';
 import { Directions } from '../enums/directions';
 
 export default function play(delta: number) {
@@ -31,15 +33,38 @@ export default function play(delta: number) {
       }
     });
   }
-  let pBox = map.pieces[PieceNames.PLAYER].box;
-  pBox.x = pendingBox.x;
-  pBox.y = pendingBox.y;
-  sprites['jplayer1.png'].x = pendingBox.x;
-  sprites['jplayer1.png'].y = pendingBox.y;
 
   Object.keys(map.pieces).map((pieceName) => {
-    let piece : PieceAnimated = map.pieces[pieceName];
-    if (piece.animationAge != undefined) {
+    let piece : PieceDirectional = map.pieces[pieceName];
+    if (piece.type == PieceTypes.CARDINAL) {
+      let pBox = map.pieces[PieceNames.PLAYER].box;
+      let diffX = pBox.x - pendingBox.x;
+      let diffY = pBox.y - pendingBox.y;
+      let newDirection = Directions.NONE;
+      if (diffY != 0) {
+        if (diffY < 0) newDirection = Directions.DOWN;
+        else newDirection = Directions.UP;
+      }
+      else if (diffX != 0) {
+        if (diffX < 0) newDirection = Directions.RIGHT;
+        else newDirection = Directions.LEFT;
+      }
+
+      let oldAnimationStep = piece.getCurrentAnimationStep();
+      let newStepIndex = piece.ageAnimationByDirection(newDirection);
+      if (newStepIndex != null) {
+        let newAnimationStep = piece.animationStepMap[piece.directionCurrent]
+          [newStepIndex];
+        sprites[piece.spriteNames[oldAnimationStep.spriteIndex]].visible = false;
+        sprites[piece.spriteNames[newAnimationStep.spriteIndex]].visible = true;
+      }
+
+      pBox.x = pendingBox.x;
+      pBox.y = pendingBox.y;
+      sprites[piece.getCurrentSpriteName()].x = pendingBox.x;
+      sprites[piece.getCurrentSpriteName()].y = pendingBox.y;
+    }
+    else if (piece.animationAge != undefined) {
       let oldAnimationStep = piece.animationSteps[piece.animationCurrrent];
       let newStepIndex = piece.ageAnimation();
       if (newStepIndex != null) {

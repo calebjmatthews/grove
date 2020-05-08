@@ -2,6 +2,7 @@ import * as PIXI from 'pixi.js';
 
 import Piece from '../models/piece';
 import PieceAnimated from '../models/piece_animated';
+import PieceDirectional from '../models/piece_directional';
 import Box from '../models/box';
 import Key from '../models/key';
 import AnimationStep from '../models/animation_step';
@@ -13,6 +14,8 @@ import { map } from '../instances/map';
 import { sprites } from '../instances/sprites';
 import { pixiState } from '../instances/pixi_state';
 import { PieceNames } from '../enums/piece_names';
+import { PieceTypes } from '../enums/piece_types';
+import { Directions } from '../enums/directions';
 const playerpng = require('../assets/player.png');
 const playerjson = require('../assets/player.json');
 const bush = require('../assets/bush.png');
@@ -59,7 +62,24 @@ function loadTextures() : Promise<boolean> {
 }
 
 function createPlayerBox() {
-  let playerPiece = new Piece({
+  let animationStepMap: { [key: string] : AnimationStep[] } = {};
+  animationStepMap[Directions.DOWN] = [
+    new AS({ spriteIndex: 0, duration: 10}), new AS({ spriteIndex: 1, duration: 10}),
+    new AS({ spriteIndex: 0, duration: 10}), new AS({ spriteIndex: 2, duration: 10})
+  ]
+  animationStepMap[Directions.LEFT] = [
+    new AS({ spriteIndex: 3, duration: 10}), new AS({ spriteIndex: 4, duration: 10}),
+    new AS({ spriteIndex: 3, duration: 10}), new AS({ spriteIndex: 5, duration: 10})
+  ]
+  animationStepMap[Directions.UP] = [
+    new AS({ spriteIndex: 6, duration: 10}), new AS({ spriteIndex: 7, duration: 10}),
+    new AS({ spriteIndex: 6, duration: 10}), new AS({ spriteIndex: 8, duration: 10})
+  ]
+  animationStepMap[Directions.RIGHT] = [
+    new AS({ spriteIndex: 9, duration: 10}), new AS({ spriteIndex: 10, duration: 10}),
+    new AS({ spriteIndex: 9, duration: 10}), new AS({ spriteIndex: 11, duration: 10})
+  ]
+  let playerPiece = new PieceDirectional({
     box: new Box({
       x: ((window.innerWidth / 2) - 32),
       vx: 0,
@@ -69,7 +89,15 @@ function createPlayerBox() {
       height: 64,
       boxName: PieceNames.PLAYER
     }),
-    spriteNames: ["jplayer1.png"]
+    spriteNames: ["jplayer25.png", "jplayer1.png", "jplayer2.png", "jplayer8.png",
+      "jplayer7.png", "jplayer33.png", "jplayer27.png", "jplayer5.png", "jplayer6.png",
+      "jplayer4.png", "jplayer3.png", "jplayer34.png"],
+    animationSteps: null,
+    animationCurrrent: 0,
+    animationAge: 0,
+    type: PieceTypes.CARDINAL,
+    animationStepMap: animationStepMap,
+    directionCurrent: Directions.DOWN
   });
   map.pieces[PieceNames.PLAYER] = playerPiece;
 }
@@ -128,7 +156,7 @@ function createSpritesFromTilesheet() {
 
 function createSprites() {
   Object.keys(map.pieces).map((pieceName) => {
-    let piece: PieceAnimated = map.pieces[pieceName];
+    let piece: PieceDirectional = map.pieces[pieceName];
     let box = piece.box;
     if (piece.spriteNames.length == 1) {
       let resource = pixiLoader.resources[piece.spriteNames[0]];
@@ -138,6 +166,8 @@ function createSprites() {
         newSprite.visible = false;
         sprites[pieceName] = newSprite;
       }
+    }
+    else if (piece.type == PieceTypes.CARDINAL) {
     }
     else if (piece.spriteNames.length > 1) {
       piece.spriteNames.map((spriteName, index) => {
@@ -156,10 +186,15 @@ function createSprites() {
 
 function displaySprites() {
   Object.keys(map.pieces).map((pieceName) => {
-    let piece: PieceAnimated = map.pieces[pieceName];
+    let piece: PieceDirectional = map.pieces[pieceName];
     let box = piece.box;
     if (piece.spriteNames.length == 1) {
       displaySprite(piece.spriteNames[0], box, 0);
+    }
+    else if (piece.type == PieceTypes.CARDINAL) {
+      piece.spriteNames.map((spriteName, index) => {
+        displaySprite(spriteName, box, index);
+      });
     }
     else if (piece.spriteNames.length > 1) {
       piece.spriteNames.map((spriteName, index) => {
