@@ -22,6 +22,9 @@ let initializing = false;
 export default function init() {
   if (!initializing) {
     initializing = true;
+
+    map.createGrid(window.innerWidth, window.innerHeight);
+
     let type = "WebGL";
     if (!PIXI.utils.isWebGLSupported()) {
       type = "canvas";

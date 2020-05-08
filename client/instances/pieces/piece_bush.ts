@@ -23,20 +23,17 @@ export function createPieceBush(index: number, map: Map) {
 }
 
 function findBushBox(map: Map) {
-  let testBush: Box = null;
-  for (let loop = 0; loop < 100; loop++) {
-    testBush = new Box({
-      x: ((window.innerWidth * Math.random()) - 32),
+  let xy = map.getOpenGridXY();
+  if (xy != null) {
+    return new Box({
+      x: xy[0],
       vx: 0,
-      y: ((window.innerHeight * Math.random()) - 32),
+      y: xy[1],
       vy: 0,
       width: 64,
       height: 64,
       boxName: PieceNames.BUSH
     });
-    if (map.detectCollision(testBush) == null) {
-      return testBush;
-    }
   }
   return null;
 }
