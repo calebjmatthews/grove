@@ -39,23 +39,40 @@ export function createBushSprites() {
   });
 }
 
+export function createBGSprites() {
+  Object.keys(map.pieces).map((pieceName) => {
+    let piece = map.pieces[pieceName];
+    let sprite = sprites[piece.spriteNames[0]];
+    if (sprite) {
+      let newSprite = new PIXI.Sprite(sprite.texture);
+      pixiApp.stage.addChild(newSprite);
+      newSprite.visible = false;
+      sprites[piece.spriteNames[0] + ',' + piece.id] = newSprite;
+    }
+  });
+}
+
 export function displaySprites() {
+  console.log('map');
+  console.log(map);
+  console.log('sprites');
+  console.log(sprites);
   map.piecePlayer.spriteNames.map((spriteName, index) => {
     displaySprite(spriteName, map.piecePlayer.box, index);
   });
   Object.keys(map.piecesAnimated).map((pieceName) => {
     let piece = map.piecesAnimated[pieceName];
     let box = piece.box;
-    if (piece.spriteNames.length == 1) {
-      displaySprite(piece.spriteNames[0], box, 0);
-    }
-    else if (piece.spriteNames.length > 1) {
-      piece.spriteNames.map((spriteName, index) => {
-        displaySprite((spriteName + ',' + piece.id), box, index);
-      });
-      piece.setRandomAge();
-    }
-  })
+    piece.spriteNames.map((spriteName, index) => {
+      displaySprite((spriteName + ',' + piece.id), box, index);
+    });
+    piece.setRandomAge();
+  });
+  Object.keys(map.pieces).map((pieceName) => {
+    let piece = map.pieces[pieceName];
+    let box = piece.box;
+    displaySprite((piece.spriteNames[0] + ',' + piece.id), box, 0);
+  });
 
   function displaySprite(spriteName: string, box: Box, index: number) {
     let dSprite = sprites[spriteName];

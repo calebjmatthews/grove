@@ -1,4 +1,6 @@
 export enum PieceNames {
   PLAYER = 'PLAYER',
-  BUSH = 'BUSH'
+  BUSH = 'BUSH',
+  GRASS = 'GRASS',
+  DIRT = 'DIRT'
 }

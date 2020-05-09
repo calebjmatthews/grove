@@ -11,7 +11,7 @@ export default class Map {
   gridHeight: number = null;
   piecePlayer: PieceDirectional = null;
   piecesAnimated: { [pieceName: string] : PieceAnimated } = {};
-  pieces: { [pieceName: string] : PieceAnimated } = {};
+  pieces: { [pieceName: string] : Piece } = {};
 
   createGrid(width: number, height: number) {
     this.gridWidth = Math.floor(width / TILE_SIZE);
@@ -30,10 +30,6 @@ export default class Map {
 
   getOpenGridSpaces() {
     let gridSpaces = this.getAllGridSpaces();
-    console.log('this');
-    console.log(this);
-    console.log('gridSpaces');
-    console.log(gridSpaces);
     Object.keys(this.piecesAnimated).map((pieceName) => {
       let piece = this.piecesAnimated[pieceName];
       let coords = (Math.floor((piece.box.x + (piece.box.width / 2)) / TILE_SIZE)

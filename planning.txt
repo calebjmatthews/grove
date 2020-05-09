@@ -28,3 +28,5 @@ Player walking:
     4, 3, 4, 34
 
 Bush positions: [3, 6] = 37; [4, 7] = 48;
+Grass position: [0, 5] = 51;
+Dirt position: [8, 8] = 89;
