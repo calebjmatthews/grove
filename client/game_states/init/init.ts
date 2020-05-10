@@ -5,9 +5,11 @@ import play from '../play/play';
 import { createSpritesFromTilesheet, createBushSprites, displaySprites,
   createBGSprites } from './sprites';
 import { createKeyboard } from './keyboard';
+import { applyOffset } from '../play/apply_offset';
 import { pixiApp } from '../../instances/pixi_app';
 import { pixiLoader } from '../../instances/pixi_loader';
 import { map } from '../../instances/map';
+import { sprites } from '../../instances/sprites';
 import { pixiState } from '../../instances/pixi_state';
 import { piecePlayer } from '../../instances/pieces/piece_player';
 import { createPieceBush } from '../../instances/pieces/piece_bush';
@@ -59,6 +61,9 @@ function loadTextures() : Promise<boolean> {
       createSpritesFromTilesheet(playerpng, playerjson);
       displaySprites();
       createKeyboard();
+      applyOffset(0, true);
+      console.log('sprites');
+      console.log(sprites);
       resolve(true);
     });
   })

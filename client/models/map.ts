@@ -16,9 +16,9 @@ export default class Map {
   pieces: { [pieceName: string] : Piece } = {};
 
   createGrid(screenWidth: number, screenHeight: number) {
-    this.gridWidth = Math.floor(screenWidth / TILE_SIZE)+5;
-    this.gridHeight = Math.floor(screenHeight / TILE_SIZE)+5;
-    this.offset = new Offset({x: 0, vx: 0, y: 0, vy: 0});
+    this.gridWidth = Math.floor(screenWidth / TILE_SIZE) * 2;
+    this.gridHeight = Math.floor(screenHeight / TILE_SIZE) * 2;
+    this.offset = new Offset({x: -(screenWidth/2), vx: 0, y: -(screenHeight/2), vy: 0});
   }
 
   getAllGridSpaces() {

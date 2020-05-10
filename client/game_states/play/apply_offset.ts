@@ -2,12 +2,13 @@ import Offset from '../../models/offset';
 import { map } from '../../instances/map';
 import { sprites } from '../../instances/sprites';
 
-export function applyOffset(delta: number) {
+export function applyOffset(delta: number, run: boolean = false) {
   let oldOffset = new Offset(map.offset);
-  if (oldOffset.vx != 0 || oldOffset.vy != 0) {
+  if ((oldOffset.vx != 0 || oldOffset.vy != 0) || run) {
+
     let newOffset = new Offset(map.offset);
-    newOffset.x += (oldOffset.vx * (1 + delta));
-    newOffset.y += (oldOffset.vy * (1 + delta));
+    newOffset.x += Math.floor((oldOffset.vx * (1 + delta)));
+    newOffset.y += Math.floor((oldOffset.vy * (1 + delta)));
     map.offset = newOffset;
 
     let playerXY = map.piecePlayer.getXYAfterOffset([newOffset.x, newOffset.y]);
