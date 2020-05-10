@@ -11,7 +11,7 @@ export function createPieceBush(index: number, map: Map) {
     name: PieceNames.BUSH,
     id: index,
     box: bushBox,
-    spriteNames: ["forestworld37.png", "forestworld48.png"],
+    spriteNames: ["row-4-col-7.png", "row-5-col-8.png"],
     animationSteps: [
       new AnimationStep({ spriteIndex: 0, duration: 400 }),
       new AnimationStep({ spriteIndex: 1, duration: 20 })

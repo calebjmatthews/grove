@@ -27,6 +27,6 @@ Player walking:
   Right:
     4, 3, 4, 34
 
-Bush positions: [3, 6] = 37; [4, 7] = 48;
-Grass position: [0, 5] = 51;
-Dirt position: [8, 8] = 89;
+Bush positions: [3, 6] = row-4-col-7.png; [4, 7] = row-5-col-8.png;
+Grass position: [0, 5] = row-6-col-1.png;
+Dirt position: [8, 8] = row-9-col-9.png;

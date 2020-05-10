@@ -4,10 +4,10 @@ import { PieceNames } from '../../enums/piece_names';
 
 export function createPieceBackground(x: number, y: number, index: number) {
   let pieceName = PieceNames.GRASS;
-  let spriteNames = ["forestworld51.png"];
+  let spriteNames = ["row-6-col-1.png"];
   if (Math.random() <= 0.25) {
     pieceName = PieceNames.DIRT;
-    spriteNames = ["forestworld89.png"];
+    spriteNames = ["row-9-col-9.png"];
   }
   return new Piece({
     name: pieceName,

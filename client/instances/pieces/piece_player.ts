@@ -27,9 +27,9 @@ let piecePlayer = new PieceDirectional({
   name: PieceNames.PLAYER,
   id: 0,
   box: new Box({
-    x: ((window.innerWidth / 2) - 32),
+    x: ((window.innerWidth) - 32),
     vx: 0,
-    y: ((window.innerHeight / 2) - 32),
+    y: ((window.innerHeight) - 32),
     vy: 0,
     width: 64,
     height: 64,
