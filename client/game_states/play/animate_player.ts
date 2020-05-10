@@ -27,6 +27,6 @@ export function animatePlayer(pendingBox: Box) {
   }
   pBox.x = pendingBox.x;
   pBox.y = pendingBox.y;
-  sprites[pPiece.getCurrentSpriteName()].x = pendingBox.x;
-  sprites[pPiece.getCurrentSpriteName()].y = pendingBox.y;
+  sprites[pPiece.getCurrentSpriteName()].x = pendingBox.x + map.offset.x;
+  sprites[pPiece.getCurrentSpriteName()].y = pendingBox.y + map.offset.y;
 }

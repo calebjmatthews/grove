@@ -3,19 +3,22 @@ import Piece from './piece';
 import PieceAnimated from './piece_animated';
 import PieceDirectional from './piece_directional';
 import Collision from '../models/collision';
+import Offset from '../models/offset';
 import { PieceNames } from '../enums/piece_names';
 import { TILE_SIZE } from '../constants';
 
 export default class Map {
   gridWidth: number = null;
   gridHeight: number = null;
+  offset: Offset = null;
   piecePlayer: PieceDirectional = null;
   piecesAnimated: { [pieceName: string] : PieceAnimated } = {};
   pieces: { [pieceName: string] : Piece } = {};
 
-  createGrid(width: number, height: number) {
-    this.gridWidth = Math.floor(width / TILE_SIZE);
-    this.gridHeight = Math.floor(height / TILE_SIZE);
+  createGrid(screenWidth: number, screenHeight: number) {
+    this.gridWidth = Math.floor(screenWidth / TILE_SIZE)+5;
+    this.gridHeight = Math.floor(screenHeight / TILE_SIZE)+5;
+    this.offset = new Offset({x: 0, vx: 0, y: 0, vy: 0});
   }
 
   getAllGridSpaces() {

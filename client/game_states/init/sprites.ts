@@ -53,10 +53,6 @@ export function createBGSprites() {
 }
 
 export function displaySprites() {
-  console.log('map');
-  console.log(map);
-  console.log('sprites');
-  console.log(sprites);
   map.piecePlayer.spriteNames.map((spriteName, index) => {
     displaySprite(spriteName, map.piecePlayer.box, index);
   });

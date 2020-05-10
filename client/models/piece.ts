@@ -10,6 +10,12 @@ export default class Piece implements PieceInterface {
   constructor(piece: PieceInterface) {
     Object.assign(this, piece);
   }
+
+  getXYAfterOffset(xy: number[]) {
+    let newX = this.box.x + xy[0];
+    let newY = this.box.y + xy[1];
+    return [newX, newY];
+  }
 }
 
 interface PieceInterface {

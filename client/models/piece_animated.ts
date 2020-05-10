@@ -33,6 +33,11 @@ export default class PieceAnimated extends Piece implements PieceAnimatedInterfa
     let cAnimationStep = this.animationSteps[this.animationCurrrent];
     this.animationAge = Math.floor(Math.random() * cAnimationStep.duration);
   }
+
+  getCurrentSpriteName() {
+    return (this.spriteNames[this.animationSteps[this.animationCurrrent].spriteIndex]
+      + ',' + this.id);
+  }
 }
 
 interface PieceAnimatedInterface {
