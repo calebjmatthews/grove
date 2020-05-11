@@ -47,44 +47,4 @@ export function createKeyboard() {
       pBox.vy = 0;
     }
   };
-
-  let a = new Key("a");
-  a.press = () => {
-    map.offset.vx = -1;
-  };
-  a.release = () => {
-    if (!d.isDown) {
-      map.offset.vx = 0;
-    }
-  };
-
-  let w = new Key("w");
-  w.press = () => {
-    map.offset.vy = -1;
-  };
-  w.release = () => {
-    if (!s.isDown) {
-      map.offset.vy = 0;
-    }
-  };
-
-  let d = new Key("d");
-  d.press = () => {
-    map.offset.vx = 1;
-  };
-  d.release = () => {
-    if (!a.isDown) {
-      map.offset.vx = 0;
-    }
-  };
-
-  let s = new Key("s");
-  s.press = () => {
-    map.offset.vy = 1;
-  };
-  s.release = () => {
-    if (!w.isDown) {
-      map.offset.vy = 0;
-    }
-  };
 }
