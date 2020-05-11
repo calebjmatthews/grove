@@ -53,7 +53,7 @@ function loadTextures() : Promise<boolean> {
     pixiLoader.add([playerpng.default, forestworldpng.default])
     .load(() => {
       createPiecePlayer();
-      createPiecesBush((map.gridWidth * map.gridHeight) / 10);
+      createPiecesBush((map.gridWidth * map.gridHeight) / 5);
       createPiecesBackgroundWhereEmpty();
       createSpritesFromTilesheet(forestworldpng, forestworldjson);
       createBGSprites();

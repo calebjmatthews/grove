@@ -9,17 +9,21 @@ export function animatePlayer(pendingBox: Box) {
   let pBox = pPiece.box;
   let diffX = pBox.x - pendingBox.x;
   let diffY = pBox.y - pendingBox.y;
-  let newDirection = Directions.NONE;
+  let directionOld = pPiece.directionCurrent;
+  let directionNew: string = Directions.NONE;
   if (diffY != 0) {
-    if (diffY < 0) newDirection = Directions.DOWN;
-    else newDirection = Directions.UP;
+    if (diffY < 0) directionNew = Directions.DOWN;
+    else directionNew = Directions.UP;
   }
   else if (diffX != 0) {
-    if (diffX < 0) newDirection = Directions.RIGHT;
-    else newDirection = Directions.LEFT;
+    if (diffX < 0) directionNew = Directions.RIGHT;
+    else directionNew = Directions.LEFT;
+  }
+  if (directionNew == Directions.NONE && pPiece.directionPending != directionOld) {
+    directionNew = pPiece.directionPending;
   }
   let oldAnimationStep = pPiece.getCurrentAnimationStep();
-  let newStepIndex = pPiece.ageAnimationByDirection(newDirection);
+  let newStepIndex = pPiece.ageAnimationByDirection(directionNew);
   if (newStepIndex != null) {
     let newAnimationStep = pPiece.animationStepMap[pPiece.directionCurrent]
       [newStepIndex];

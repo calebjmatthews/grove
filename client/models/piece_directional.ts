@@ -8,6 +8,7 @@ export default class PieceDirectional extends PieceAnimated implements
   type: string;
   animationStepMap: { [key: string] : AnimationStep[] };
   directionCurrent: string;
+  directionPending: string;
 
   constructor(pieceDirectional: PieceDirectionalInterface) {
     super(pieceDirectional);
@@ -77,4 +78,5 @@ interface PieceDirectionalInterface {
   type: string;
   animationStepMap: { [key: string] : AnimationStep[] };
   directionCurrent: string;
+  directionPending: string;
 }

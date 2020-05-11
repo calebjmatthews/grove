@@ -43,7 +43,8 @@ let piecePlayer = new PieceDirectional({
   animationAge: 0,
   type: PieceTypes.CARDINAL,
   animationStepMap: animationStepMap,
-  directionCurrent: Directions.DOWN
+  directionCurrent: Directions.DOWN,
+  directionPending: Directions.DOWN
 });
 
 export { piecePlayer };
