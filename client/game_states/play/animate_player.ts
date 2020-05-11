@@ -2,6 +2,7 @@ import Box from '../../models/box';
 import { map } from '../../instances/map';
 import { Directions } from '../../enums/directions';
 import { sprites } from '../../instances/sprites';
+import { pixiContainers } from '../../instances/pixi_containers';
 
 export function animatePlayer(pendingBox: Box) {
   let pPiece = map.piecePlayer;
@@ -27,6 +28,6 @@ export function animatePlayer(pendingBox: Box) {
   }
   pBox.x = pendingBox.x;
   pBox.y = pendingBox.y;
-  sprites[pPiece.getCurrentSpriteName()].x = pendingBox.x + map.offset.x;
-  sprites[pPiece.getCurrentSpriteName()].y = pendingBox.y + map.offset.y;
+  pixiContainers[pPiece.name].x = pendingBox.x + map.offset.x;
+  pixiContainers[pPiece.name].y = pendingBox.y + map.offset.y;
 }

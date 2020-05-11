@@ -1,6 +1,7 @@
 import Offset from '../../models/offset';
 import { map } from '../../instances/map';
 import { sprites } from '../../instances/sprites';
+import { pixiContainers } from '../../instances/pixi_containers';
 
 export function applyOffset(delta: number, run: boolean = false) {
   let oldOffset = new Offset(map.offset);
@@ -12,11 +13,8 @@ export function applyOffset(delta: number, run: boolean = false) {
     map.offset = newOffset;
 
     let playerXY = map.piecePlayer.getXYAfterOffset([newOffset.x, newOffset.y]);
-    map.piecePlayer.spriteNames.map((spriteName) => {
-      let sprite = sprites[spriteName];
-      sprite.x = playerXY[0];
-      sprite.y = playerXY[1];
-    });
+    pixiContainers[map.piecePlayer.name].x = playerXY[0];
+    pixiContainers[map.piecePlayer.name].y = playerXY[1];
 
     Object.keys(map.piecesAnimated).map((pieceName) => {
       let piece = map.piecesAnimated[pieceName];

@@ -3,7 +3,7 @@ import * as PIXI from 'pixi.js';
 import Box from '../../models/box';
 import play from '../play/play';
 import { createSpritesFromTilesheet, createBushSprites, displaySprites,
-  createBGSprites } from './sprites';
+  createBGSprites, createPlayerSprites } from './sprites';
 import { createKeyboard } from './keyboard';
 import { applyOffset } from '../play/apply_offset';
 import { pixiApp } from '../../instances/pixi_app';
@@ -59,11 +59,10 @@ function loadTextures() : Promise<boolean> {
       createBushSprites();
       createBGSprites();
       createSpritesFromTilesheet(playerpng, playerjson);
+      createPlayerSprites();
       displaySprites();
       createKeyboard();
       applyOffset(0, true);
-      console.log('sprites');
-      console.log(sprites);
       resolve(true);
     });
   })
