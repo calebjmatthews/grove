@@ -6,7 +6,7 @@ import { Directions } from '../enums/directions';
 export default class PieceDirectional extends PieceAnimated implements
   PieceDirectionalInterface {
   type: string;
-  animationStepMap: { [key: string] : AnimationStep[] };
+  directionAnimMap: { [key: string] : AnimationStep[] };
   directionCurrent: string;
   directionPending: string;
 
@@ -20,12 +20,12 @@ export default class PieceDirectional extends PieceAnimated implements
     if (direction == this.directionCurrent) {
       let newStepIndex = null;
       this.animationAge++;
-      let cStep = this.animationStepMap[this.directionCurrent][this.animationCurrrent];
+      let cStep = this.directionAnimMap[this.directionCurrent][this.animationCurrrent];
       if (this.animationAge >= cStep.duration) {
         this.animationCurrrent++;
         newStepIndex = this.animationCurrrent;
         if (this.animationCurrrent >=
-          this.animationStepMap[this.directionCurrent].length) {
+          this.directionAnimMap[this.directionCurrent].length) {
           this.animationCurrrent = 0;
           newStepIndex = this.animationCurrrent;
         }
@@ -47,21 +47,21 @@ export default class PieceDirectional extends PieceAnimated implements
     //  directional animation with a random age
     else {
       this.directionCurrent = direction;
-      let newStepIndex = Math.floor(this.animationStepMap[direction].length
+      let newStepIndex = Math.floor(this.directionAnimMap[direction].length
         * Math.random());
       this.animationCurrrent = newStepIndex
-      this.animationAge = Math.floor(this.animationStepMap[direction]
+      this.animationAge = Math.floor(this.directionAnimMap[direction]
         [newStepIndex].duration * Math.random());
       return newStepIndex;
     }
   }
 
   getCurrentAnimationStep() {
-    return this.animationStepMap[this.directionCurrent][this.animationCurrrent];
+    return this.directionAnimMap[this.directionCurrent][this.animationCurrrent];
   }
 
   getCurrentSpriteName() {
-    return this.spriteNames[this.animationStepMap[this.directionCurrent]
+    return this.spriteNames[this.directionAnimMap[this.directionCurrent]
       [this.animationCurrrent].spriteIndex];
   }
 }
@@ -76,7 +76,7 @@ interface PieceDirectionalInterface {
   animationAge: number;
 
   type: string;
-  animationStepMap: { [key: string] : AnimationStep[] };
+  directionAnimMap: { [key: string] : AnimationStep[] };
   directionCurrent: string;
   directionPending: string;
 }

@@ -1,7 +1,7 @@
 import Box from './box';
 import Piece from './piece';
 import PieceAnimated from './piece_animated';
-import PieceDirectional from './piece_directional';
+import PiecePlayer from './piece_player';
 import Collision from '../models/collision';
 import Offset from '../models/offset';
 import { PieceNames } from '../enums/piece_names';
@@ -11,7 +11,7 @@ export default class Map {
   gridWidth: number = null;
   gridHeight: number = null;
   offset: Offset = null;
-  piecePlayer: PieceDirectional = null;
+  piecePlayer: PiecePlayer = null;
   piecesAnimated: { [pieceName: string] : PieceAnimated } = {};
   pieces: { [pieceName: string] : Piece } = {};
 

@@ -1,16 +1,18 @@
 import Key from '../../models/key';
 import { map } from '../../instances/map';
 import { Directions } from '../../enums/directions';
+import { PlayerStatuses } from '../../enums/player_statuses';
 import { PLAYER_SPEED } from '../../constants';
 
 export function createKeyboard() {
+  let player = map.piecePlayer;
   let pBox = map.piecePlayer.box;
 
   let left = new Key("ArrowLeft");
   left.press = () => {
     // Change the pBox's velocity when the key is pressed
     pBox.vx = -PLAYER_SPEED;
-    map.piecePlayer.directionPending = Directions.LEFT;
+    player.directionPending = Directions.LEFT;
   };
   left.release = () => {
     // If the left arrow has been released, and the right arrow isn't down
@@ -23,7 +25,7 @@ export function createKeyboard() {
   let right = new Key("ArrowRight");
   right.press = () => {
     pBox.vx = PLAYER_SPEED;
-    map.piecePlayer.directionPending = Directions.RIGHT;
+    player.directionPending = Directions.RIGHT;
   };
   right.release = () => {
     if (!left.isDown) {
@@ -34,7 +36,7 @@ export function createKeyboard() {
   let up = new Key("ArrowUp");
   up.press = () => {
     pBox.vy = -PLAYER_SPEED;
-    map.piecePlayer.directionPending = Directions.UP;
+    player.directionPending = Directions.UP;
   };
   up.release = () => {
     if (!down.isDown) {
@@ -45,7 +47,17 @@ export function createKeyboard() {
   let down = new Key("ArrowDown");
   down.press = () => {
     pBox.vy = PLAYER_SPEED;
-    map.piecePlayer.directionPending = Directions.DOWN;
+    player.directionPending = Directions.DOWN;
+  };
+  down.release = () => {
+    if (!up.isDown) {
+      pBox.vy = 0;
+    }
+  };
+
+  let space = new Key(" ");
+  space.press = () => {
+    player.statusPending = PlayerStatuses.STRIKING;
   };
   down.release = () => {
     if (!up.isDown) {
