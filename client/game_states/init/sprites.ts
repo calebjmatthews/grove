@@ -32,24 +32,6 @@ export function createPlayerSprites() {
   pixiContainers[PieceNames.PLAYER] = playerContainer;
 }
 
-export function createBushSprites() {
-  Object.keys(map.piecesAnimated).map((pieceName) => {
-    let piece = map.piecesAnimated[pieceName];
-    if (piece.name == PieceNames.BUSH) {
-      piece.spriteNames.map((spriteName) => {
-        let sprite = sprites[spriteName];
-        if (sprite) {
-          let newSprite = new PIXI.Sprite(sprite.texture);
-          pixiApp.stage.addChild(newSprite);
-          newSprite.visible = false;
-          sprites[spriteName + ',' + piece.id] = newSprite;
-        }
-      });
-      piece.setRandomAge();
-    }
-  });
-}
-
 export function createBGSprites() {
   let bgContainer = new PIXI.Container();
   pixiApp.stage.addChild(bgContainer);
@@ -62,13 +44,31 @@ export function createBGSprites() {
     let sprite = sprites[piece.spriteNames[0]];
     if (sprite) {
       let newSprite = new PIXI.Sprite(sprite.texture);
-      pixiApp.stage.addChild(newSprite);
       newSprite.visible = false;
       sprites[piece.spriteNames[0] + ',' + piece.id] = newSprite;
       bgContainer.addChild(newSprite);
     }
   });
   pixiContainers[PieceNames.BACKGROUND] = bgContainer;
+}
+
+export function createBushSprites() {
+  let bgContainer = pixiContainers[PieceNames.BACKGROUND];
+  Object.keys(map.piecesAnimated).map((pieceName) => {
+    let piece = map.piecesAnimated[pieceName];
+    if (piece.name == PieceNames.BUSH) {
+      piece.spriteNames.map((spriteName) => {
+        let sprite = sprites[spriteName];
+        if (sprite) {
+          let newSprite = new PIXI.Sprite(sprite.texture);
+          newSprite.visible = false;
+          sprites[spriteName + ',' + piece.id] = newSprite;
+          bgContainer.addChild(newSprite);
+        }
+      });
+      piece.setRandomAge();
+    }
+  });
 }
 
 export function displaySprites() {
