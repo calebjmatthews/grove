@@ -2,6 +2,7 @@ import Offset from '../../models/offset';
 import { map } from '../../instances/map';
 import { sprites } from '../../instances/sprites';
 import { pixiContainers } from '../../instances/pixi_containers';
+import { PieceNames } from '../../enums/piece_names';
 
 export function applyOffset(delta: number, run: boolean = false) {
   let oldOffset = new Offset(map.offset);
@@ -26,12 +27,7 @@ export function applyOffset(delta: number, run: boolean = false) {
       });
     });
 
-    Object.keys(map.pieces).map((pieceName) => {
-      let piece = map.pieces[pieceName];
-      let pieceXY = piece.getXYAfterOffset([newOffset.x, newOffset.y]);
-      let sprite = sprites[(piece.spriteNames[0] + ',' + piece.id)];
-      sprite.x = pieceXY[0];
-      sprite.y = pieceXY[1];
-    });
+    pixiContainers[PieceNames.BACKGROUND].x = newOffset.x;
+    pixiContainers[PieceNames.BACKGROUND].y = newOffset.y;
   }
 }
