@@ -57,6 +57,8 @@ export function createKeyboard() {
 
   let space = new Key(" ");
   space.press = () => {
+    if (player.statusPending != PlayerStatuses.STRIKING
+      && player.statusCurrent != PlayerStatuses.STRIKING)
     player.statusPending = PlayerStatuses.STRIKING;
   };
   down.release = () => {

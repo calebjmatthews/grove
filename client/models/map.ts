@@ -4,6 +4,7 @@ import PieceAnimated from './piece_animated';
 import PiecePlayer from './piece_player';
 import Collision from '../models/collision';
 import Offset from '../models/offset';
+import PlayEvent from '../models/play_event';
 import { PieceNames } from '../enums/piece_names';
 import { TILE_SIZE } from '../constants';
 
@@ -15,6 +16,7 @@ export default class Map {
   piecesAnimated: { [pieceName: string] : PieceAnimated } = {};
   pieces: { [pieceName: string] : Piece } = {};
   pieceMap: { [coords: string] : { mapName: string, pieceName: string} } = null;
+  playEvents: PlayEvent[] = [];
 
   createGrid(screenWidth: number, screenHeight: number) {
     this.gridWidth = Math.floor(screenWidth / TILE_SIZE) * 2;
@@ -109,5 +111,23 @@ export default class Map {
       return collisions
     }
     return null;
+  }
+
+  agePlayEvents() {
+    for (let index = this.playEvents.length-1; index >= 0; index--) {
+      let playEvent = this.playEvents[index];
+      playEvent.delay--;
+      if (playEvent.delay <= 0) {
+        let newMap = playEvent.resolve(this);
+        this.setMap(newMap);
+        this.playEvents.splice(index, 1);
+      }
+    }
+  }
+
+  setMap(map: Map) {
+    Object.keys(map).map((key) => {
+      this[key] = map[key];
+    });
   }
 }

@@ -8,7 +8,6 @@ export default class PiecePlayer extends PieceDirectional implements
   PiecePlayerInterface {
   statusCurrent: string;
   statusPending: string;
-  statusAge: number;
   strikeAnimMap: { [key: string] : AnimationStep[] };
 
   constructor(piecePlayer: PiecePlayerInterface) {
@@ -16,26 +15,24 @@ export default class PiecePlayer extends PieceDirectional implements
     Object.assign(this, piecePlayer);
   }
 
-  ageAnimationByDirection(direction: string) {
+  ageAnimationByDirectionAndStatus(direction: string, statusNew: boolean) {
+    if (statusNew) {
+      this.animationCurrrent = 0;
+      this.animationAge = 0;
+    }
     switch (this.statusPending) {
       case (PlayerStatuses.STRIKING):
       let newStepIndex = null;
       this.animationAge++;
       let cStep = this.strikeAnimMap[this.directionCurrent][this.animationCurrrent];
-      if (this.animationAge >= cStep.duration) {
+      if (statusNew) {
+        newStepIndex = this.animationCurrrent;
+      }
+      else if (this.animationAge >= cStep.duration) {
         this.animationCurrrent++;
         newStepIndex = this.animationCurrrent;
-        if (this.animationCurrrent >=
-          this.strikeAnimMap[this.directionCurrent].length) {
-          this.animationCurrrent = 0;
-          newStepIndex = this.animationCurrrent;
-        }
         this.animationAge = 0;
       }
-      console.log('this');
-      console.log(this);
-      console.log('newStepIndex');
-      console.log(newStepIndex);
       return newStepIndex;
       break;
 
@@ -83,12 +80,16 @@ export default class PiecePlayer extends PieceDirectional implements
   }
 
   getCurrentAnimationStep() {
-    return this.directionAnimMap[this.directionCurrent][this.animationCurrrent];
+    let animMap = this.directionAnimMap;
+    if (this.statusCurrent == PlayerStatuses.STRIKING) {
+      animMap = this.strikeAnimMap;
+    }
+    return animMap[this.directionCurrent][this.animationCurrrent];
   }
 
   getCurrentSpriteName() {
-    return this.spriteNames[this.directionAnimMap[this.directionCurrent]
-      [this.animationCurrrent].spriteIndex];
+    let animStep = this.getCurrentAnimationStep();
+    return this.spriteNames[animStep.spriteIndex];
   }
 }
 
@@ -108,6 +109,5 @@ interface PiecePlayerInterface {
 
   statusCurrent: string;
   statusPending: string;
-  statusAge: number;
   strikeAnimMap: { [key: string] : AnimationStep[] };
 }
