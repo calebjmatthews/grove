@@ -78,6 +78,7 @@ export default class PiecePlayer extends PieceDirectional implements
 interface PiecePlayerInterface {
   name: string;
   id: number;
+  gridPos: [number, number];
   box: Box;
   spriteNames: string[];
   animationSteps: AnimationStep[];

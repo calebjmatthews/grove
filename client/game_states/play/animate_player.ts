@@ -9,13 +9,6 @@ export function actAndAnimatePlayer(pendingBox: Box) {
   let player = map.piecePlayer;
   let pBox = player.box;
 
-  if (player.statusPending != player.statusCurrent) {
-    if (player.statusPending == PlayerStatuses.STRIKING) {
-      console.log('Bam!');
-      player.statusCurrent = PlayerStatuses.STRIKING;
-    }
-  }
-
   let diffX = pBox.x - pendingBox.x;
   let diffY = pBox.y - pendingBox.y;
   let directionOld = player.directionCurrent;
@@ -43,4 +36,29 @@ export function actAndAnimatePlayer(pendingBox: Box) {
   pBox.y = pendingBox.y;
   pixiContainers[player.name].x = pendingBox.x + map.offset.x;
   pixiContainers[player.name].y = pendingBox.y + map.offset.y;
+
+  if (player.statusPending != player.statusCurrent) {
+    if (player.statusPending == PlayerStatuses.STRIKING) {
+      let targetPos = map.getGridPos([player.box.x, player.box.y]);
+      switch(player.directionCurrent) {
+        case (Directions.DOWN):
+        targetPos[1]++;
+        break;
+        case (Directions.LEFT):
+        targetPos[0]--;
+        break;
+        case (Directions.UP):
+        targetPos[1]--;
+        break;
+        case (Directions.RIGHT):
+        targetPos[0]++;
+        break;
+      }
+      let targetPiece = map.getPieceByGridPos(targetPos);
+      console.log('targetPiece');
+      console.log(targetPiece);
+      player.statusCurrent = PlayerStatuses.NORMAL;
+      player.statusPending = PlayerStatuses.NORMAL;
+    }
+  }
 }

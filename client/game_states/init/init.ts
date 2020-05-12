@@ -86,7 +86,8 @@ export function createPiecesBackgroundWhereEmpty() {
   openCoords.map((coord, index) => {
     let x = (Math.floor(parseInt(coord.split(',')[0])) * TILE_SIZE);
     let y = (Math.floor(parseInt(coord.split(',')[1])) * TILE_SIZE);
-    let pieceBG = createPieceBackground(x, y, index);
+    let pieceBG = createPieceBackground(x, y, index,
+      [parseInt(coord.split(',')[0]), parseInt(coord.split(',')[1])]);
     map.pieces[pieceBG.name + ',' + index] = pieceBG;
   });
 }

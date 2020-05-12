@@ -42,6 +42,7 @@ strikeAnimMap[Directions.RIGHT] = [
 let piecePlayer = new PiecePlayer({
   name: PieceNames.PLAYER,
   id: 0,
+  gridPos: [null, null],
   box: new Box({
     x: ((window.innerWidth) - 32),
     vx: 0,

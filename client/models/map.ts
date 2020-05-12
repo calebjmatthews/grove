@@ -14,6 +14,7 @@ export default class Map {
   piecePlayer: PiecePlayer = null;
   piecesAnimated: { [pieceName: string] : PieceAnimated } = {};
   pieces: { [pieceName: string] : Piece } = {};
+  pieceMap: { [coords: string] : { mapName: string, pieceName: string} } = null;
 
   createGrid(screenWidth: number, screenHeight: number) {
     this.gridWidth = Math.floor(screenWidth / TILE_SIZE) * 2;
@@ -48,17 +49,46 @@ export default class Map {
     return openGridSpaces;
   }
 
-  getOpenGridXY(): [number, number] {
+  getOpenGridLocation(): { xy: [number, number], gridPos: [number, number] } {
     let coords = Object.keys(this.getOpenGridSpaces());
     if (coords.length > 0) {
       let coord = coords[Math.floor(coords.length * Math.random())];
       let x = (Math.floor(parseInt(coord.split(',')[0])) * TILE_SIZE);
       let y = (Math.floor(parseInt(coord.split(',')[1])) * TILE_SIZE);
-      return [x, y];
+      return {xy: [x, y], gridPos: [Math.floor(parseInt(coord.split(',')[0])),
+        Math.floor(parseInt(coord.split(',')[1]))]};
     }
     else {
       return null;
     }
+  }
+
+  getGridPos(xy: [number, number]): [number, number] {
+    let gridX = Math.floor((xy[0] + (TILE_SIZE / 2)) / TILE_SIZE);
+    let gridY = Math.floor((xy[1] + (TILE_SIZE / 2)) / TILE_SIZE);
+    return [gridX, gridY];
+  }
+
+  getPieceByGridPos(gridPos: [number, number]) {
+    if (this.pieceMap == null) {
+      this.createPieceMap();
+    }
+    let pieceMapObj = this.pieceMap[gridPos[0] + ',' + gridPos[1]];
+    return this[pieceMapObj.mapName][pieceMapObj.pieceName];
+  }
+
+  createPieceMap() {
+    this.pieceMap = {};
+    Object.keys(this.piecesAnimated).map((pieceName, index) => {
+      let piece = this.piecesAnimated[pieceName];
+      this.pieceMap[(piece.gridPos[0] + ',' + piece.gridPos[1])] =
+        {mapName: 'piecesAnimated', pieceName: pieceName};
+    });
+    Object.keys(this.pieces).map((pieceName, index) => {
+      let piece = this.pieces[pieceName];
+      this.pieceMap[(piece.gridPos[0] + ',' + piece.gridPos[1])] =
+        {mapName: 'pieces', pieceName: pieceName};
+    });
   }
 
   detectCollision(box: Box) : Collision[] {
