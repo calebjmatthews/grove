@@ -57,8 +57,7 @@ export function actAndAnimatePlayer(pendingBox: Box) {
       let targetPiece = map.getPieceByGridPos(targetPos);
       console.log('targetPiece');
       console.log(targetPiece);
-      player.statusCurrent = PlayerStatuses.NORMAL;
-      player.statusPending = PlayerStatuses.NORMAL;
+      player.statusCurrent = PlayerStatuses.STRIKING;
     }
   }
 }

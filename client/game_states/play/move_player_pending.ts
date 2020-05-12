@@ -1,10 +1,12 @@
 import Box from '../../models/box';
 import { map } from '../../instances/map';
 import { Directions } from '../../enums/directions';
+import { PlayerStatuses } from '../../enums/player_statuses';
 
 export function movePlayerPending(delta: number) {
   let pendingBox = new Box(map.piecePlayer.box);
-  if (pendingBox.vx != 0 || pendingBox.vy != 0) {
+  if ((pendingBox.vx != 0 || pendingBox.vy != 0)
+    && map.piecePlayer.statusCurrent == PlayerStatuses.NORMAL) {
     pendingBox.x += (pendingBox.vx * (1 + delta));
     pendingBox.y += (pendingBox.vy * (1 + delta));
     let collisions = map.detectCollision(pendingBox);

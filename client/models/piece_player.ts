@@ -19,7 +19,24 @@ export default class PiecePlayer extends PieceDirectional implements
   ageAnimationByDirection(direction: string) {
     switch (this.statusPending) {
       case (PlayerStatuses.STRIKING):
-
+      let newStepIndex = null;
+      this.animationAge++;
+      let cStep = this.strikeAnimMap[this.directionCurrent][this.animationCurrrent];
+      if (this.animationAge >= cStep.duration) {
+        this.animationCurrrent++;
+        newStepIndex = this.animationCurrrent;
+        if (this.animationCurrrent >=
+          this.strikeAnimMap[this.directionCurrent].length) {
+          this.animationCurrrent = 0;
+          newStepIndex = this.animationCurrrent;
+        }
+        this.animationAge = 0;
+      }
+      console.log('this');
+      console.log(this);
+      console.log('newStepIndex');
+      console.log(newStepIndex);
+      return newStepIndex;
       break;
 
       case (PlayerStatuses.NORMAL):
