@@ -1,3 +1,4 @@
+import * as PIXI from 'pixi.js';
 import Box from './box';
 import Piece from './piece';
 import PieceAnimated from './piece_animated';
@@ -5,6 +6,7 @@ import PiecePlayer from './piece_player';
 import Collision from '../models/collision';
 import Offset from '../models/offset';
 import PlayEvent from '../models/play_event';
+import ParticleGroup from '../models/particle_group';
 import { PieceNames } from '../enums/piece_names';
 import { TILE_SIZE } from '../constants';
 
@@ -17,6 +19,7 @@ export default class Map {
   pieces: { [pieceName: string] : Piece } = {};
   pieceMap: { [coords: string] : { mapName: string, pieceName: string} } = null;
   playEvents: PlayEvent[] = [];
+  particleGroups: ParticleGroup[] = [];
 
   createGrid(screenWidth: number, screenHeight: number) {
     this.gridWidth = Math.floor(screenWidth / TILE_SIZE) * 2;
@@ -128,6 +131,13 @@ export default class Map {
   setMap(map: Map) {
     Object.keys(map).map((key) => {
       this[key] = map[key];
+    });
+  }
+
+  animateParticleGroups(delta: number) {
+    let allChangedSpriteNames: string[] = [];
+    this.particleGroups.map((particleGroup) => {
+      particleGroup.animate(particleGroup, delta);
     });
   }
 }

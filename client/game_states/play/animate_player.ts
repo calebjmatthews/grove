@@ -1,4 +1,5 @@
 import * as PIXI from 'pixi.js';
+import { rubbleParticlesCreate } from './particle/rubble';
 import Box from '../../models/box';
 import PlayEvent from '../../models/play_event';
 import Piece from '../../models/piece';
@@ -64,6 +65,10 @@ export function actAndAnimatePlayer(pendingBox: Box) {
           pMap.pieces[(grassPiece.name + ',' + grassPiece.id)] = grassPiece;
           pMap.pieceMap[targetPos[0] + ',' + targetPos[1]] = {mapName: 'pieces',
             pieceName: (grassPiece.name + ',' + grassPiece.id)};
+          let particleGroup = rubbleParticlesCreate(10,
+            [(targetPiece.box.x + targetPiece.box.width/2),
+              (targetPiece.box.y + targetPiece.box.height/2)]);
+          pMap.particleGroups.push(particleGroup);
         }
         player.statusPending = PlayerStatuses.NORMAL;
         return pMap;
