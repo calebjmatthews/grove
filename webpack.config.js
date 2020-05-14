@@ -1,3 +1,5 @@
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+
 module.exports = {
   entry: [
     './client/index.ts'
@@ -37,6 +39,12 @@ module.exports = {
       }
     ]
   },
+
+  plugins: [
+    new CopyWebpackPlugin([
+      { from: 'client/static' }
+    ])
+  ]
 
   // When importing a module whose path matches one of the following, just
   // assume a corresponding global variable exists and use that instead.

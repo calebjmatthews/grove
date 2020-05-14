@@ -29,7 +29,7 @@ export function rubbleParticlesCreate(numParticles: number, xy: [number, number]
       y: -(TILE_SIZE / 4) + (Math.random() * (TILE_SIZE/2)),
       vy: vy
     }
-    let particleSprite = new PIXI.Sprite(sprites[spriteFilename].texture);
+    let particleSprite = new PIXI.Sprite(PIXI.utils.TextureCache[spriteFilename]);
     particleSprite.width = 16;
     particleSprite.height = 16;
     container.addChild(particleSprite);

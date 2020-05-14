@@ -81,11 +81,12 @@ export function actAndAnimatePlayer(pendingBox: Box) {
     let newBox = targetPiece.box;
     newBox.boxName = newName;
 
-    let dSprite = new PIXI.Sprite(sprites["row-6-col-1.png"].texture);
+    let dSprite = new PIXI.Sprite(PIXI.utils.TextureCache["row-6-col-1.png"]);
     dSprite.x = newBox.x;
     dSprite.y = newBox.y;
     dSprite.width = newBox.width;
     dSprite.height = newBox.height;
+    sprites[newName] = dSprite;
     pixiContainers[PieceNames.BACKGROUND].addChild(dSprite);
 
     return new Piece({

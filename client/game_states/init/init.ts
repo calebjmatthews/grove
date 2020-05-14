@@ -15,12 +15,6 @@ import { piecePlayer } from '../../instances/pieces/piece_player';
 import { createPieceBush } from '../../instances/pieces/piece_bush';
 import { createPieceBackground } from '../../instances/pieces/piece_bg';
 import { PieceNames } from '../../enums/piece_names';
-const playerpng = require('../../assets/player.png');
-const playerjson = require('../../assets/player.json');
-const forestworldpng = require('../../assets/forestworld.png');
-const forestworldjson = require('../../assets/forestworld.json');
-const forestparticlespng = require('../../assets/forestparticles.png');
-const forestparticlesjson = require('../../assets/forestparticles.json');
 import { TILE_SIZE } from '../../constants';
 
 let initializing = false;
@@ -52,21 +46,21 @@ export default function init() {
 
 function loadTextures() : Promise<boolean> {
   return new Promise((resolve) => {
-    pixiLoader.add([playerpng.default, forestworldpng.default,
-      forestparticlespng.default])
+    pixiLoader.add(["player.json", "forestworld.json", "forestparticles.json"])
     .load(() => {
       createPiecePlayer();
       createPiecesBush((map.gridWidth * map.gridHeight) / 5);
       createPiecesBackgroundWhereEmpty();
-      createSpritesFromTilesheet(forestworldpng, forestworldjson);
       createBGSprites();
       createBushSprites();
-      createSpritesFromTilesheet(playerpng, playerjson);
       createPlayerSprites();
-      createSpritesFromTilesheet(forestparticlespng, forestparticlesjson);
       displaySprites();
       createKeyboard();
       applyOffset(0, true);
+      console.log('pixiApp');
+      console.log(pixiApp);
+      console.log('PIXI.utils.TextureCache');
+      console.log(PIXI.utils.TextureCache);
       resolve(true);
     });
   })

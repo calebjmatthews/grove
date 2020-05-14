@@ -173,7 +173,7 @@
 
 },
 "meta": {
-	"image": "sprites.png",
+	"image": "player.png",
 	"size": {"w": 102, "h": 102},
 	"scale": "1"
 }
