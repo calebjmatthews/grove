@@ -5,7 +5,7 @@ import { Directions } from '../enums/directions';
 
 export default class PieceDirectional extends PieceAnimated implements
   PieceDirectionalInterface {
-  type: string;
+  typeName: string;
   directionAnimMap: { [key: string] : AnimationStep[] };
   directionCurrent: string;
   directionPending: string;
@@ -67,7 +67,7 @@ export default class PieceDirectional extends PieceAnimated implements
 }
 
 interface PieceDirectionalInterface {
-  name: string;
+  typeName: string;
   id: number;
   gridPos: [number, number];
   box: Box;
@@ -76,7 +76,6 @@ interface PieceDirectionalInterface {
   animationCurrrent: number;
   animationAge: number;
 
-  type: string;
   directionAnimMap: { [key: string] : AnimationStep[] };
   directionCurrent: string;
   directionPending: string;

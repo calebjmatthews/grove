@@ -1,6 +1,6 @@
 import { map } from '../../../instances/map';
 import { pixiContainers } from '../../../instances/pixi_containers';
-import { PieceNames } from '../../../enums/piece_names';
+import { PieceTypeNames } from '../../../enums/piece_type_names';
 
 export function particleAgeOut() {
   for (let index = map.particleGroups.length-1; index >= 0; index--) {
@@ -9,7 +9,7 @@ export function particleAgeOut() {
       pg.age++;
     }
     else {
-      pixiContainers[PieceNames.BACKGROUND]
+      pixiContainers[PieceTypeNames.BACKGROUND]
         .removeChild(pixiContainers[pg.particleType + ',' + pg.id]);
       map.particleGroups.splice(index, 1);
     }

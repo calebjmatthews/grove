@@ -2,7 +2,7 @@ import Box from '../../models/box';
 import Map from '../../models/map';
 import PieceAnimated from '../../models/piece_animated';
 import AnimationStep from '../../models/animation_step';
-import { PieceNames } from '../../enums/piece_names';
+import { PieceTypeNames } from '../../enums/piece_type_names';
 
 export function createPieceBush(index: number, map: Map) {
   let newBush: PieceAnimated = null;
@@ -16,11 +16,11 @@ export function createPieceBush(index: number, map: Map) {
       vy: 0,
       width: 64,
       height: 64,
-      boxName: PieceNames.BUSH
+      boxName: PieceTypeNames.BUSH
     });
-    
+
     newBush = new PieceAnimated({
-      name: PieceNames.BUSH,
+      typeName: PieceTypeNames.BUSH,
       id: index,
       gridPos: location.gridPos,
       box: bushBox,

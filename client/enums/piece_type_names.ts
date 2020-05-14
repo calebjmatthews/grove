@@ -1,4 +1,4 @@
-export enum PieceNames {
+export enum PieceTypeNames {
   PLAYER = 'PLAYER',
   BUSH = 'BUSH',
   GRASS = 'GRASS',

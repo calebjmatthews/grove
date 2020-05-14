@@ -1,17 +1,17 @@
 import Box from '../../models/box';
 import Piece from '../../models/piece';
-import { PieceNames } from '../../enums/piece_names';
+import { PieceTypeNames } from '../../enums/piece_type_names';
 
 export function createPieceBackground(x: number, y: number, index: number,
   gridPos: [number, number]) {
-  let pieceName = PieceNames.GRASS;
+  let pieceName = PieceTypeNames.GRASS;
   let spriteNames = ["row-6-col-1.png"];
   if (Math.random() <= 0.25) {
-    pieceName = PieceNames.DIRT;
+    pieceName = PieceTypeNames.DIRT;
     spriteNames = ["row-9-col-9.png"];
   }
   return new Piece({
-    name: pieceName,
+    typeName: pieceName,
     id: index,
     gridPos: gridPos,
     box: new Box({

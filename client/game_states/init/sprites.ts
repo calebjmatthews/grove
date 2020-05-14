@@ -6,7 +6,7 @@ import { pixiLoader } from '../../instances/pixi_loader';
 import { map } from '../../instances/map';
 import { sprites } from '../../instances/sprites';
 import { pixiContainers } from '../../instances/pixi_containers';
-import { PieceNames } from '../../enums/piece_names';
+import { PieceTypeNames } from '../../enums/piece_type_names';
 
 export function createSpritesFromTilesheet(sheetPng: any, sheetJson: any) {
   Object.keys(sheetJson.frames).map((name) => {
@@ -30,7 +30,7 @@ export function createPlayerSprites() {
     playerContainer.addChild(dSprite);
     sprites[spriteName] = dSprite;
   });
-  pixiContainers[PieceNames.PLAYER] = playerContainer;
+  pixiContainers[PieceTypeNames.PLAYER] = playerContainer;
 }
 
 export function createBGSprites() {
@@ -47,14 +47,14 @@ export function createBGSprites() {
     sprites[piece.spriteNames[0] + ',' + piece.id] = newSprite;
     bgContainer.addChild(newSprite);
   });
-  pixiContainers[PieceNames.BACKGROUND] = bgContainer;
+  pixiContainers[PieceTypeNames.BACKGROUND] = bgContainer;
 }
 
 export function createBushSprites() {
-  let bgContainer = pixiContainers[PieceNames.BACKGROUND];
+  let bgContainer = pixiContainers[PieceTypeNames.BACKGROUND];
   Object.keys(map.piecesAnimated).map((pieceName) => {
     let piece = map.piecesAnimated[pieceName];
-    if (piece.name == PieceNames.BUSH) {
+    if (piece.typeName == PieceTypeNames.BUSH) {
       piece.spriteNames.map((spriteName) => {
         let newSprite = new PIXI.Sprite(PIXI.utils.TextureCache[spriteName]);
         newSprite.visible = false;
@@ -67,7 +67,7 @@ export function createBushSprites() {
 }
 
 export function displaySprites() {
-  let pContainer = pixiContainers[PieceNames.PLAYER];
+  let pContainer = pixiContainers[PieceTypeNames.PLAYER];
   pContainer.x = map.piecePlayer.box.x;
   pContainer.y = map.piecePlayer.box.y;
   pContainer.width = map.piecePlayer.box.width;

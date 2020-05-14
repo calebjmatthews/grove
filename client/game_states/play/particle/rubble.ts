@@ -3,7 +3,7 @@ import ParticleGroup from '../../../models/particle_group';
 import { sprites } from '../../../instances/sprites';
 import { pixiContainers } from '../../../instances/pixi_containers';
 import { ParticleTypes } from '../../../enums/particle_types';
-import { PieceNames } from '../../../enums/piece_names';
+import { PieceTypeNames } from '../../../enums/piece_type_names';
 import { TILE_SIZE } from '../../../constants';
 
 export function rubbleParticlesCreate(numParticles: number, xy: [number, number]) {
@@ -39,7 +39,7 @@ export function rubbleParticlesCreate(numParticles: number, xy: [number, number]
   }
 
   pixiContainers[ParticleTypes.RUBBLE_WOOD + ',' + containerId] = container;
-  pixiContainers[PieceNames.BACKGROUND].addChild(container);
+  pixiContainers[PieceTypeNames.BACKGROUND].addChild(container);
   container.x = xy[0];
   container.y = xy[1];
 

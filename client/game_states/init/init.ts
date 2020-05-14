@@ -14,7 +14,7 @@ import { pixiState } from '../../instances/pixi_state';
 import { piecePlayer } from '../../instances/pieces/piece_player';
 import { createPieceBush } from '../../instances/pieces/piece_bush';
 import { createPieceBackground } from '../../instances/pieces/piece_bg';
-import { PieceNames } from '../../enums/piece_names';
+import { PieceTypeNames } from '../../enums/piece_type_names';
 import { TILE_SIZE } from '../../constants';
 
 let initializing = false;
@@ -74,7 +74,7 @@ function createPiecesBush(numBushes: number) {
   for (let index = 0; index < numBushes; index++) {
     let bushPiece = createPieceBush(index, map);
     if (bushPiece != null) {
-      map.piecesAnimated[PieceNames.BUSH + ',' + index] = bushPiece;
+      map.piecesAnimated[PieceTypeNames.BUSH + ',' + index] = bushPiece;
     }
   }
 }
@@ -86,6 +86,6 @@ export function createPiecesBackgroundWhereEmpty() {
     let y = (Math.floor(parseInt(coord.split(',')[1])) * TILE_SIZE);
     let pieceBG = createPieceBackground(x, y, index,
       [parseInt(coord.split(',')[0]), parseInt(coord.split(',')[1])]);
-    map.pieces[pieceBG.name + ',' + index] = pieceBG;
+    map.pieces[pieceBG.typeName + ',' + index] = pieceBG;
   });
 }

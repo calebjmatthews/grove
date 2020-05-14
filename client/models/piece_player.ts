@@ -94,7 +94,7 @@ export default class PiecePlayer extends PieceDirectional implements
 }
 
 interface PiecePlayerInterface {
-  name: string;
+  typeName: string;
   id: number;
   gridPos: [number, number];
   box: Box;
@@ -102,7 +102,6 @@ interface PiecePlayerInterface {
   animationSteps: AnimationStep[];
   animationCurrrent: number;
   animationAge: number;
-  type: string;
   directionAnimMap: { [key: string] : AnimationStep[] };
   directionCurrent: string;
   directionPending: string;

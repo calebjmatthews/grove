@@ -2,7 +2,7 @@ import Offset from '../../models/offset';
 import { map } from '../../instances/map';
 import { sprites } from '../../instances/sprites';
 import { pixiContainers } from '../../instances/pixi_containers';
-import { PieceNames } from '../../enums/piece_names';
+import { PieceTypeNames } from '../../enums/piece_type_names';
 
 export function applyOffset(delta: number, run: boolean = false) {
   let oldOffset = new Offset(map.offset);
@@ -14,10 +14,10 @@ export function applyOffset(delta: number, run: boolean = false) {
     map.offset = newOffset;
 
     let playerXY = map.piecePlayer.getXYAfterOffset([newOffset.x, newOffset.y]);
-    pixiContainers[map.piecePlayer.name].x = playerXY[0];
-    pixiContainers[map.piecePlayer.name].y = playerXY[1];
+    pixiContainers[map.piecePlayer.typeName].x = playerXY[0];
+    pixiContainers[map.piecePlayer.typeName].y = playerXY[1];
 
-    pixiContainers[PieceNames.BACKGROUND].x = newOffset.x;
-    pixiContainers[PieceNames.BACKGROUND].y = newOffset.y;
+    pixiContainers[PieceTypeNames.BACKGROUND].x = newOffset.x;
+    pixiContainers[PieceTypeNames.BACKGROUND].y = newOffset.y;
   }
 }

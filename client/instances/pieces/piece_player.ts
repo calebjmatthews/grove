@@ -3,8 +3,7 @@ import AnimationStep from '../../models/animation_step';
 import Box from '../../models/box';
 const AS = AnimationStep;
 import { Directions } from '../../enums/directions';
-import { PieceNames } from '../../enums/piece_names';
-import { PieceTypes } from '../../enums/piece_types';
+import { PieceTypeNames } from '../../enums/piece_type_names';
 import { PlayerStatuses } from '../../enums/player_statuses';
 
 let directionAnimMap: { [key: string] : AnimationStep[] } = {};
@@ -40,7 +39,7 @@ strikeAnimMap[Directions.RIGHT] = [
 ]
 
 let piecePlayer = new PiecePlayer({
-  name: PieceNames.PLAYER,
+  typeName: PieceTypeNames.PLAYER,
   id: 0,
   gridPos: [null, null],
   box: new Box({
@@ -50,7 +49,7 @@ let piecePlayer = new PiecePlayer({
     vy: 0,
     width: 64,
     height: 64,
-    boxName: PieceNames.PLAYER
+    boxName: PieceTypeNames.PLAYER
   }),
   spriteNames: ["jplayer25.png", "jplayer1.png", "jplayer2.png", "jplayer8.png",
     "jplayer7.png", "jplayer33.png", "jplayer27.png", "jplayer5.png", "jplayer6.png",
@@ -60,7 +59,6 @@ let piecePlayer = new PiecePlayer({
   animationSteps: null,
   animationCurrrent: 0,
   animationAge: 0,
-  type: PieceTypes.CARDINAL,
   directionAnimMap: directionAnimMap,
   directionCurrent: Directions.DOWN,
   directionPending: Directions.DOWN,

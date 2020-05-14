@@ -2,7 +2,7 @@ import Box from './box';
 
 // An object on the stage, represented by a bounding box and one or more sprites
 export default class Piece implements PieceInterface {
-  name: string;
+  typeName: string;
   id: number;
   gridPos: [number, number];
   box: Box;
@@ -20,7 +20,7 @@ export default class Piece implements PieceInterface {
 }
 
 interface PieceInterface {
-  name: string;
+  typeName: string;
   id: number;
   gridPos: [number, number];
   box: Box;

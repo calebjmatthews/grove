@@ -10,7 +10,7 @@ import { sprites } from '../../instances/sprites';
 import { pixiContainers } from '../../instances/pixi_containers';
 import { Directions } from '../../enums/directions';
 import { PlayerStatuses } from '../../enums/player_statuses';
-import { PieceNames } from '../../enums/piece_names';
+import { PieceTypeNames } from '../../enums/piece_type_names';
 
 export function actAndAnimatePlayer(pendingBox: Box) {
   let player = map.piecePlayer;
@@ -58,13 +58,13 @@ export function actAndAnimatePlayer(pendingBox: Box) {
           break;
         }
         let targetPiece = pMap.getPieceByGridPos(targetPos);
-        if (targetPiece.name == PieceNames.BUSH) {
-          delete pMap.piecesAnimated[PieceNames.BUSH + ',' + targetPiece.id];
+        if (targetPiece.typeName == PieceTypeNames.BUSH) {
+          delete pMap.piecesAnimated[PieceTypeNames.BUSH + ',' + targetPiece.id];
           delete pMap.pieceMap[targetPos[0] + ',' + targetPos[1]];
           let grassPiece = createGrass(targetPiece, targetPos);
-          pMap.pieces[(grassPiece.name + ',' + grassPiece.id)] = grassPiece;
+          pMap.pieces[(grassPiece.typeName + ',' + grassPiece.id)] = grassPiece;
           pMap.pieceMap[targetPos[0] + ',' + targetPos[1]] = {mapName: 'pieces',
-            pieceName: (grassPiece.name + ',' + grassPiece.id)};
+            pieceName: (grassPiece.typeName + ',' + grassPiece.id)};
           let particleGroup = rubbleParticlesCreate(10,
             [(targetPiece.box.x + targetPiece.box.width/2),
               (targetPiece.box.y + targetPiece.box.height/2)]);
@@ -77,7 +77,7 @@ export function actAndAnimatePlayer(pendingBox: Box) {
   }
   function createGrass(targetPiece: PieceAnimated, targetPos: [number, number]) {
     let newId = Math.floor(Math.random() * 10000000);
-    let newName = PieceNames.GRASS + ',' + newId;
+    let newName = PieceTypeNames.GRASS + ',' + newId;
     let newBox = targetPiece.box;
     newBox.boxName = newName;
 
@@ -87,10 +87,10 @@ export function actAndAnimatePlayer(pendingBox: Box) {
     dSprite.width = newBox.width;
     dSprite.height = newBox.height;
     sprites[newName] = dSprite;
-    pixiContainers[PieceNames.BACKGROUND].addChild(dSprite);
+    pixiContainers[PieceTypeNames.BACKGROUND].addChild(dSprite);
 
     return new Piece({
-      name: PieceNames.GRASS,
+      typeName: PieceTypeNames.GRASS,
       id: newId,
       gridPos: targetPos,
       box: newBox,
@@ -110,6 +110,6 @@ export function actAndAnimatePlayer(pendingBox: Box) {
   }
   pBox.x = pendingBox.x;
   pBox.y = pendingBox.y;
-  pixiContainers[player.name].x = pendingBox.x + map.offset.x;
-  pixiContainers[player.name].y = pendingBox.y + map.offset.y;
+  pixiContainers[player.typeName].x = pendingBox.x + map.offset.x;
+  pixiContainers[player.typeName].y = pendingBox.y + map.offset.y;
 }

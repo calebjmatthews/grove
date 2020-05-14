@@ -7,7 +7,7 @@ import Collision from '../models/collision';
 import Offset from '../models/offset';
 import PlayEvent from '../models/play_event';
 import ParticleGroup from '../models/particle_group';
-import { PieceNames } from '../enums/piece_names';
+import { PieceTypeNames } from '../enums/piece_type_names';
 import { TILE_SIZE } from '../constants';
 
 export default class Map {
@@ -43,7 +43,7 @@ export default class Map {
       let piece = this.piecesAnimated[pieceName];
       let coords = (Math.floor((piece.box.x + (piece.box.width / 2)) / TILE_SIZE)
         + ',' + Math.floor((piece.box.y + (piece.box.height / 2)) / TILE_SIZE));
-      gridSpaces[coords] = piece.name;
+      gridSpaces[coords] = piece.typeName;
     });
     let openGridSpaces: { [coords: string] : string } = {};
     Object.keys(gridSpaces).map((coord: string) => {
