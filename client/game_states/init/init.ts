@@ -1,6 +1,7 @@
 import * as PIXI from 'pixi.js';
 
 import Box from '../../models/box';
+import Piece from '../../models/piece';
 import play from '../play/play';
 import { createSpritesFromTilesheet, createBushSprites, displaySprites,
   createBGSprites, createPlayerSprites } from './sprites';
@@ -11,9 +12,8 @@ import { pixiLoader } from '../../instances/pixi_loader';
 import { map } from '../../instances/map';
 import { sprites } from '../../instances/sprites';
 import { pixiState } from '../../instances/pixi_state';
-import { piecePlayer } from '../../instances/pieces/piece_player';
-import { createPieceBush } from '../../instances/pieces/piece_bush';
-import { createPieceBackground } from '../../instances/pieces/piece_bg';
+import { pieceTypes } from '../../instances/piece_types/index';
+import { piecePlayer } from '../../instances/piece_types/player';
 import { PieceTypeNames } from '../../enums/piece_type_names';
 import { TILE_SIZE } from '../../constants';
 
@@ -57,10 +57,6 @@ function loadTextures() : Promise<boolean> {
       displaySprites();
       createKeyboard();
       applyOffset(0, true);
-      console.log('pixiApp');
-      console.log(pixiApp);
-      console.log('PIXI.utils.TextureCache');
-      console.log(PIXI.utils.TextureCache);
       resolve(true);
     });
   })
@@ -72,10 +68,10 @@ function createPiecePlayer() {
 
 function createPiecesBush(numBushes: number) {
   for (let index = 0; index < numBushes; index++) {
-    let bushPiece = createPieceBush(index, map);
-    if (bushPiece != null) {
-      map.piecesAnimated[PieceTypeNames.BUSH + ',' + index] = bushPiece;
-    }
+    let location = map.getOpenGridLocation();
+    let pieceBush = pieceTypes[PieceTypeNames.BUSH].createPiece(index, location.gridPos,
+    location.xy);
+    map.piecesAnimated[PieceTypeNames.BUSH + ',' + index] = pieceBush;
   }
 }
 
@@ -84,8 +80,12 @@ export function createPiecesBackgroundWhereEmpty() {
   openCoords.map((coord, index) => {
     let x = (Math.floor(parseInt(coord.split(',')[0])) * TILE_SIZE);
     let y = (Math.floor(parseInt(coord.split(',')[1])) * TILE_SIZE);
-    let pieceBG = createPieceBackground(x, y, index,
-      [parseInt(coord.split(',')[0]), parseInt(coord.split(',')[1])]);
+    let pieceTypeName = PieceTypeNames.GRASS;
+    if (Math.random() < 0.25) {
+      pieceTypeName = PieceTypeNames.DIRT;
+    }
+    let pieceBG: Piece = pieceTypes[pieceTypeName].createPiece(index,
+      [parseInt(coord.split(',')[0]), parseInt(coord.split(',')[1])], [x, y]);
     map.pieces[pieceBG.typeName + ',' + index] = pieceBG;
   });
 }

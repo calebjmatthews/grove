@@ -1,7 +1,7 @@
 export enum PieceTypeNames {
-  PLAYER = 'PLAYER',
-  BUSH = 'BUSH',
-  GRASS = 'GRASS',
-  DIRT = 'DIRT',
-  BACKGROUND = 'BACKGROUND'
+  PLAYER = 'Player',
+  BUSH = 'Bush',
+  GRASS = 'Grass',
+  DIRT = 'Dirt (small)',
+  BACKGROUND = 'Background'
 }
