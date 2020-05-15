@@ -54,6 +54,7 @@ let piecePlayer = new PiecePlayer({
   collidable: true,
   breakable: false,
   durability: null,
+  animated: true,
   spriteNames: ["jplayer25.png", "jplayer1.png", "jplayer2.png", "jplayer8.png",
     "jplayer7.png", "jplayer33.png", "jplayer27.png", "jplayer5.png", "jplayer6.png",
     "jplayer4.png", "jplayer3.png", "jplayer34.png", "jplayer18.png", "jplayer10.png",

@@ -50,7 +50,7 @@ export function createBGSprites() {
   pixiContainers[PieceTypeNames.BACKGROUND] = bgContainer;
 }
 
-export function createBushSprites() {
+export function createDestrSprites() {
   let bgContainer = pixiContainers[PieceTypeNames.BACKGROUND];
   Object.keys(map.piecesAnimated).map((pieceName) => {
     let piece = map.piecesAnimated[pieceName];
@@ -62,6 +62,15 @@ export function createBushSprites() {
         bgContainer.addChild(newSprite);
       });
       piece.setRandomAge();
+    }
+  });
+  Object.keys(map.pieces).map((pieceName) => {
+    let piece = map.pieces[pieceName];
+    if (piece.typeName == PieceTypeNames.STONE) {
+      let newSprite = new PIXI.Sprite(PIXI.utils.TextureCache[piece.spriteNames[0]]);
+      newSprite.visible = true;
+      sprites[piece.spriteNames[0] + ',' + piece.id] = newSprite;
+      bgContainer.addChild(newSprite);
     }
   });
 }

@@ -9,6 +9,7 @@ export default class Piece implements PieceInterface {
   collidable: boolean;
   breakable: boolean;
   durability: number;
+  animated: boolean;
   spriteNames: string[];
 
   constructor(piece: PieceInterface) {
@@ -30,5 +31,6 @@ interface PieceInterface {
   collidable: boolean;
   breakable: boolean;
   durability: number;
+  animated: boolean;
   spriteNames: string[];
 }

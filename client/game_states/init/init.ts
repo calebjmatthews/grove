@@ -3,7 +3,7 @@ import * as PIXI from 'pixi.js';
 import Box from '../../models/box';
 import Piece from '../../models/piece';
 import play from '../play/play';
-import { createSpritesFromTilesheet, createBushSprites, displaySprites,
+import { createSpritesFromTilesheet, createDestrSprites, displaySprites,
   createBGSprites, createPlayerSprites } from './sprites';
 import { createKeyboard } from './keyboard';
 import { applyOffset } from '../play/apply_offset';
@@ -49,10 +49,12 @@ function loadTextures() : Promise<boolean> {
     pixiLoader.add(["player.json", "forestworld.json", "forestparticles.json"])
     .load(() => {
       createPiecePlayer();
-      createPiecesBush((map.gridWidth * map.gridHeight) / 5);
+      createPiecesDestructable((map.gridWidth * map.gridHeight) / 5);
+      console.log('map');
+      console.log(map);
       createPiecesBackgroundWhereEmpty();
       createBGSprites();
-      createBushSprites();
+      createDestrSprites();
       createPlayerSprites();
       displaySprites();
       createKeyboard();
@@ -66,12 +68,21 @@ function createPiecePlayer() {
   map.piecePlayer = piecePlayer;
 }
 
-function createPiecesBush(numBushes: number) {
-  for (let index = 0; index < numBushes; index++) {
+function createPiecesDestructable(numDestr: number) {
+  for (let index = 0; index < numDestr; index++) {
     let location = map.getOpenGridLocation();
-    let pieceBush = pieceTypes[PieceTypeNames.BUSH].createPiece(index, location.gridPos,
+    let pieceTypeName = PieceTypeNames.BUSH;
+    if (Math.random() < 0.25) {
+      pieceTypeName = PieceTypeNames.STONE;
+    }
+    let pieceDestr = pieceTypes[pieceTypeName].createPiece(index, location.gridPos,
     location.xy);
-    map.piecesAnimated[PieceTypeNames.BUSH + ',' + index] = pieceBush;
+    if (pieceDestr.animated == true) {
+      map.piecesAnimated[pieceTypeName + ',' + index] = pieceDestr;
+    }
+    else {
+      map.pieces[pieceTypeName + ',' + index] = pieceDestr;
+    }
   }
 }
 
