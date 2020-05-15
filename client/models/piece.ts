@@ -6,6 +6,9 @@ export default class Piece implements PieceInterface {
   id: number;
   gridPos: [number, number];
   box: Box;
+  collidable: boolean;
+  breakable: boolean;
+  durability: number;
   spriteNames: string[];
 
   constructor(piece: PieceInterface) {
@@ -24,5 +27,8 @@ interface PieceInterface {
   id: number;
   gridPos: [number, number];
   box: Box;
+  collidable: boolean;
+  breakable: boolean;
+  durability: number;
   spriteNames: string[];
 }

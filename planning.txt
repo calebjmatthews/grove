@@ -39,3 +39,9 @@ Player striking:
 Bush positions: [3, 6] = row-4-col-7.png; [4, 7] = row-5-col-8.png;
 Grass position: [0, 5] = row-6-col-1.png;
 Dirt position: [8, 8] = row-9-col-9.png;
+
+Piece behaviors:
+  - Player
+  - Background: does not cause collision
+  - Breakable: causes collision, can be broken (variable for durability, variable for drops)
+  - Obstruction: causes collision, cannot be broken

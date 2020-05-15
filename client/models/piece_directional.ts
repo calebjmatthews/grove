@@ -71,6 +71,9 @@ interface PieceDirectionalInterface {
   id: number;
   gridPos: [number, number];
   box: Box;
+  collidable: boolean;
+  breakable: boolean;
+  durability: number;
   spriteNames: string[];
   animationSteps: AnimationStep[];
   animationCurrrent: number;

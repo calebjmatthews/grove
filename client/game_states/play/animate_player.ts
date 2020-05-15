@@ -8,6 +8,7 @@ import Map from '../../models/map';
 import { map } from '../../instances/map';
 import { sprites } from '../../instances/sprites';
 import { pixiContainers } from '../../instances/pixi_containers';
+import { pieceTypes } from '../../instances/piece_types';
 import { Directions } from '../../enums/directions';
 import { PlayerStatuses } from '../../enums/player_statuses';
 import { PieceTypeNames } from '../../enums/piece_type_names';
@@ -58,6 +59,7 @@ export function actAndAnimatePlayer(pendingBox: Box) {
           break;
         }
         let targetPiece = pMap.getPieceByGridPos(targetPos);
+        let targetType = pieceTypes[targetPiece.typeName];
         if (targetPiece.typeName == PieceTypeNames.BUSH) {
           delete pMap.piecesAnimated[PieceTypeNames.BUSH + ',' + targetPiece.id];
           delete pMap.pieceMap[targetPos[0] + ',' + targetPos[1]];
@@ -78,24 +80,17 @@ export function actAndAnimatePlayer(pendingBox: Box) {
   function createGrass(targetPiece: PieceAnimated, targetPos: [number, number]) {
     let newId = Math.floor(Math.random() * 10000000);
     let newName = PieceTypeNames.GRASS + ',' + newId;
-    let newBox = targetPiece.box;
-    newBox.boxName = newName;
 
     let dSprite = new PIXI.Sprite(PIXI.utils.TextureCache["row-6-col-1.png"]);
-    dSprite.x = newBox.x;
-    dSprite.y = newBox.y;
-    dSprite.width = newBox.width;
-    dSprite.height = newBox.height;
+    dSprite.x = targetPiece.box.x;
+    dSprite.y = targetPiece.box.y;
+    dSprite.width = targetPiece.box.width;
+    dSprite.height = targetPiece.box.height;
     sprites[newName] = dSprite;
     pixiContainers[PieceTypeNames.BACKGROUND].addChild(dSprite);
 
-    return new Piece({
-      typeName: PieceTypeNames.GRASS,
-      id: newId,
-      gridPos: targetPos,
-      box: newBox,
-      spriteNames: ["row-6-col-1.png"]
-    });
+    return pieceTypes[PieceTypeNames.GRASS].createPiece(newId, targetPiece.gridPos,
+      [targetPiece.box.x, targetPiece.box.y]);
   }
 
   let newStepIndex = player.ageAnimationByDirectionAndStatus(directionNew, statusNew);

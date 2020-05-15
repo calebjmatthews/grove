@@ -30,6 +30,9 @@ export default class PieceType implements PieceTypeInterface {
         height: 64,
         boxName: this.name
       }),
+      collidable: this.collidable,
+      breakable: this.breakable,
+      durability: this.durability,
       spriteNames: this.spriteNames
     });
 
