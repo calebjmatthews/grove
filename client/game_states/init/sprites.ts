@@ -76,19 +76,21 @@ export function createDestrSprites() {
 }
 
 export function displaySprites() {
-  let pContainer = pixiContainers[PieceTypeNames.PLAYER];
-  pContainer.x = map.piecePlayer.box.x;
-  pContainer.y = map.piecePlayer.box.y;
-  pContainer.width = map.piecePlayer.box.width;
-  pContainer.height = map.piecePlayer.box.height;
-  map.piecePlayer.spriteNames.map((spriteName, index) => {
-    let dSprite = sprites[spriteName];
-    dSprite.width = map.piecePlayer.box.width;
-    dSprite.height = map.piecePlayer.box.height;
-    if (index == 0) {
-      dSprite.visible = true;
-    }
-  });
+  if (map.piecePlayer) {
+    let pContainer = pixiContainers[PieceTypeNames.PLAYER];
+    pContainer.x = map.piecePlayer.box.x;
+    pContainer.y = map.piecePlayer.box.y;
+    pContainer.width = map.piecePlayer.box.width;
+    pContainer.height = map.piecePlayer.box.height;
+    map.piecePlayer.spriteNames.map((spriteName, index) => {
+      let dSprite = sprites[spriteName];
+      dSprite.width = map.piecePlayer.box.width;
+      dSprite.height = map.piecePlayer.box.height;
+      if (index == 0) {
+        dSprite.visible = true;
+      }
+    });
+  }
 
   Object.keys(map.piecesAnimated).map((pieceName) => {
     let piece = map.piecesAnimated[pieceName];

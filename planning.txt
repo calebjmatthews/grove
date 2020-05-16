@@ -45,3 +45,12 @@ Piece behaviors:
   - Background: does not cause collision
   - Breakable: causes collision, can be broken (variable for durability, variable for drops)
   - Obstruction: causes collision, cannot be broken
+
+Scene editor:
+- New pixi state that handles stage clicks, animates pieces, and allows scrolling based on keyboard input
+- Hook absolutely positioned on bottom of screen to hold piece types
+- Iterate through piece types, creating a DOM container object for each, which holds the title and the graphic
+- OnClick event in the DOM container which sets a selected piece type
+- click event handler in the pixi state that replaces the clicked tile with a new piece
+- Function to export created scenes as a two-dimensional array of indexes
+- Function to import a scene for editing or play

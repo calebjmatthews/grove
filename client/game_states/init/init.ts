@@ -3,9 +3,11 @@ import * as PIXI from 'pixi.js';
 import Box from '../../models/box';
 import Piece from '../../models/piece';
 import play from '../play/play';
+import edit from '../edit/edit';
 import { createSpritesFromTilesheet, createDestrSprites, displaySprites,
   createBGSprites, createPlayerSprites } from './sprites';
-import { createKeyboard } from './keyboard';
+import { createKeyboardPlay } from './keyboard_play';
+import { createKeyboardEdit } from './keyboard_edit';
 import { applyOffset } from '../play/apply_offset';
 import { pixiApp } from '../../instances/pixi_app';
 import { pixiLoader } from '../../instances/pixi_loader';
@@ -37,27 +39,47 @@ export default function init() {
     pixiApp.renderer.resize(window.innerWidth, window.innerHeight);
     document.body.appendChild(pixiApp.view);
 
-    loadTextures()
-    .then(() => {
-      pixiState.s = play;
-    });
+    if (location.pathname.includes('edit')) {
+      loadEditTextures()
+      .then(() => {
+        pixiState.s = edit;
+      });
+    }
+    else {
+      loadPlayTextures()
+      .then(() => {
+        pixiState.s = play;
+      });
+    }
   }
 }
 
-function loadTextures() : Promise<boolean> {
+function loadPlayTextures() : Promise<boolean> {
   return new Promise((resolve) => {
     pixiLoader.add(["player.json", "forestworld.json", "forestparticles.json"])
     .load(() => {
       createPiecePlayer();
       createPiecesDestructable((map.gridWidth * map.gridHeight) / 5);
-      console.log('map');
-      console.log(map);
       createPiecesBackgroundWhereEmpty();
       createBGSprites();
       createDestrSprites();
       createPlayerSprites();
       displaySprites();
-      createKeyboard();
+      createKeyboardPlay();
+      applyOffset(0, true);
+      resolve(true);
+    });
+  })
+}
+
+function loadEditTextures() {
+  return new Promise((resolve) => {
+    pixiLoader.add(["player.json", "forestworld.json", "forestparticles.json"])
+    .load(() => {
+      createPiecesBackgroundWhereEmpty();
+      createBGSprites();
+      displaySprites();
+      createKeyboardEdit();
       applyOffset(0, true);
       resolve(true);
     });

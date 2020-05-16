@@ -4,7 +4,7 @@ import { Directions } from '../../enums/directions';
 import { PlayerStatuses } from '../../enums/player_statuses';
 import { PLAYER_SPEED } from '../../constants';
 
-export function createKeyboard() {
+export function createKeyboardPlay() {
   let player = map.piecePlayer;
   let pBox = map.piecePlayer.box;
 
