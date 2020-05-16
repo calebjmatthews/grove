@@ -74,6 +74,12 @@ export default class Map {
     return [gridX, gridY];
   }
 
+  getGridUpperLeftPos(xy: [number, number]): [number, number] {
+    let gridX = Math.floor((xy[0]) / TILE_SIZE);
+    let gridY = Math.floor((xy[1]) / TILE_SIZE);
+    return [gridX, gridY];
+  }
+
   getPieceByGridPos(gridPos: [number, number]) {
     if (this.pieceMap == null) {
       this.createPieceMap();

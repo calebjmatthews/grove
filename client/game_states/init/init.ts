@@ -9,6 +9,7 @@ import { createSpritesFromTilesheet, createDestrSprites, displaySprites,
 import { createKeyboardPlay } from './keyboard_play';
 import { createKeyboardEdit } from './keyboard_edit';
 import { createPalatte } from '../edit/palatte';
+import { handleCanvasClick } from '../edit/canvas_click';
 import { applyOffset } from '../play/apply_offset';
 import { pixiApp } from '../../instances/pixi_app';
 import { pixiLoader } from '../../instances/pixi_loader';
@@ -83,6 +84,7 @@ function loadEditTextures() {
       createKeyboardEdit();
       applyOffset(0, true);
       createPalatte();
+      handleCanvasClick();
       resolve(true);
     });
   })
