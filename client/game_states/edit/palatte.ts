@@ -3,6 +3,8 @@ import { setPieceTypeSelect } from './piece_type_select';
 
 export function createPalatte() {
   let ele = document.getElementById('foot');
+  let palatte = document.createElement("DIV");
+  palatte.setAttribute("class", "palette");
   Object.keys(pieceTypes).map((pieceTypeName) => {
     let pieceType = pieceTypes[pieceTypeName];
     let div = document.createElement("DIV");
@@ -13,6 +15,7 @@ export function createPalatte() {
     div.addEventListener("click", () => {
       setPieceTypeSelect(pieceType.name);
     });
-    ele.appendChild(div);
-  })
+    palatte.appendChild(div);
+  });
+  ele.appendChild(palatte);
 }
