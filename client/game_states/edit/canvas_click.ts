@@ -13,8 +13,6 @@ export function handleCanvasClick() {
         let gridPos = map.getGridUpperLeftPos([(ev.x - map.offset.x),
           (ev.y - map.offset.y)])
         let selPiece = map.getPieceByGridPos(gridPos);
-        console.log('selPiece click:');
-        console.log(selPiece);
 
         if (selPiece.animated) {
           delete map.piecesAnimated[selPiece.name + ',' + selPiece.id];
