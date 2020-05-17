@@ -9,5 +9,5 @@ export let stone = new PieceType({
   durability: 5,
   animated: false,
   animationSteps: null,
-  spriteNames: ["row-5-col-7.png"]
+  spriteNames: ["row-1-col-6.png"]
 })

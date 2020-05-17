@@ -63,6 +63,7 @@ function loadPlayTextures() : Promise<boolean> {
       createPiecePlayer();
       createPiecesDestructable((map.gridWidth * map.gridHeight) / 5);
       createPiecesBackgroundWhereEmpty();
+      map.createPieceMap();
       createBGSprites();
       createDestrSprites();
       createPlayerSprites();

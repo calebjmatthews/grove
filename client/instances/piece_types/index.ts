@@ -3,26 +3,22 @@ import { PieceTypeNames } from '../../enums/piece_type_names';
 import { grass, dirt } from './background';
 import { bush } from './bush';
 import { stone } from './stone';
+import { tree_nw, tree_sw, tree_ne, tree_se } from './tree';
 
 let pieceTypes: { [typeName: string] : PieceType } = {};
-[grass, dirt, bush, stone]
+[grass, dirt, bush, stone, tree_nw, tree_sw, tree_ne, tree_se]
 .map((pieceType) => {
   pieceTypes[pieceType.name] = pieceType;
 });
 ["row-1-col-1.png",
 "row-2-col-1.png",
-"row-3-col-1.png",
-"row-4-col-1.png",
 "row-5-col-1.png",
-"row-6-col-1.png",
 "row-7-col-1.png",
 "row-8-col-1.png",
 "row-9-col-1.png",
 "row-10-col-1.png",
 "row-1-col-2.png",
 "row-2-col-2.png",
-"row-3-col-2.png",
-"row-4-col-2.png",
 "row-5-col-2.png",
 "row-6-col-2.png",
 "row-7-col-2.png",

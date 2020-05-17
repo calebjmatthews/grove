@@ -63,6 +63,7 @@ export function actAndAnimatePlayer(pendingBox: Box) {
         if (targetPiece.typeName == PieceTypeNames.BUSH) {
           delete pMap.piecesAnimated[PieceTypeNames.BUSH + ',' + targetPiece.id];
           delete pMap.pieceMap[targetPos[0] + ',' + targetPos[1]];
+          delete pMap.collisionMap[targetPos[0] + ',' + targetPos[1]];
           let grassPiece = createGrass(targetPiece, targetPos);
           pMap.pieces[(grassPiece.typeName + ',' + grassPiece.id)] = grassPiece;
           pMap.pieceMap[targetPos[0] + ',' + targetPos[1]] = {mapName: 'pieces',

@@ -18,6 +18,7 @@ export default class Map {
   piecesAnimated: { [pieceName: string] : PieceAnimated } = {};
   pieces: { [pieceName: string] : Piece } = {};
   pieceMap: { [coords: string] : { mapName: string, pieceName: string} } = null;
+  collisionMap: { [coords: string] : { mapName: string, pieceName: string} } = null;
   playEvents: PlayEvent[] = [];
   particleGroups: ParticleGroup[] = [];
 
@@ -81,31 +82,38 @@ export default class Map {
   }
 
   getPieceByGridPos(gridPos: [number, number]) {
-    if (this.pieceMap == null) {
-      this.createPieceMap();
-    }
     let pieceMapObj = this.pieceMap[gridPos[0] + ',' + gridPos[1]];
     return this[pieceMapObj.mapName][pieceMapObj.pieceName];
   }
 
   createPieceMap() {
     this.pieceMap = {};
+    this.collisionMap = {};
     Object.keys(this.piecesAnimated).map((pieceName, index) => {
       let piece = this.piecesAnimated[pieceName];
       this.pieceMap[(piece.gridPos[0] + ',' + piece.gridPos[1])] =
         {mapName: 'piecesAnimated', pieceName: pieceName};
+      if (piece.collidable) {
+        this.collisionMap[(piece.gridPos[0] + ',' + piece.gridPos[1])] =
+          {mapName: 'piecesAnimated', pieceName: pieceName};
+      }
     });
     Object.keys(this.pieces).map((pieceName, index) => {
       let piece = this.pieces[pieceName];
       this.pieceMap[(piece.gridPos[0] + ',' + piece.gridPos[1])] =
         {mapName: 'pieces', pieceName: pieceName};
+      if (piece.collidable) {
+        this.collisionMap[(piece.gridPos[0] + ',' + piece.gridPos[1])] =
+          {mapName: 'pieces', pieceName: pieceName};
+      }
     });
   }
 
   detectCollision(box: Box) : Collision[] {
     let collisions: Collision[] = [];
-    Object.keys(this.piecesAnimated).map((pieceName) => {
-      let tBox = this.piecesAnimated[pieceName].box;
+    Object.keys(this.collisionMap).map((coords) => {
+      let mapObj = this.collisionMap[coords];
+      let tBox = this[mapObj.mapName][mapObj.pieceName].box;
       if (box.x < tBox.x + tBox.width &&
         box.x + box.width > tBox.x &&
         box.y < tBox.y + tBox.height &&
