@@ -3,25 +3,22 @@ import { pieceTypes } from '../../instances/piece_types';
 import { pixiContainers } from '../../instances/pixi_containers';
 import { sprites } from '../../instances/sprites';
 
-const sceneNames = ["../../editing/scene1.json"];
-let scenes = {};
-import("../../editing/scene1.json").then((json) => {
-  scenes["../../editing/scene1.json"] = json;
-});;
+let scenes = [
+  require("../../editing/scene1.json")
+];
 
 export function createMapButtons() {
   let ele = document.getElementById('foot');
   let buttonContainer = document.createElement("DIV");
   buttonContainer.setAttribute("class", "button-container");
 
-  sceneNames.map((sceneName) => {
+  scenes.map((scene, index) => {
     let loadButton = document.createElement("DIV");
-    loadButton.setAttribute("id", sceneName);
+    loadButton.setAttribute("id", "scene" + index);
     loadButton.setAttribute("class", "button");
-    loadButton.appendChild(document.createTextNode('Load ' + sceneName));
+    loadButton.appendChild(document.createTextNode('Load scene ' + index));
     loadButton.addEventListener("click", () => {
       map.destroyAllPieces(pixiContainers, sprites);
-      let scene = scenes[sceneName];
       Object.keys(scene.pieceMap).map((coord) => {
         let mapObj = scene.pieceMap[coord];
         let nameSplit = mapObj.pieceName.split(',');
