@@ -229,4 +229,24 @@ export default class Map {
       containers[PieceTypeNames.BACKGROUND].addChild(newSprite);
     }
   }
+
+  destroyPiece(piece: any,
+    containers: { [pieceName: string] : PIXI.Container },
+    sprites: { [spriteName: string] : PIXI.Sprite }) {
+    if (piece.animated) {
+      delete this.piecesAnimated[piece.typeName + ',' + piece.id];
+      piece.spriteNames.map((spriteName: string) => {
+        let sprite = sprites[spriteName + ',' + piece.id];
+        containers[PieceTypeNames.BACKGROUND].removeChild(sprite);
+        delete sprites[spriteName + ',' + piece.id];
+      });
+    }
+    else {
+      delete this.pieces[piece.name + ',' + piece.id];
+      let sprite = sprites[piece.spriteNames[0] + ',' + piece.id];
+      containers[PieceTypeNames.BACKGROUND].removeChild(sprite);
+      delete sprites[piece.spriteNames[0] + ',' + piece.id];
+    }
+    delete this.pieceMap[piece.gridPos[0] + ',' + piece.gridPos[1]];
+  }
 }
