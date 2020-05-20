@@ -1,5 +1,7 @@
 import { map } from '../../instances/map';
 import { pieceTypes } from '../../instances/piece_types';
+import { pixiContainers } from '../../instances/pixi_containers';
+import { sprites } from '../../instances/sprites';
 
 const sceneNames = ["../../editing/scene1.json"];
 let scenes = {};
@@ -18,10 +20,14 @@ export function createMapButtons() {
     loadButton.setAttribute("class", "button");
     loadButton.appendChild(document.createTextNode('Load ' + sceneName));
     loadButton.addEventListener("click", () => {
-      console.log('scenes');
-      console.log(scenes);
-      console.log('sceneName');
-      console.log(sceneName);
+      map.destroyAllPieces(pixiContainers, sprites);
+      let scene = scenes[sceneName];
+      Object.keys(scene.pieceMap).map((coord) => {
+        let mapObj = scene.pieceMap[coord];
+        let nameSplit = mapObj.pieceName.split(',');
+        map.createAndDisplayPiece(nameSplit[0], coord, nameSplit[1], pieceTypes,
+          pixiContainers, sprites);
+      })
     });
     buttonContainer.appendChild(loadButton);
   })

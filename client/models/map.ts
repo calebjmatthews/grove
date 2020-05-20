@@ -249,4 +249,16 @@ export default class Map {
     }
     delete this.pieceMap[piece.gridPos[0] + ',' + piece.gridPos[1]];
   }
+
+  destroyAllPieces(containers: { [pieceName: string] : PIXI.Container },
+    sprites: { [spriteName: string] : PIXI.Sprite }) {
+    Object.keys(this.pieces).map((pieceName) => {
+      let piece = this.pieces[pieceName];
+      this.destroyPiece(piece, containers, sprites);
+    });
+    Object.keys(this.piecesAnimated).map((pieceName) => {
+      let piece = this.pieces[pieceName];
+      this.destroyPiece(piece, containers, sprites);
+    });
+  }
 }
