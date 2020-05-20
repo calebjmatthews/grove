@@ -7,6 +7,7 @@ import Collision from '../models/collision';
 import Offset from '../models/offset';
 import PlayEvent from '../models/play_event';
 import ParticleGroup from '../models/particle_group';
+import PieceType from '../models/piece_type';
 import { PieceTypeNames } from '../enums/piece_type_names';
 import { TILE_SIZE } from '../constants';
 
@@ -17,8 +18,8 @@ export default class Map {
   piecePlayer: PiecePlayer = null;
   piecesAnimated: { [pieceName: string] : PieceAnimated } = {};
   pieces: { [pieceName: string] : Piece } = {};
-  pieceMap: { [coords: string] : { mapName: string, pieceName: string} } = null;
-  collisionMap: { [coords: string] : { mapName: string, pieceName: string} } = null;
+  pieceMap: { [coords: string] : { mapName: string, pieceName: string} } = {};
+  collisionMap: { [coords: string] : { mapName: string, pieceName: string} } = {};
   playEvents: PlayEvent[] = [];
   particleGroups: ParticleGroup[] = [];
 
@@ -153,5 +154,79 @@ export default class Map {
     this.particleGroups.map((particleGroup) => {
       particleGroup.animate(particleGroup, delta);
     });
+  }
+
+  createAndDisplayPiece(pieceTypeName: string, coord: string, id: number,
+    pieceTypes: { [typeName: string] : PieceType },
+    containers: { [pieceName: string] : PIXI.Container },
+    sprites: { [spriteName: string] : PIXI.Sprite }) {
+    let piece = this.createPiece(pieceTypeName, coord, id, pieceTypes);
+    this.displayPiece(piece, containers, sprites);
+  }
+
+  createPiece(pieceTypeName: string, coord: string, id: number,
+    pieceTypes: { [typeName: string] : PieceType }) {
+    let x = (Math.floor(parseInt(coord.split(',')[0])) * TILE_SIZE);
+    let y = (Math.floor(parseInt(coord.split(',')[1])) * TILE_SIZE);
+    let piece = pieceTypes[pieceTypeName].createPiece(id,
+      [parseInt(coord.split(',')[0]), parseInt(coord.split(',')[1])], [x, y]);
+    if (piece.animated) {
+      this.piecesAnimated[pieceTypeName + ',' + id] = piece;
+      this.pieceMap[(piece.gridPos[0] + ',' + piece.gridPos[1])] =
+        {mapName: 'piecesAnimated', pieceName: (pieceTypeName + ',' + id)};
+      if (piece.collidable) {
+        this.collisionMap[(piece.gridPos[0] + ',' + piece.gridPos[1])] =
+          {mapName: 'piecesAnimated', pieceName: (pieceTypeName + ',' + id)};
+      }
+    }
+    else {
+      this.pieces[pieceTypeName + ',' + id] = piece;
+      this.pieceMap[(piece.gridPos[0] + ',' + piece.gridPos[1])] =
+        {mapName: 'pieces', pieceName: (pieceTypeName + ',' + id)};
+      if (piece.collidable) {
+        this.collisionMap[(piece.gridPos[0] + ',' + piece.gridPos[1])] =
+          {mapName: 'pieces', pieceName: (pieceTypeName + ',' + id)};
+      }
+    }
+    return piece;
+  }
+
+  displayPiece(piece: any, containers: { [pieceName: string] : PIXI.Container },
+    sprites: { [spriteName: string] : PIXI.Sprite }) {
+    if (piece.typeName == PieceTypeNames.PLAYER) {
+      piece.spriteNames.map((spriteName: string, index: number) => {
+        let newSprite = new PIXI.Sprite(PIXI.utils.TextureCache[spriteName]);
+        newSprite.width = piece.box.width;
+        newSprite.height = piece.box.height;
+        if (index != 0) {
+          newSprite.visible = false;
+        }
+        sprites[spriteName] = newSprite;
+        containers[PieceTypeNames.PLAYER].addChild(newSprite);
+      });
+    }
+    else if (piece.animated) {
+      piece.spriteNames.map((spriteName: string, index: number) => {
+        let newSprite = new PIXI.Sprite(PIXI.utils.TextureCache[spriteName]);
+        newSprite.x = piece.box.x;
+        newSprite.y = piece.box.y;
+        newSprite.width = piece.box.width;
+        newSprite.height = piece.box.height;
+        if (index != 0) {
+          newSprite.visible = false;
+        }
+        sprites[spriteName + ',' + piece.id] = newSprite;
+        containers[PieceTypeNames.BACKGROUND].addChild(newSprite);
+      });
+    }
+    else {
+      let newSprite = new PIXI.Sprite(PIXI.utils.TextureCache[piece.spriteNames[0]]);
+      newSprite.x = piece.box.x;
+      newSprite.y = piece.box.y;
+      newSprite.width = piece.box.width;
+      newSprite.height = piece.box.height;
+      sprites[piece.spriteNames[0] + ',' + piece.id] = newSprite;
+      containers[PieceTypeNames.BACKGROUND].addChild(newSprite);
+    }
   }
 }

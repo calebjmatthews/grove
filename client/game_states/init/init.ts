@@ -4,8 +4,7 @@ import Box from '../../models/box';
 import Piece from '../../models/piece';
 import play from '../play/play';
 import edit from '../edit/edit';
-import { createSpritesFromTilesheet, createDestrSprites, displaySprites,
-  createBGSprites, createPlayerSprites } from './sprites';
+import { createBGContainer, createPlayerContainer } from './sprites';
 import { createKeyboardPlay } from './keyboard_play';
 import { createKeyboardEdit } from './keyboard_edit';
 import { createPalatte } from '../edit/palatte';
@@ -19,6 +18,7 @@ import { sprites } from '../../instances/sprites';
 import { pixiState } from '../../instances/pixi_state';
 import { pieceTypes } from '../../instances/piece_types/index';
 import { piecePlayer } from '../../instances/piece_types/player';
+import { pixiContainers } from '../../instances/pixi_containers';
 import { PieceTypeNames } from '../../enums/piece_type_names';
 import { TILE_SIZE } from '../../constants';
 
@@ -61,14 +61,14 @@ function loadPlayTextures() : Promise<boolean> {
   return new Promise((resolve) => {
     pixiLoader.add(["player.json", "forestworld.json", "forestparticles.json"])
     .load(() => {
-      createPiecePlayer();
+      createBGContainer();
+      createPlayerContainer();
       createPiecesDestructable((map.gridWidth * map.gridHeight) / 5);
       createPiecesBackgroundWhereEmpty();
-      map.createPieceMap();
-      createBGSprites();
-      createDestrSprites();
-      createPlayerSprites();
-      displaySprites();
+      createPiecePlayer();
+      // createDestrSprites();
+      // createPlayerSprites();
+      // displaySprites();
       createKeyboardPlay();
       applyOffset(0, true);
       resolve(true);
@@ -80,10 +80,10 @@ function loadEditTextures() {
   return new Promise((resolve) => {
     pixiLoader.add(["player.json", "forestworld.json", "forestparticles.json"])
     .load(() => {
+      createBGContainer();
       createPiecesBackgroundWhereEmpty();
-      map.createPieceMap();
-      createBGSprites();
-      displaySprites();
+      // map.createPieceMap();
+      // displaySprites();
       createKeyboardEdit();
       applyOffset(0, true);
       createMapButtons();
@@ -96,6 +96,7 @@ function loadEditTextures() {
 
 function createPiecePlayer() {
   map.piecePlayer = piecePlayer;
+  map.displayPiece(piecePlayer, pixiContainers, sprites);
 }
 
 function createPiecesDestructable(numDestr: number) {
@@ -105,28 +106,20 @@ function createPiecesDestructable(numDestr: number) {
     if (Math.random() < 0.25) {
       pieceTypeName = PieceTypeNames.STONE;
     }
-    let pieceDestr = pieceTypes[pieceTypeName].createPiece(index, location.gridPos,
-    location.xy);
-    if (pieceDestr.animated == true) {
-      map.piecesAnimated[pieceTypeName + ',' + index] = pieceDestr;
-    }
-    else {
-      map.pieces[pieceTypeName + ',' + index] = pieceDestr;
-    }
+    map.createAndDisplayPiece(pieceTypeName,
+      (location.gridPos[0] + ',' + location.gridPos[1]), index, pieceTypes,
+      pixiContainers, sprites);
   }
 }
 
 export function createPiecesBackgroundWhereEmpty() {
   let openCoords = Object.keys(map.getOpenGridSpaces());
   openCoords.map((coord, index) => {
-    let x = (Math.floor(parseInt(coord.split(',')[0])) * TILE_SIZE);
-    let y = (Math.floor(parseInt(coord.split(',')[1])) * TILE_SIZE);
     let pieceTypeName = PieceTypeNames.GRASS;
     if (Math.random() < 0.25) {
       pieceTypeName = PieceTypeNames.DIRT;
     }
-    let pieceBG: Piece = pieceTypes[pieceTypeName].createPiece(index,
-      [parseInt(coord.split(',')[0]), parseInt(coord.split(',')[1])], [x, y]);
-    map.pieces[pieceBG.typeName + ',' + index] = pieceBG;
+    map.createAndDisplayPiece(pieceTypeName, coord, index, pieceTypes, pixiContainers,
+      sprites);
   });
 }
