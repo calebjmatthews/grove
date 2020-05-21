@@ -14,10 +14,10 @@ let tt = new PieceType({
 });
 
 export let tree_nw = new PT(Object.assign({}, tt, {
-  name: PTN.TREE_NW, spriteNames: ["row-3-col-1.png"] }));
+  name: PTN.TREE_NW, spriteNames: ["tree_nw.png"] }));
 export let tree_sw = new PT(Object.assign({}, tt, {
-  name: PTN.TREE_SW, spriteNames: ["row-4-col-1.png"] }));
+  name: PTN.TREE_SW, spriteNames: ["tree_sw.png"] }));
 export let tree_ne = new PT(Object.assign({}, tt, {
-  name: PTN.TREE_NE, spriteNames: ["row-3-col-2.png"] }));
+  name: PTN.TREE_NE, spriteNames: ["tree_ne.png"] }));
 export let tree_se = new PT(Object.assign({}, tt, {
-  name: PTN.TREE_SE, spriteNames: ["row-4-col-2.png"] }));
+  name: PTN.TREE_SE, spriteNames: ["tree_se.png"] }));

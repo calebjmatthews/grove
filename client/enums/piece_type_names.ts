@@ -6,7 +6,11 @@ export enum PieceTypeNames {
   TREE_NE = 'Tree (NE)',
   TREE_SE = 'Tree (SE)',
   STONE = 'Stone',
+  BACKGROUND = 'Background',
   GRASS = 'Grass',
   DIRT = 'Dirt (small)',
-  BACKGROUND = 'Background'
+  CIRCLE_GLYPH_NE = 'Circle glyph (NE)',
+  CIRCLE_GLYPH_SE = 'Circle glyph (SE)',
+  CIRCLE_GLYPH_SW = 'Circle glyph (SW)',
+  CIRCLE_GLYPH_NW = 'Circle glyph (NW)',
 }

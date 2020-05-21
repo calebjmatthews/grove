@@ -14,6 +14,6 @@ let bt = new PieceType({
 });
 
 export let grass = new PT(Object.assign({}, bt, {
-  name: PTN.GRASS, spriteNames: ["row-6-col-1.png"] }));
+  name: PTN.GRASS, spriteNames: ["grass.png"] }));
 export let dirt = new PT(Object.assign({}, bt, {
-  name: PTN.DIRT, spriteNames: ["row-9-col-9.png"] }));
+  name: PTN.DIRT, spriteNames: ["dirt_sm.png"] }));
