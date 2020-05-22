@@ -21,5 +21,10 @@ export function createBGContainer() {
   bgContainer.height = window.innerHeight * 2;
   bgContainer.x = -(window.innerWidth/2);
   bgContainer.y = -(window.innerHeight/2);
+  let bgTilingSprite = new PIXI.TilingSprite(PIXI.utils.TextureCache['grass.png']);
+  bgTilingSprite.width = (window.innerWidth * 2) / 4;
+  bgTilingSprite.height = (window.innerHeight * 2) / 4;
+  bgTilingSprite.scale = new PIXI.Point(4, 4);
+  bgContainer.addChild(bgTilingSprite);
   pixiContainers[PieceTypeNames.BACKGROUND] = bgContainer;
 }

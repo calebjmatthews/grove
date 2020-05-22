@@ -66,9 +66,6 @@ function loadPlayTextures() : Promise<boolean> {
       createPiecesDestructable((map.gridWidth * map.gridHeight) / 5);
       createPiecesBackgroundWhereEmpty();
       createPiecePlayer();
-      // createDestrSprites();
-      // createPlayerSprites();
-      // displaySprites();
       createKeyboardPlay();
       applyOffset(0, true);
       resolve(true);
@@ -82,8 +79,6 @@ function loadEditTextures() {
     .load(() => {
       createBGContainer();
       createPiecesBackgroundWhereEmpty();
-      // map.createPieceMap();
-      // displaySprites();
       createKeyboardEdit();
       applyOffset(0, true);
       createMapButtons();
@@ -115,11 +110,9 @@ function createPiecesDestructable(numDestr: number) {
 export function createPiecesBackgroundWhereEmpty() {
   let openCoords = Object.keys(map.getOpenGridSpaces());
   openCoords.map((coord, index) => {
-    let pieceTypeName = PieceTypeNames.GRASS;
     if (Math.random() < 0.25) {
-      pieceTypeName = PieceTypeNames.DIRT;
+      map.createAndDisplayPiece(PieceTypeNames.DIRT, coord, index, pieceTypes,
+        pixiContainers, sprites);
     }
-    map.createAndDisplayPiece(pieceTypeName, coord, index, pieceTypes, pixiContainers,
-      sprites);
   });
 }

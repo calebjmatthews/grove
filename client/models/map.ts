@@ -41,8 +41,9 @@ export default class Map {
 
   getOpenGridSpaces() {
     let gridSpaces = this.getAllGridSpaces();
-    Object.keys(this.piecesAnimated).map((pieceName) => {
-      let piece = this.piecesAnimated[pieceName];
+    Object.keys(this.collisionMap).map((coord) => {
+      let mapObj = this.collisionMap[coord];
+      let piece = this[mapObj.mapName][mapObj.pieceName];
       let coords = (Math.floor((piece.box.x + (piece.box.width / 2)) / TILE_SIZE)
         + ',' + Math.floor((piece.box.y + (piece.box.height / 2)) / TILE_SIZE));
       gridSpaces[coords] = piece.typeName;
