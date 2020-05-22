@@ -85,7 +85,12 @@ export default class Map {
 
   getPieceByGridPos(gridPos: [number, number]) {
     let pieceMapObj = this.pieceMap[gridPos[0] + ',' + gridPos[1]];
-    return this[pieceMapObj.mapName][pieceMapObj.pieceName];
+    if (pieceMapObj) {
+      return this[pieceMapObj.mapName][pieceMapObj.pieceName];
+    }
+    else {
+      return null;
+    }
   }
 
   createPieceMap() {
