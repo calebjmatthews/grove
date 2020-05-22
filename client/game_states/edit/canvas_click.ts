@@ -13,8 +13,9 @@ export function handleCanvasClick() {
         let gridPos = map.getGridUpperLeftPos([(ev.x - map.offset.x),
           (ev.y - map.offset.y)])
         let selPiece = map.getPieceByGridPos(gridPos);
-
-        map.destroyPiece(selPiece, pixiContainers, sprites);
+        if (selPiece) {
+          map.destroyPiece(selPiece, pixiContainers, sprites);
+        }
 
         let newId = Math.floor(Math.random() * 10000000);
         map.createAndDisplayPiece(pieceTypeNameSel, (gridPos[0] + ',' + gridPos[1]),
