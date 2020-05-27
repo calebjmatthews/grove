@@ -253,6 +253,9 @@ export default class Map {
       containers[PieceTypeNames.BACKGROUND].removeChild(sprite);
       delete sprites[piece.spriteNames[0] + ',' + piece.id];
     }
+    if (piece.collidable) {
+      delete this.collisionMap[piece.gridPos[0] + ',' + piece.gridPos[1]];
+    }
     delete this.pieceMap[piece.gridPos[0] + ',' + piece.gridPos[1]];
   }
 

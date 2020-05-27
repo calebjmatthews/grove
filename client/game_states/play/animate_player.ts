@@ -59,39 +59,20 @@ export function actAndAnimatePlayer(pendingBox: Box) {
           break;
         }
         let targetPiece = pMap.getPieceByGridPos(targetPos);
-        let targetType = pieceTypes[targetPiece.typeName];
-        if (targetPiece.typeName == PieceTypeNames.BUSH) {
-          delete pMap.piecesAnimated[PieceTypeNames.BUSH + ',' + targetPiece.id];
-          delete pMap.pieceMap[targetPos[0] + ',' + targetPos[1]];
-          delete pMap.collisionMap[targetPos[0] + ',' + targetPos[1]];
-          let grassPiece = createGrass(targetPiece, targetPos);
-          pMap.pieces[(grassPiece.typeName + ',' + grassPiece.id)] = grassPiece;
-          pMap.pieceMap[targetPos[0] + ',' + targetPos[1]] = {mapName: 'pieces',
-            pieceName: (grassPiece.typeName + ',' + grassPiece.id)};
-          let particleGroup = rubbleParticlesCreate(10,
-            [(targetPiece.box.x + targetPiece.box.width/2),
-              (targetPiece.box.y + targetPiece.box.height/2)]);
-          pMap.particleGroups.push(particleGroup);
+        if (targetPiece) {
+          let targetType = pieceTypes[targetPiece.typeName];
+          if (targetPiece.typeName == PieceTypeNames.BUSH) {
+            map.destroyPiece(targetPiece, pixiContainers, sprites);
+            let particleGroup = rubbleParticlesCreate(10,
+              [(targetPiece.box.x + targetPiece.box.width/2),
+                (targetPiece.box.y + targetPiece.box.height/2)]);
+            pMap.particleGroups.push(particleGroup);
+          }
         }
         player.statusPending = PlayerStatuses.NORMAL;
         return pMap;
       }, (24-1)));
     }
-  }
-  function createGrass(targetPiece: PieceAnimated, targetPos: [number, number]) {
-    let newId = Math.floor(Math.random() * 10000000);
-    let newName = PieceTypeNames.GRASS + ',' + newId;
-
-    let dSprite = new PIXI.Sprite(PIXI.utils.TextureCache["row-6-col-1.png"]);
-    dSprite.x = targetPiece.box.x;
-    dSprite.y = targetPiece.box.y;
-    dSprite.width = targetPiece.box.width;
-    dSprite.height = targetPiece.box.height;
-    sprites[newName] = dSprite;
-    pixiContainers[PieceTypeNames.BACKGROUND].addChild(dSprite);
-
-    return pieceTypes[PieceTypeNames.GRASS].createPiece(newId, targetPiece.gridPos,
-      [targetPiece.box.x, targetPiece.box.y]);
   }
 
   let newStepIndex = player.ageAnimationByDirectionAndStatus(directionNew, statusNew);
