@@ -4,7 +4,8 @@ import { pixiContainers } from '../../instances/pixi_containers';
 import { sprites } from '../../instances/sprites';
 
 let scenes = [
-  require("../../editing/scene1.json")
+  require("../../editing/scene1.json"),
+  require("../../editing/scene2.json")
 ];
 
 export function createMapButtons() {
@@ -14,9 +15,9 @@ export function createMapButtons() {
 
   scenes.map((scene, index) => {
     let loadButton = document.createElement("DIV");
-    loadButton.setAttribute("id", "scene" + index);
+    loadButton.setAttribute("id", "scene" + (index+1));
     loadButton.setAttribute("class", "button");
-    loadButton.appendChild(document.createTextNode('Load scene ' + index));
+    loadButton.appendChild(document.createTextNode('Load scene ' + (index+1)));
     loadButton.addEventListener("click", () => {
       map.destroyAllPieces(pixiContainers, sprites);
       Object.keys(scene.pieceMap).map((coord) => {

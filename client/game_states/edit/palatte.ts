@@ -1,12 +1,21 @@
 import { pieceTypes } from '../../instances/piece_types';
 import { setPieceTypeSelect } from './piece_type_select';
 
-
-
 export function createPalatte() {
   let ele = document.getElementById('foot');
   let palatte = document.createElement("DIV");
   palatte.setAttribute("class", "palette");
+
+  let div = document.createElement("DIV");
+  div.setAttribute("id", 'Delete');
+  div.setAttribute("class", "palette-item");
+  let img = document.createElement("IMG");
+  div.appendChild(document.createTextNode('Delete'));
+  div.addEventListener("click", () => {
+    setPieceTypeSelect('Delete');
+  });
+  palatte.appendChild(div);
+
   Object.keys(pieceTypes).map((pieceTypeName) => {
     let pieceType = pieceTypes[pieceTypeName];
     let div = document.createElement("DIV");

@@ -78,7 +78,6 @@ function loadEditTextures() {
     pixiLoader.add(["player.json", "forestworld.json", "forestparticles.json"])
     .load(() => {
       createBGContainer();
-      createPiecesBackgroundWhereEmpty();
       createKeyboardEdit();
       applyOffset(0, true);
       createMapButtons();
