@@ -99,7 +99,7 @@ function createPiecesDestructable(numDestr: number) {
     let location = map.getOpenGridLocation();
     let pieceTypeName = PieceTypeNames.BUSH;
     if (Math.random() < 0.25) {
-      pieceTypeName = PieceTypeNames.STONE;
+      pieceTypeName = PieceTypeNames.STONE_SLATE_M;
     }
     map.createAndDisplayPiece(pieceTypeName,
       (location.gridPos[0] + ',' + location.gridPos[1]), index, pieceTypes,
