@@ -2,13 +2,14 @@ import * as PIXI from 'pixi.js';
 
 import Box from '../../models/box';
 import Piece from '../../models/piece';
-import play from '../play/play';
 import edit from '../edit/edit';
+import scene_select from '../scene_select/scene_select';
 import { createBGContainer, createPlayerContainer } from './sprites';
 import { createKeyboardPlay } from './keyboard_play';
 import { createKeyboardEdit } from './keyboard_edit';
 import { createPalatte } from '../edit/palatte';
 import { createMapButtons } from '../edit/map_buttons';
+import { createSceneButtons } from '../scene_select/scene_buttons';
 import { handleCanvasClick } from '../edit/canvas_click';
 import { applyOffset } from '../play/apply_offset';
 import { pixiApp } from '../../instances/pixi_app';
@@ -51,7 +52,7 @@ export default function init() {
     else {
       loadPlayTextures()
       .then(() => {
-        pixiState.s = play;
+        pixiState.s = scene_select;
       });
     }
   }
@@ -67,6 +68,7 @@ function loadPlayTextures() : Promise<boolean> {
       createPiecesBackgroundWhereEmpty();
       createPiecePlayer();
       createKeyboardPlay();
+      createSceneButtons();
       applyOffset(0, true);
       resolve(true);
     });

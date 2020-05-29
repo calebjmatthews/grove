@@ -266,7 +266,7 @@ export default class Map {
       this.destroyPiece(piece, containers, sprites);
     });
     Object.keys(this.piecesAnimated).map((pieceName) => {
-      let piece = this.pieces[pieceName];
+      let piece = this.piecesAnimated[pieceName];
       this.destroyPiece(piece, containers, sprites);
     });
   }
