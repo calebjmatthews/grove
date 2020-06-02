@@ -54,3 +54,10 @@ Scene editor:
 - click event handler in the pixi state that replaces the clicked tile with a new piece
 - Function to export created scenes as a two-dimensional array of indexes
 - Function to import a scene for editing or play
+
+Table of relationships, table of  table of payouts, table of payout requests
+Admin facing view of relationships, admin facing view of payout requests, photographer facing view of claimed clients can claim
+
+Drawing large maps:
+- Perform check every time enters a new grid space
+- Only make visible the sprites that will be displayed in the viewport

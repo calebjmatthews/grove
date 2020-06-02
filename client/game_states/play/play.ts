@@ -10,7 +10,7 @@ import { sprites } from '../../instances/sprites';
 export default function play(delta: number) {
   let pendingBox = movePlayerPending(delta);
   actAndAnimatePlayer(pendingBox);
-  animate();
+  // animate();
   determineOffset(window.innerWidth, window.innerHeight);
   applyOffset(delta);
   map.agePlayEvents();

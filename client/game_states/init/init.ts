@@ -70,6 +70,7 @@ function loadPlayTextures() : Promise<boolean> {
       createKeyboardPlay();
       createSceneButtons();
       applyOffset(0, true);
+      map.showViewportTiles(sprites);
       resolve(true);
     });
   })

@@ -218,9 +218,7 @@ export default class Map {
         newSprite.y = piece.box.y;
         newSprite.width = piece.box.width;
         newSprite.height = piece.box.height;
-        if (index != 0) {
-          newSprite.visible = false;
-        }
+        newSprite.visible = false;
         sprites[spriteName + ',' + piece.id] = newSprite;
         containers[PieceTypeNames.BACKGROUND].addChild(newSprite);
       });
@@ -231,8 +229,44 @@ export default class Map {
       newSprite.y = piece.box.y;
       newSprite.width = piece.box.width;
       newSprite.height = piece.box.height;
+      newSprite.visible = false;
       sprites[piece.spriteNames[0] + ',' + piece.id] = newSprite;
       containers[PieceTypeNames.BACKGROUND].addChild(newSprite);
+    }
+  }
+
+  showViewportTiles(sprites: { [spriteName: string] : PIXI.Sprite }) {
+    let uBound = Math.floor(-this.offset.y / TILE_SIZE);
+    let dBound = Math.floor((-this.offset.y + window.innerHeight) / TILE_SIZE) + 1;
+    let lBound = Math.floor(-this.offset.x / TILE_SIZE);
+    let rBound = Math.floor((-this.offset.x + window.innerWidth) / TILE_SIZE) + 1;
+    for (let col = lBound; col < rBound; col++) {
+      for (let row = uBound; row < dBound; row++) {
+        let piece = this.getPieceByGridPos([col, row]);
+        if (piece) {
+          sprites[piece.spriteNames[0] + ',' + piece.id].visible = true;
+        }
+      }
+    }
+  }
+
+  toggleRowHide(row: number, colStart: number, colEnd: number, show: boolean,
+    sprites: { [spriteName: string] : PIXI.Sprite }) {
+    for (let col = colStart; col < colEnd; col++) {
+      let piece = this.getPieceByGridPos([col, row]);
+      if (piece) {
+        sprites[piece.spriteNames[0] + ',' + piece.id].visible = show;
+      }
+    }
+  }
+
+  toggleColHide(col: number, rowStart: number, rowEnd: number, show: boolean,
+    sprites: { [spriteName: string] : PIXI.Sprite }) {
+    for (let row = rowStart; row < rowEnd; row++) {
+      let piece = this.getPieceByGridPos([col, row]);
+      if (piece) {
+        sprites[piece.spriteNames[0] + ',' + piece.id].visible = show;
+      }
     }
   }
 
