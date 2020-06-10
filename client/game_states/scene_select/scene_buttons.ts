@@ -25,10 +25,9 @@ export function createSceneButtons() {
       Object.keys(scene.pieceMap).map((coord) => {
         let mapObj = scene.pieceMap[coord];
         let nameSplit = mapObj.pieceName.split(',');
-        map.createAndDisplayPiece(nameSplit[0], coord, nameSplit[1], pieceTypes,
-          pixiContainers, sprites);
+        map.createPiece(nameSplit[0], coord, nameSplit[1], pieceTypes);
       });
-      map.showViewportTiles(sprites);
+      map.showViewportTiles(pixiContainers, sprites);
       pixiState.s = play;
     });
     buttonContainer.appendChild(loadButton);

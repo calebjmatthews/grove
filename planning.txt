@@ -60,4 +60,6 @@ Admin facing view of relationships, admin facing view of payout requests, photog
 
 Drawing large maps:
 - Perform check every time enters a new grid space
-- Only make visible the sprites that will be displayed in the viewport
+- Find the new row/column about to be introduced to the viewport and the old row/column that has exited by calculating using the offset, screen size, and tile size
+- Show/hide them respectively
+- If necessary, remove the sprites that leave and create the ones that enter

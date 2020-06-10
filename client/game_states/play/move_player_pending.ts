@@ -1,5 +1,6 @@
 import Box from '../../models/box';
 import { map } from '../../instances/map';
+import { pixiContainers } from '../../instances/pixi_containers';
 import { sprites } from '../../instances/sprites';
 import { Directions } from '../../enums/directions';
 import { PlayerStatuses } from '../../enums/player_statuses';
@@ -44,16 +45,16 @@ export function movePlayerPending(delta: number) {
     // Hide leftmost col, show rightmost col
     if (oldGridPos[0] < newGridPos[0]) {
       let hideCol = Math.floor(-map.offset.x / TILE_SIZE)-1;
-      map.toggleColHide(hideCol, uBound, dBound, false, sprites);
+      map.toggleColHide(hideCol, uBound, dBound, false, pixiContainers, sprites);
       let showCol = Math.floor((-map.offset.x + window.innerWidth) / TILE_SIZE)+1;
-      map.toggleColHide(showCol, uBound, dBound, true, sprites);
+      map.toggleColHide(showCol, uBound, dBound, true, pixiContainers, sprites);
     }
     // Hide rightmost col, show leftmost col
     else {
       let hideCol = Math.floor((-map.offset.x + window.innerWidth) / TILE_SIZE)+1;
-      map.toggleColHide(hideCol, uBound, dBound, false, sprites);
+      map.toggleColHide(hideCol, uBound, dBound, false, pixiContainers, sprites);
       let showCol = Math.floor(-map.offset.x / TILE_SIZE)-1;
-      map.toggleColHide(showCol, uBound, dBound, true, sprites);
+      map.toggleColHide(showCol, uBound, dBound, true, pixiContainers, sprites);
     }
   }
   if (oldGridPos[1] != newGridPos[1]) {
@@ -62,16 +63,16 @@ export function movePlayerPending(delta: number) {
     // Hide top row, show bottom row
     if (oldGridPos[1] < newGridPos[1]) {
       let hideRow = Math.floor(-map.offset.y / TILE_SIZE)-1;
-      map.toggleRowHide(hideRow, lBound, rBound, false, sprites);
+      map.toggleRowHide(hideRow, lBound, rBound, false, pixiContainers, sprites);
       let showRow = Math.floor((-map.offset.y + window.innerHeight) / TILE_SIZE)+1;
-      map.toggleRowHide(showRow, lBound, rBound, true, sprites);
+      map.toggleRowHide(showRow, lBound, rBound, true, pixiContainers, sprites);
     }
     // Hide bottom row, show top row
     else {
       let hideRow = Math.floor((-map.offset.y + window.innerHeight) / TILE_SIZE)+1;
-      map.toggleRowHide(hideRow, lBound, rBound, false, sprites);
+      map.toggleRowHide(hideRow, lBound, rBound, false, pixiContainers, sprites);
       let showRow = Math.floor(-map.offset.y / TILE_SIZE)-1;
-      map.toggleRowHide(showRow, lBound, rBound, true, sprites);
+      map.toggleRowHide(showRow, lBound, rBound, true, pixiContainers, sprites);
     }
   }
 

@@ -64,13 +64,13 @@ function loadPlayTextures() : Promise<boolean> {
     .load(() => {
       createBGContainer();
       createPlayerContainer();
-      createPiecesDestructable((map.gridWidth * map.gridHeight) / 5);
-      createPiecesBackgroundWhereEmpty();
+      // createPiecesDestructable((map.gridWidth * map.gridHeight) / 5);
+      // createPiecesBackgroundWhereEmpty();
       createPiecePlayer();
       createKeyboardPlay();
       createSceneButtons();
       applyOffset(0, true);
-      map.showViewportTiles(sprites);
+      map.showViewportTiles(pixiContainers, sprites);
       resolve(true);
     });
   })

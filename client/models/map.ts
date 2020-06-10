@@ -218,7 +218,9 @@ export default class Map {
         newSprite.y = piece.box.y;
         newSprite.width = piece.box.width;
         newSprite.height = piece.box.height;
-        newSprite.visible = false;
+        if (index != 0) {
+          newSprite.visible = false;
+        }
         sprites[spriteName + ',' + piece.id] = newSprite;
         containers[PieceTypeNames.BACKGROUND].addChild(newSprite);
       });
@@ -229,13 +231,29 @@ export default class Map {
       newSprite.y = piece.box.y;
       newSprite.width = piece.box.width;
       newSprite.height = piece.box.height;
-      newSprite.visible = false;
       sprites[piece.spriteNames[0] + ',' + piece.id] = newSprite;
       containers[PieceTypeNames.BACKGROUND].addChild(newSprite);
     }
   }
 
-  showViewportTiles(sprites: { [spriteName: string] : PIXI.Sprite }) {
+  hidePiece(piece: any, containers: { [pieceName: string] : PIXI.Container },
+    sprites: { [spriteName: string] : PIXI.Sprite }) {
+      if (piece.animated) {
+        piece.spriteNames.map((spriteName: string, index: number) => {
+          delete sprites[spriteName + ',' + piece.id];
+          containers[PieceTypeNames.BACKGROUND]
+            .removeChild(sprites[spriteName + ',' + piece.id]);
+        });
+      }
+      else {
+        delete sprites[piece.spriteNames[0] + ',' + piece.id];
+        containers[PieceTypeNames.BACKGROUND]
+          .removeChild(sprites[piece.spriteNames[0] + ',' + piece.id]);
+      }
+  }
+
+  showViewportTiles(containers: { [pieceName: string] : PIXI.Container },
+    sprites: { [spriteName: string] : PIXI.Sprite }) {
     let uBound = Math.floor(-this.offset.y / TILE_SIZE);
     let dBound = Math.floor((-this.offset.y + window.innerHeight) / TILE_SIZE) + 1;
     let lBound = Math.floor(-this.offset.x / TILE_SIZE);
@@ -244,28 +262,30 @@ export default class Map {
       for (let row = uBound; row < dBound; row++) {
         let piece = this.getPieceByGridPos([col, row]);
         if (piece) {
-          sprites[piece.spriteNames[0] + ',' + piece.id].visible = true;
+          this.displayPiece(piece, containers, sprites);
         }
       }
     }
   }
 
   toggleRowHide(row: number, colStart: number, colEnd: number, show: boolean,
+    containers: { [pieceName: string] : PIXI.Container },
     sprites: { [spriteName: string] : PIXI.Sprite }) {
     for (let col = colStart; col < colEnd; col++) {
       let piece = this.getPieceByGridPos([col, row]);
       if (piece) {
-        sprites[piece.spriteNames[0] + ',' + piece.id].visible = show;
+        this.displayPiece(piece, containers, sprites);
       }
     }
   }
 
   toggleColHide(col: number, rowStart: number, rowEnd: number, show: boolean,
+    containers: { [pieceName: string] : PIXI.Container },
     sprites: { [spriteName: string] : PIXI.Sprite }) {
     for (let row = rowStart; row < rowEnd; row++) {
       let piece = this.getPieceByGridPos([col, row]);
       if (piece) {
-        sprites[piece.spriteNames[0] + ',' + piece.id].visible = show;
+        this.displayPiece(piece, containers, sprites);
       }
     }
   }
