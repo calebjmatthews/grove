@@ -164,7 +164,11 @@ export default class Map {
 
   createAndDisplayPiece(pieceTypeName: string, coord: string, id: number,
     pieceTypes: { [typeName: string] : PieceType },
-    containers: { [pieceName: string] : PIXI.Container },
+    containers: {
+      main: PIXI.Container,
+      tilemap: PIXI.tilemap.CompositeRectTileLayer;
+      player: PIXI.Container;
+    },
     sprites: { [spriteName: string] : PIXI.Sprite }) {
     let piece = this.createPiece(pieceTypeName, coord, id, pieceTypes);
     this.displayPiece(piece, containers, sprites);
@@ -197,115 +201,55 @@ export default class Map {
     return piece;
   }
 
-  displayPiece(piece: any, containers: { [pieceName: string] : PIXI.Container },
+  displayPiece(piece: any,
+    containers: {
+      main: PIXI.Container,
+      tilemap: PIXI.tilemap.CompositeRectTileLayer;
+      player: PIXI.Container;
+    },
     sprites: { [spriteName: string] : PIXI.Sprite }) {
     if (piece.typeName == PieceTypeNames.PLAYER) {
       piece.spriteNames.map((spriteName: string, index: number) => {
         let newSprite = new PIXI.Sprite(PIXI.utils.TextureCache[spriteName]);
-        newSprite.width = piece.box.width;
-        newSprite.height = piece.box.height;
         if (index != 0) {
           newSprite.visible = false;
         }
         sprites[spriteName] = newSprite;
-        containers[PieceTypeNames.PLAYER].addChild(newSprite);
-      });
-    }
-    else if (piece.animated) {
-      piece.spriteNames.map((spriteName: string, index: number) => {
-        let newSprite = new PIXI.Sprite(PIXI.utils.TextureCache[spriteName]);
-        newSprite.x = piece.box.x;
-        newSprite.y = piece.box.y;
-        newSprite.width = piece.box.width;
-        newSprite.height = piece.box.height;
-        if (index != 0) {
-          newSprite.visible = false;
-        }
-        sprites[spriteName + ',' + piece.id] = newSprite;
-        containers[PieceTypeNames.BACKGROUND].addChild(newSprite);
+        containers.player.addChild(newSprite);
       });
     }
     else {
-      let newSprite = new PIXI.Sprite(PIXI.utils.TextureCache[piece.spriteNames[0]]);
-      newSprite.x = piece.box.x;
-      newSprite.y = piece.box.y;
-      newSprite.width = piece.box.width;
-      newSprite.height = piece.box.height;
-      sprites[piece.spriteNames[0] + ',' + piece.id] = newSprite;
-      containers[PieceTypeNames.BACKGROUND].addChild(newSprite);
+      console.log("piece.box.x/3 + ',' + piece.box.y/3");
+      console.log(piece.box.x/3 + ',' + piece.box.y/3);
+      containers.tilemap.addFrame(PIXI.utils.TextureCache[piece.spriteNames[0]],
+        (piece.box.x/3), (piece.box.y/3));
     }
   }
 
-  hidePiece(piece: any, containers: { [pieceName: string] : PIXI.Container },
+  hidePiece(piece: any,
+    containers: {
+      main: PIXI.Container,
+      tilemap: PIXI.tilemap.CompositeRectTileLayer;
+      player: PIXI.Container;
+    },
     sprites: { [spriteName: string] : PIXI.Sprite }) {
-      if (piece.animated) {
-        piece.spriteNames.map((spriteName: string, index: number) => {
-          delete sprites[spriteName + ',' + piece.id];
-          containers[PieceTypeNames.BACKGROUND]
-            .removeChild(sprites[spriteName + ',' + piece.id]);
-        });
-      }
-      else {
-        delete sprites[piece.spriteNames[0] + ',' + piece.id];
-        containers[PieceTypeNames.BACKGROUND]
-          .removeChild(sprites[piece.spriteNames[0] + ',' + piece.id]);
-      }
-  }
-
-  showViewportTiles(containers: { [pieceName: string] : PIXI.Container },
-    sprites: { [spriteName: string] : PIXI.Sprite }) {
-    let uBound = Math.floor(-this.offset.y / TILE_SIZE);
-    let dBound = Math.floor((-this.offset.y + window.innerHeight) / TILE_SIZE) + 1;
-    let lBound = Math.floor(-this.offset.x / TILE_SIZE);
-    let rBound = Math.floor((-this.offset.x + window.innerWidth) / TILE_SIZE) + 1;
-    for (let col = lBound; col < rBound; col++) {
-      for (let row = uBound; row < dBound; row++) {
-        let piece = this.getPieceByGridPos([col, row]);
-        if (piece) {
-          this.displayPiece(piece, containers, sprites);
-        }
-      }
-    }
-  }
-
-  toggleRowHide(row: number, colStart: number, colEnd: number, show: boolean,
-    containers: { [pieceName: string] : PIXI.Container },
-    sprites: { [spriteName: string] : PIXI.Sprite }) {
-    for (let col = colStart; col < colEnd; col++) {
-      let piece = this.getPieceByGridPos([col, row]);
-      if (piece) {
-        this.displayPiece(piece, containers, sprites);
-      }
-    }
-  }
-
-  toggleColHide(col: number, rowStart: number, rowEnd: number, show: boolean,
-    containers: { [pieceName: string] : PIXI.Container },
-    sprites: { [spriteName: string] : PIXI.Sprite }) {
-    for (let row = rowStart; row < rowEnd; row++) {
-      let piece = this.getPieceByGridPos([col, row]);
-      if (piece) {
-        this.displayPiece(piece, containers, sprites);
-      }
-    }
+    containers.tilemap.addFrame(PIXI.utils.TextureCache["grass.png"],
+      piece.box.x, piece.box.y);
   }
 
   destroyPiece(piece: any,
-    containers: { [pieceName: string] : PIXI.Container },
+    containers: {
+      main: PIXI.Container,
+      tilemap: PIXI.tilemap.CompositeRectTileLayer;
+      player: PIXI.Container;
+    },
     sprites: { [spriteName: string] : PIXI.Sprite }) {
+    this.hidePiece(piece, containers, sprites);
     if (piece.animated) {
-      delete this.piecesAnimated[piece.typeName + ',' + piece.id];
-      piece.spriteNames.map((spriteName: string) => {
-        let sprite = sprites[spriteName + ',' + piece.id];
-        containers[PieceTypeNames.BACKGROUND].removeChild(sprite);
-        delete sprites[spriteName + ',' + piece.id];
-      });
+      delete this.piecesAnimated[piece.name + ',' + piece.id];
     }
     else {
       delete this.pieces[piece.name + ',' + piece.id];
-      let sprite = sprites[piece.spriteNames[0] + ',' + piece.id];
-      containers[PieceTypeNames.BACKGROUND].removeChild(sprite);
-      delete sprites[piece.spriteNames[0] + ',' + piece.id];
     }
     if (piece.collidable) {
       delete this.collisionMap[piece.gridPos[0] + ',' + piece.gridPos[1]];
@@ -313,7 +257,11 @@ export default class Map {
     delete this.pieceMap[piece.gridPos[0] + ',' + piece.gridPos[1]];
   }
 
-  destroyAllPieces(containers: { [pieceName: string] : PIXI.Container },
+  destroyAllPieces(containers: {
+      main: PIXI.Container,
+      tilemap: PIXI.tilemap.CompositeRectTileLayer;
+      player: PIXI.Container;
+    },
     sprites: { [spriteName: string] : PIXI.Sprite }) {
     Object.keys(this.pieces).map((pieceName) => {
       let piece = this.pieces[pieceName];

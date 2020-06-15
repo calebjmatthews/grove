@@ -5,6 +5,7 @@ const AS = AnimationStep;
 import { Directions } from '../../enums/directions';
 import { PieceTypeNames } from '../../enums/piece_type_names';
 import { PlayerStatuses } from '../../enums/player_statuses';
+import { TILE_SIZE } from '../../constants';
 
 let directionAnimMap: { [key: string] : AnimationStep[] } = {};
 directionAnimMap[Directions.DOWN] = [
@@ -43,12 +44,12 @@ let piecePlayer = new PiecePlayer({
   id: 0,
   gridPos: [null, null],
   box: new Box({
-    x: ((window.innerWidth) - 32),
+    x: ((window.innerWidth) - TILE_SIZE/2),
     vx: 0,
-    y: ((window.innerHeight) - 32),
+    y: ((window.innerHeight) - TILE_SIZE/2),
     vy: 0,
-    width: 64,
-    height: 64,
+    width: TILE_SIZE,
+    height: TILE_SIZE,
     boxName: PieceTypeNames.PLAYER
   }),
   collidable: true,

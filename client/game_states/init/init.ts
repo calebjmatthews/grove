@@ -1,10 +1,13 @@
 import * as PIXI from 'pixi.js';
+import 'pixi-tilemap';
 
 import Box from '../../models/box';
 import Piece from '../../models/piece';
 import edit from '../edit/edit';
+import play from '../play/play';
 import scene_select from '../scene_select/scene_select';
-import { createBGContainer, createPlayerContainer } from './sprites';
+import { createMainContainer, createPlayerContainer, createTilemap }
+  from './containers';
 import { createKeyboardPlay } from './keyboard_play';
 import { createKeyboardEdit } from './keyboard_edit';
 import { createPalatte } from '../edit/palatte';
@@ -13,6 +16,7 @@ import { createSceneButtons } from '../scene_select/scene_buttons';
 import { handleCanvasClick } from '../edit/canvas_click';
 import { applyOffset } from '../play/apply_offset';
 import { pixiApp } from '../../instances/pixi_app';
+import { pixiRenderer } from '../../instances/pixi_renderer';
 import { pixiLoader } from '../../instances/pixi_loader';
 import { map } from '../../instances/map';
 import { sprites } from '../../instances/sprites';
@@ -20,6 +24,7 @@ import { pixiState } from '../../instances/pixi_state';
 import { pieceTypes } from '../../instances/piece_types/index';
 import { piecePlayer } from '../../instances/piece_types/player';
 import { pixiContainers } from '../../instances/pixi_containers';
+const pc = pixiContainers;
 import { PieceTypeNames } from '../../enums/piece_type_names';
 import { TILE_SIZE } from '../../constants';
 
@@ -29,19 +34,19 @@ export default function init() {
   if (!initializing) {
     initializing = true;
 
-    map.createGrid(window.innerWidth, window.innerHeight);
+    map.createGrid((window.innerWidth/4), (window.innerHeight/4));
 
     let type = "WebGL";
     if (!PIXI.utils.isWebGLSupported()) {
       type = "canvas";
     }
     PIXI.utils.sayHello(type);
-
     PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
-    pixiApp.renderer.view.style.position = "absolute";
-    pixiApp.renderer.view.style.display = "block";
-    pixiApp.renderer.resize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(pixiApp.view);
+    pixiRenderer.pr = PIXI.autoDetectRenderer({
+      width: window.innerWidth,
+      height: window.innerHeight
+    });
+    document.body.appendChild(pixiRenderer.pr.view);
 
     if (location.pathname.includes('edit')) {
       loadEditTextures()
@@ -52,7 +57,7 @@ export default function init() {
     else {
       loadPlayTextures()
       .then(() => {
-        pixiState.s = scene_select;
+        pixiState.s = play;
       });
     }
   }
@@ -62,15 +67,15 @@ function loadPlayTextures() : Promise<boolean> {
   return new Promise((resolve) => {
     pixiLoader.add(["player.json", "forestworld.json", "forestparticles.json"])
     .load(() => {
-      createBGContainer();
+      createMainContainer();
       createPlayerContainer();
-      // createPiecesDestructable((map.gridWidth * map.gridHeight) / 5);
-      // createPiecesBackgroundWhereEmpty();
+      createTilemap();
+      createPiecesDestructable((map.gridWidth * map.gridHeight) / 5);
+      createPiecesBackgroundWhereEmpty();
       createPiecePlayer();
       createKeyboardPlay();
-      createSceneButtons();
+      // createSceneButtons();
       applyOffset(0, true);
-      map.showViewportTiles(pixiContainers, sprites);
       resolve(true);
     });
   })
@@ -80,7 +85,8 @@ function loadEditTextures() {
   return new Promise((resolve) => {
     pixiLoader.add(["player.json", "forestworld.json", "forestparticles.json"])
     .load(() => {
-      createBGContainer();
+      createMainContainer();
+      createTilemap();
       createKeyboardEdit();
       applyOffset(0, true);
       createMapButtons();
@@ -93,7 +99,7 @@ function loadEditTextures() {
 
 function createPiecePlayer() {
   map.piecePlayer = piecePlayer;
-  map.displayPiece(piecePlayer, pixiContainers, sprites);
+  map.displayPiece(piecePlayer, pc, sprites);
 }
 
 function createPiecesDestructable(numDestr: number) {
@@ -105,7 +111,7 @@ function createPiecesDestructable(numDestr: number) {
     }
     map.createAndDisplayPiece(pieceTypeName,
       (location.gridPos[0] + ',' + location.gridPos[1]), index, pieceTypes,
-      pixiContainers, sprites);
+      pc, sprites);
   }
 }
 
@@ -114,7 +120,11 @@ export function createPiecesBackgroundWhereEmpty() {
   openCoords.map((coord, index) => {
     if (Math.random() < 0.25) {
       map.createAndDisplayPiece(PieceTypeNames.DIRT_SM, coord, index, pieceTypes,
-        pixiContainers, sprites);
+        pc, sprites);
+    }
+    else {
+      map.createAndDisplayPiece(PieceTypeNames.GRASS, coord, index, pieceTypes,
+        pc, sprites);
     }
   });
 }

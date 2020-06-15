@@ -39,7 +39,7 @@ export function rubbleParticlesCreate(numParticles: number, xy: [number, number]
   }
 
   pixiContainers[ParticleTypes.RUBBLE_WOOD + ',' + containerId] = container;
-  pixiContainers[PieceTypeNames.BACKGROUND].addChild(container);
+  pixiContainers.main.addChild(container);
   container.x = xy[0];
   container.y = xy[1];
 

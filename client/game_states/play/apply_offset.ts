@@ -15,11 +15,11 @@ export function applyOffset(delta: number, run: boolean = false) {
 
     if (map.piecePlayer) {
       let playerXY = map.piecePlayer.getXYAfterOffset([newOffset.x, newOffset.y]);
-      pixiContainers[map.piecePlayer.typeName].x = playerXY[0];
-      pixiContainers[map.piecePlayer.typeName].y = playerXY[1];
+      pixiContainers.player.x = playerXY[0];
+      pixiContainers.player.y = playerXY[1];
     }
 
-    pixiContainers[PieceTypeNames.BACKGROUND].x = newOffset.x;
-    pixiContainers[PieceTypeNames.BACKGROUND].y = newOffset.y;
+    pixiContainers.main.x = newOffset.x;
+    pixiContainers.main.y = newOffset.y;
   }
 }

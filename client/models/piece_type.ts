@@ -2,6 +2,7 @@ import Piece from './piece';
 import PieceAnimated from './piece_animated';
 import Box from './box';
 import AnimationStep from './animation_step';
+import { TILE_SIZE } from '../constants';
 
 export default class PieceType implements PieceTypeInterface {
   name: string;
@@ -26,8 +27,8 @@ export default class PieceType implements PieceTypeInterface {
         vx: 0,
         y: xy[1],
         vy: 0,
-        width: 64,
-        height: 64,
+        width: TILE_SIZE,
+        height: TILE_SIZE,
         boxName: this.name
       }),
       collidable: this.collidable,

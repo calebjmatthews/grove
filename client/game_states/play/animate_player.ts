@@ -87,6 +87,6 @@ export function actAndAnimatePlayer(pendingBox: Box) {
   }
   pBox.x = pendingBox.x;
   pBox.y = pendingBox.y;
-  pixiContainers[player.typeName].x = pendingBox.x + map.offset.x;
-  pixiContainers[player.typeName].y = pendingBox.y + map.offset.y;
+  pixiContainers.player.x = pendingBox.x + map.offset.x;
+  pixiContainers.player.y = pendingBox.y + map.offset.y;
 }

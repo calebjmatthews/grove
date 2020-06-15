@@ -4,6 +4,10 @@ import { animate } from './animate';
 import { applyOffset } from './apply_offset';
 import { particleAgeOut } from './particle/particle_age_out';
 import { determineOffset } from './determine_offset';
+import { pixiApp } from '../../instances/pixi_app';
+import { pixiRenderer } from '../../instances/pixi_renderer';
+import { pixiContainers } from '../../instances/pixi_containers';
+const pc = pixiContainers;
 import { map } from '../../instances/map';
 import { sprites } from '../../instances/sprites';
 
@@ -16,4 +20,5 @@ export default function play(delta: number) {
   map.agePlayEvents();
   map.animateParticleGroups(delta);
   particleAgeOut();
+  pixiRenderer.pr.render(pc.all);
 }

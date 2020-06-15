@@ -9,7 +9,7 @@ export function particleAgeOut() {
       pg.age++;
     }
     else {
-      pixiContainers[PieceTypeNames.BACKGROUND]
+      pixiContainers.main
         .removeChild(pixiContainers[pg.particleType + ',' + pg.id]);
       map.particleGroups.splice(index, 1);
     }

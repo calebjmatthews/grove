@@ -4,7 +4,7 @@ import { PieceTypeNames } from '../../enums/piece_type_names';
 const PTN = PieceTypeNames;
 
 let bt = new PieceType({
-  name: PieceTypeNames.BACKGROUND,
+  name: 'Name missing',
   collidable: false,
   breakable: false,
   durability: 0,
