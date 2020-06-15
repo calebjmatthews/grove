@@ -219,8 +219,6 @@ export default class Map {
       });
     }
     else {
-      console.log("piece.box.x/3 + ',' + piece.box.y/3");
-      console.log(piece.box.x/3 + ',' + piece.box.y/3);
       containers.tilemap.addFrame(PIXI.utils.TextureCache[piece.spriteNames[0]],
         (piece.box.x/3), (piece.box.y/3));
     }
@@ -234,7 +232,7 @@ export default class Map {
     },
     sprites: { [spriteName: string] : PIXI.Sprite }) {
     containers.tilemap.addFrame(PIXI.utils.TextureCache["grass.png"],
-      piece.box.x, piece.box.y);
+      piece.box.x/3, piece.box.y/3);
   }
 
   destroyPiece(piece: any,

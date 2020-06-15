@@ -19,19 +19,17 @@ export function rubbleParticlesCreate(numParticles: number, xy: [number, number]
     let spriteFilename = spriteFilenames
       [Math.floor((Math.random() * spriteFilenames.length))];
     let spriteName = (spriteFilename + ',' + spriteId);
-    let vx = (0.5 + (Math.random() * 4.5));
+    let vx = (0.5 + (Math.random() * 1.5));
     if (Math.random() < 0.5) {vx = -vx};
-    let vy = (0.5 + (Math.random() * 4.5));
+    let vy = (0.5 + (Math.random() * 1.5));
     if (Math.random() < 0.5) {vy = -vy};
     let spriteProp: any = {
-      x: -(TILE_SIZE / 4) + (Math.random() * (TILE_SIZE/2)),
+      x: -(TILE_SIZE / 3) + (Math.random() * (TILE_SIZE/2)),
       vx: vx,
-      y: -(TILE_SIZE / 4) + (Math.random() * (TILE_SIZE/2)),
+      y: -(TILE_SIZE / 3) + (Math.random() * (TILE_SIZE/2)),
       vy: vy
     }
     let particleSprite = new PIXI.Sprite(PIXI.utils.TextureCache[spriteFilename]);
-    particleSprite.width = 16;
-    particleSprite.height = 16;
     container.addChild(particleSprite);
     spriteNames.push(spriteName);
     spriteProps[spriteName] = spriteProp;
@@ -40,8 +38,8 @@ export function rubbleParticlesCreate(numParticles: number, xy: [number, number]
 
   pixiContainers[ParticleTypes.RUBBLE_WOOD + ',' + containerId] = container;
   pixiContainers.main.addChild(container);
-  container.x = xy[0];
-  container.y = xy[1];
+  container.x = xy[0]/3;
+  container.y = xy[1]/3;
 
   let particleGroup = new ParticleGroup({
     particleType: ParticleTypes.RUBBLE_WOOD,

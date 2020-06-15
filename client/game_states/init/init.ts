@@ -57,7 +57,7 @@ export default function init() {
     else {
       loadPlayTextures()
       .then(() => {
-        pixiState.s = play;
+        pixiState.s = scene_select;
       });
     }
   }
@@ -74,7 +74,7 @@ function loadPlayTextures() : Promise<boolean> {
       createPiecesBackgroundWhereEmpty();
       createPiecePlayer();
       createKeyboardPlay();
-      // createSceneButtons();
+      createSceneButtons();
       applyOffset(0, true);
       resolve(true);
     });
