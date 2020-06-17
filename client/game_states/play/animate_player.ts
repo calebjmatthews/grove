@@ -62,8 +62,13 @@ export function actAndAnimatePlayer(pendingBox: Box) {
         if (targetPiece) {
           let targetType = pieceTypes[targetPiece.typeName];
           if (targetPiece.typeName == PieceTypeNames.BUSH) {
-            map.destroyPiece(targetPiece, pixiContainers, sprites);
-            let particleGroup = rubbleParticlesCreate(10,
+            targetPiece.durability--;
+            let particleNum = 3;
+            if (targetPiece.durability <= 0) {
+              particleNum = 10;
+              map.destroyPiece(targetPiece, pixiContainers, sprites);
+            }
+            let particleGroup = rubbleParticlesCreate(particleNum,
               [(targetPiece.box.x + targetPiece.box.width/2),
                 (targetPiece.box.y + targetPiece.box.height/2)]);
             pMap.particleGroups.push(particleGroup);
