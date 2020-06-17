@@ -6,21 +6,23 @@ import Piece from '../../models/piece';
 import PieceAnimated from '../../models/piece_animated';
 import Map from '../../models/map';
 import { map } from '../../instances/map';
+import { player } from '../../instances/player';
 import { sprites } from '../../instances/sprites';
 import { pixiContainers } from '../../instances/pixi_containers';
 import { pieceTypes } from '../../instances/piece_types';
 import { Directions } from '../../enums/directions';
 import { PlayerStatuses } from '../../enums/player_statuses';
 import { PieceTypeNames } from '../../enums/piece_type_names';
+import { ItemNames } from '../../enums/item_names';
 
 export function actAndAnimatePlayer(pendingBox: Box) {
-  let player = map.piecePlayer;
-  let pBox = player.box;
-  let oldAnimationStep = player.getCurrentAnimationStep();
+  let pcPlayer = map.piecePlayer;
+  let pBox = map.piecePlayer.box;
+  let oldAnimationStep = pcPlayer.getCurrentAnimationStep();
 
   let diffX = pBox.x - pendingBox.x;
   let diffY = pBox.y - pendingBox.y;
-  let directionOld = player.directionCurrent;
+  let directionOld = pcPlayer.directionCurrent;
   let directionNew: string = Directions.NONE;
   if (diffY != 0) {
     if (diffY < 0) directionNew = Directions.DOWN;
@@ -30,21 +32,21 @@ export function actAndAnimatePlayer(pendingBox: Box) {
     if (diffX < 0) directionNew = Directions.RIGHT;
     else directionNew = Directions.LEFT;
   }
-  if (directionNew == Directions.NONE && player.directionPending != directionOld) {
-    directionNew = player.directionPending;
+  if (directionNew == Directions.NONE && pcPlayer.directionPending != directionOld) {
+    directionNew = pcPlayer.directionPending;
   }
 
   let statusNew = false;
-  if (player.statusPending != player.statusCurrent) {
+  if (pcPlayer.statusPending != pcPlayer.statusCurrent) {
     statusNew = true;
-    if (player.statusPending == PlayerStatuses.NORMAL) {
-      player.statusCurrent = PlayerStatuses.NORMAL;
+    if (pcPlayer.statusPending == PlayerStatuses.NORMAL) {
+      pcPlayer.statusCurrent = PlayerStatuses.NORMAL;
     }
-    else if (player.statusPending == PlayerStatuses.STRIKING) {
-      player.statusCurrent = PlayerStatuses.STRIKING;
+    else if (pcPlayer.statusPending == PlayerStatuses.STRIKING) {
+      pcPlayer.statusCurrent = PlayerStatuses.STRIKING;
       map.playEvents.push(new PlayEvent((pMap) => {
-        let targetPos = pMap.getGridPos([player.box.x, player.box.y]);
-        switch(player.directionCurrent) {
+        let targetPos = pMap.getGridPos([pcPlayer.box.x, pcPlayer.box.y]);
+        switch(pcPlayer.directionCurrent) {
           case (Directions.DOWN):
           targetPos[1]++;
           break;
@@ -67,6 +69,7 @@ export function actAndAnimatePlayer(pendingBox: Box) {
             if (targetPiece.durability <= 0) {
               particleNum = 10;
               map.destroyPiece(targetPiece, pixiContainers, sprites);
+              player.addToInventory(ItemNames.SCRAP_WOOD, Math.floor(Math.random()*3));
             }
             let particleGroup = rubbleParticlesCreate(particleNum,
               [(targetPiece.box.x + targetPiece.box.width/2),
@@ -74,21 +77,21 @@ export function actAndAnimatePlayer(pendingBox: Box) {
             pMap.particleGroups.push(particleGroup);
           }
         }
-        player.statusPending = PlayerStatuses.NORMAL;
+        pcPlayer.statusPending = PlayerStatuses.NORMAL;
         return pMap;
       }, (24-1)));
     }
   }
 
-  let newStepIndex = player.ageAnimationByDirectionAndStatus(directionNew, statusNew);
+  let newStepIndex = pcPlayer.ageAnimationByDirectionAndStatus(directionNew, statusNew);
   if (newStepIndex != null) {
-    let animStepMap = player.directionAnimMap;
-    if (player.statusCurrent == PlayerStatuses.STRIKING) {
-      animStepMap = player.strikeAnimMap;
+    let animStepMap = pcPlayer.directionAnimMap;
+    if (pcPlayer.statusCurrent == PlayerStatuses.STRIKING) {
+      animStepMap = pcPlayer.strikeAnimMap;
     }
-    let newAnimationStep = animStepMap[player.directionCurrent][newStepIndex];
-    sprites[player.spriteNames[oldAnimationStep.spriteIndex]].visible = false;
-    sprites[player.spriteNames[newAnimationStep.spriteIndex]].visible = true;
+    let newAnimationStep = animStepMap[pcPlayer.directionCurrent][newStepIndex];
+    sprites[pcPlayer.spriteNames[oldAnimationStep.spriteIndex]].visible = false;
+    sprites[pcPlayer.spriteNames[newAnimationStep.spriteIndex]].visible = true;
   }
   pBox.x = pendingBox.x;
   pBox.y = pendingBox.y;
