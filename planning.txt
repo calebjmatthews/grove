@@ -55,11 +55,19 @@ Scene editor:
 - Function to export created scenes as a two-dimensional array of indexes
 - Function to import a scene for editing or play
 
-Table of relationships, table of  table of payouts, table of payout requests
-Admin facing view of relationships, admin facing view of payout requests, photographer facing view of claimed clients can claim
-
 Drawing large maps:
 - Perform check every time enters a new grid space
 - Find the new row/column about to be introduced to the viewport and the old row/column that has exited by calculating using the offset, screen size, and tile size
 - Show/hide them respectively
 - If necessary, remove the sprites that leave and create the ones that enter
+
+Planes:
+- Dark, cozy forest with constant hunger
+- Bright white and gold rocky land with flowing bright blue rivers and waterfalls
+- Neon city with creatures that attack, cannot bring anything in
+- Cloud-covered, floating sunset land where food grants flight
+- Nighttime desert with glowing sands where food gives exponential strength
+
+Other ideas:
+- Devas which can perform work (harvesting, breeding) in exchange for food and a place to live (statue)
+- The "Rambling Linguist" whose work can be found scattered around the planes and translates Deva language

@@ -10,6 +10,7 @@ import { player } from '../../instances/player';
 import { sprites } from '../../instances/sprites';
 import { pixiContainers } from '../../instances/pixi_containers';
 import { pieceTypes } from '../../instances/piece_types';
+import { noteItemPickup } from './item_note';
 import { Directions } from '../../enums/directions';
 import { PlayerStatuses } from '../../enums/player_statuses';
 import { PieceTypeNames } from '../../enums/piece_type_names';
@@ -69,7 +70,11 @@ export function actAndAnimatePlayer(pendingBox: Box) {
             if (targetPiece.durability <= 0) {
               particleNum = 10;
               map.destroyPiece(targetPiece, pixiContainers, sprites);
-              player.addToInventory(ItemNames.SCRAP_WOOD, Math.floor(Math.random()*3));
+              let quantity = Math.floor(Math.random()*3);
+              if (quantity > 0) {
+                player.addToInventory(ItemNames.SCRAP_WOOD, quantity);
+                noteItemPickup(ItemNames.SCRAP_WOOD, quantity);
+              }
             }
             let particleGroup = rubbleParticlesCreate(particleNum,
               [(targetPiece.box.x + targetPiece.box.width/2),

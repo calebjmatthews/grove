@@ -50,3 +50,31 @@
   image-rendering: -moz-crisp-edges;
   image-rendering: crisp-edges;
 }
+
+.item-note-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+}
+.item-note {
+  flex: 0 1 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.25em;
+  margin: 0.25em;
+  background: #fff6;
+  border: 3px solid #ffffff75;
+  transition: background 0.3s ease-in-out;
+  cursor: pointer;
+}
+.item-note img {
+  width: 48px;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+.item-note span {
+  margin-left: 0.25em;
+}
