@@ -35,7 +35,7 @@ function createItemNote(itemName: string, quantity: number) {
     imageURL: items[itemName].sprite,
     itemName: itemName,
     quantity: quantity,
-    delay: setTimeout(() => { destroyItemNote(itemName) }, 5000)
+    delay: setTimeout(() => { fadeItemNote(itemName) }, 4000)
   });
   itemNotes[itemName] = newItemNote;
 
@@ -65,7 +65,10 @@ function addToItemNote(itemName: string, quantity: number) {
   let itemNote = itemNotes[itemName];
   itemNote.quantity += quantity;
   clearTimeout(itemNote.delay);
-  itemNote.delay = setTimeout(() => { destroyItemNote(itemName) }, 5000);
+  itemNote.delay = setTimeout(() => { fadeItemNote(itemName) }, 4000);
+
+  let itemNoteEle = document.getElementById(itemName);
+  itemNoteEle.setAttribute("class", "item-note");
 
   let spanQuantity = document.getElementById(itemName + '-quantity');
   spanQuantity.remove();
@@ -75,6 +78,15 @@ function addToItemNote(itemName: string, quantity: number) {
   newSpanQuantity.appendChild(spanQuantityText);
   let div = document.getElementById(itemName);
   div.appendChild(newSpanQuantity);
+}
+
+function fadeItemNote(itemName: string) {
+  let itemNote = itemNotes[itemName];
+  clearTimeout(itemNote.delay);
+  itemNote.delay = setTimeout(() => { destroyItemNote(itemName) }, 1000);
+
+  let itemNoteEle = document.getElementById(itemName);
+  itemNoteEle.setAttribute("class", ('item-note fading'));
 }
 
 function destroyItemNote(itemName: string) {

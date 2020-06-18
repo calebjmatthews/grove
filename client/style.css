@@ -66,8 +66,12 @@
   margin: 0.25em;
   background: #fff6;
   border: 3px solid #ffffff75;
-  transition: background 0.3s ease-in-out;
+  opacity: 1;
+  transition: opacity 1s ease-in-out;
   cursor: pointer;
+}
+.item-note.fading {
+  opacity: 0;
 }
 .item-note img {
   width: 48px;
