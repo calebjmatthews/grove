@@ -20,6 +20,7 @@ export default class Map {
   pieces: { [pieceName: string] : Piece } = {};
   pieceMap: { [coords: string] : { mapName: string, pieceName: string} } = {};
   collisionMap: { [coords: string] : { mapName: string, pieceName: string} } = {};
+  sparkleMap: { [coords: string] : { mapName: string, pieceName: string} } = {};
   playEvents: PlayEvent[] = [];
   particleGroups: ParticleGroup[] = [];
 

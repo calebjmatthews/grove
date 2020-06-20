@@ -66,7 +66,7 @@ export default function init() {
 
 function loadPlayTextures() : Promise<boolean> {
   return new Promise((resolve) => {
-    pixiLoader.add(["player.json", "forestworld.json", "forestparticles.json"])
+    pixiLoader.add(["player.json", "forestworld.json", "particles.json"])
     .load(() => {
       createMainContainer();
       createPlayerContainer();
@@ -85,7 +85,7 @@ function loadPlayTextures() : Promise<boolean> {
 
 function loadEditTextures() {
   return new Promise((resolve) => {
-    pixiLoader.add(["player.json", "forestworld.json", "forestparticles.json"])
+    pixiLoader.add(["player.json", "forestworld.json", "particles.json"])
     .load(() => {
       createMainContainer();
       createTilemap();
