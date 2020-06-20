@@ -61,6 +61,9 @@ Drawing large maps:
 - Show/hide them respectively
 - If necessary, remove the sprites that leave and create the ones that enter
 
+Item pickup effect:
+- Item launched by
+
 Planes:
 - Dark, cozy forest with constant hunger
 - Bright white and gold rocky land with flowing bright blue rivers and waterfalls

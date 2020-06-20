@@ -5,6 +5,7 @@ import PlayEvent from '../../models/play_event';
 import Piece from '../../models/piece';
 import PieceAnimated from '../../models/piece_animated';
 import Map from '../../models/map';
+import { getKeyboardPlay } from '../init/keyboard_play';
 import { map } from '../../instances/map';
 import { player } from '../../instances/player';
 import { sprites } from '../../instances/sprites';
@@ -42,6 +43,10 @@ export function actAndAnimatePlayer(pendingBox: Box) {
     statusNew = true;
     if (pcPlayer.statusPending == PlayerStatuses.NORMAL) {
       pcPlayer.statusCurrent = PlayerStatuses.NORMAL;
+      let keyboard = getKeyboardPlay();
+      if (keyboard.z.isDown) {
+        pcPlayer.statusPending = PlayerStatuses.STRIKING;
+      }
     }
     else if (pcPlayer.statusPending == PlayerStatuses.STRIKING) {
       pcPlayer.statusCurrent = PlayerStatuses.STRIKING;

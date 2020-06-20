@@ -4,6 +4,8 @@ import { Directions } from '../../enums/directions';
 import { PlayerStatuses } from '../../enums/player_statuses';
 import { PLAYER_SPEED } from '../../constants';
 
+let keyboard: { [keyName: string] : Key } = {};
+
 export function createKeyboardPlay() {
   let player = map.piecePlayer;
   let pBox = map.piecePlayer.box;
@@ -55,15 +57,20 @@ export function createKeyboardPlay() {
     }
   };
 
-  let space = new Key(" ");
-  space.press = () => {
+  let z = new Key("z");
+  z.press = () => {
     if (player.statusPending != PlayerStatuses.STRIKING
       && player.statusCurrent != PlayerStatuses.STRIKING)
     player.statusPending = PlayerStatuses.STRIKING;
   };
-  down.release = () => {
-    if (!up.isDown) {
-      pBox.vy = 0;
-    }
-  };
+
+  keyboard['left'] = left;
+  keyboard['right'] = right;
+  keyboard['up'] = up;
+  keyboard['down'] = down;
+  keyboard['z'] = z;
+}
+
+export function getKeyboardPlay() {
+  return keyboard;
 }
