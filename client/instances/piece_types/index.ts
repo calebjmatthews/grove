@@ -3,6 +3,7 @@ import { PieceTypeNames } from '../../enums/piece_type_names';
 import { grass, dirtSm, dirtN, dirtNE, dirtE, dirtSE, dirtS, dirtSW, dirtW, dirtNW,
   dirtM, dirtH, dirtV } from './ground';
 import { bush } from './bush';
+import { bush_s } from './bush_s';
 import { tree_nw, tree_sw, tree_ne, tree_se } from './tree';
 import { circleGlyphNE, circleGlyphSE, circleGlyphSW, circleGlyphNW }
   from './circle_glyph';
@@ -20,7 +21,7 @@ import { tileCracked, tileCrowns, tileFace, tileGlyphCracked, tileHatch, tileRec
 
 let pieceTypes: { [typeName: string] : PieceType } = {};
 [grass, dirtSm, dirtN, dirtNE, dirtE, dirtSE, dirtS, dirtSW, dirtW, dirtNW,
-  dirtM, dirtH, dirtV, bush, tree_nw, tree_sw, tree_ne, tree_se, circleGlyphNE,
+  dirtM, dirtH, dirtV, bush, bush_s, tree_nw, tree_sw, tree_ne, tree_se, circleGlyphNE,
   circleGlyphSE, circleGlyphSW, circleGlyphNW, barN, barS, doorwayNW, doorwayNE,
   doorwaySE, doorwaySW, stairsSmN, stairsSmS, stairsNW, stairsN, stairsNE, stairsSW,
   stairsS, stairsSE, stoneRailNW, stoneRailW, stoneRailSW, stoneRailNE, stoneRailE,

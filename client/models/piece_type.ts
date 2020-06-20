@@ -9,6 +9,7 @@ export default class PieceType implements PieceTypeInterface {
   collidable: boolean;
   breakable: boolean;
   durability: number;
+  special?: any[];
   animated: boolean;
   animationSteps: AnimationStep[];
   spriteNames: string[];
@@ -56,6 +57,7 @@ interface PieceTypeInterface {
   collidable: boolean;
   breakable: boolean;
   durability: number;
+  special?: any[];
   animated: boolean;
   animationSteps: AnimationStep[];
   spriteNames: string[];

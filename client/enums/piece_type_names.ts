@@ -1,6 +1,7 @@
 export enum PieceTypeNames {
   PLAYER = 'Player',
   BUSH = 'Bush',
+  BUSH_S = 'Sparkle bush',
   TREE_NW = 'Tree (NW)',
   TREE_SW = 'Tree (SW)',
   TREE_NE = 'Tree (NE)',
