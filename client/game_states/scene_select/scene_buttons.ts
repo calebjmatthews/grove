@@ -28,6 +28,7 @@ export function createSceneButtons() {
         map.createAndDisplayPiece(nameSplit[0], coord, nameSplit[1], pieceTypes,
           pixiContainers, sprites);
       });
+      map.createPieceMap();
       pixiState.s = play;
     });
     buttonContainer.appendChild(loadButton);

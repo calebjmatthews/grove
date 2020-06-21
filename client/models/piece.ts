@@ -22,6 +22,18 @@ export default class Piece implements PieceInterface {
     let newY = this.box.y + xy[1];
     return [newX, newY];
   }
+
+  getSpecial(specialName: string) {
+    let fSpecial: any = null;
+    if (this.special) {
+      this.special.map((special: any) => {
+        if (special.name == specialName) {
+          fSpecial = special;
+        }
+      });
+    }
+    return fSpecial;
+  }
 }
 
 interface PieceInterface {

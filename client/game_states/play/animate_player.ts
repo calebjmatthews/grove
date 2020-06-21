@@ -1,21 +1,16 @@
 import * as PIXI from 'pixi.js';
-import { rubbleParticlesCreate } from './particle/rubble';
 import Box from '../../models/box';
 import PlayEvent from '../../models/play_event';
 import Piece from '../../models/piece';
-import PieceAnimated from '../../models/piece_animated';
 import Map from '../../models/map';
 import { getKeyboardPlay } from '../init/keyboard_play';
 import { map } from '../../instances/map';
 import { player } from '../../instances/player';
 import { sprites } from '../../instances/sprites';
 import { pixiContainers } from '../../instances/pixi_containers';
-import { pieceTypes } from '../../instances/piece_types';
-import { noteItemPickup } from './item_note';
+import { handleImpact } from './handle_impact';
 import { Directions } from '../../enums/directions';
 import { PlayerStatuses } from '../../enums/player_statuses';
-import { PieceTypeNames } from '../../enums/piece_type_names';
-import { ItemNames } from '../../enums/item_names';
 
 export function actAndAnimatePlayer(pendingBox: Box) {
   let pcPlayer = map.piecePlayer;
@@ -68,24 +63,7 @@ export function actAndAnimatePlayer(pendingBox: Box) {
         }
         let targetPiece = pMap.getPieceByGridPos(targetPos);
         if (targetPiece) {
-          let targetType = pieceTypes[targetPiece.typeName];
-          if (targetPiece.typeName == PieceTypeNames.BUSH) {
-            targetPiece.durability--;
-            let particleNum = 3;
-            if (targetPiece.durability <= 0) {
-              particleNum = 10;
-              map.destroyPiece(targetPiece, pixiContainers, sprites);
-              let quantity = Math.floor(Math.random()*3);
-              if (quantity > 0) {
-                player.addToInventory(ItemNames.SCRAP_WOOD, quantity);
-                noteItemPickup(ItemNames.SCRAP_WOOD, quantity);
-              }
-            }
-            let particleGroup = rubbleParticlesCreate(particleNum,
-              [(targetPiece.box.x + targetPiece.box.width/2),
-                (targetPiece.box.y + targetPiece.box.height/2)]);
-            pMap.particleGroups.push(particleGroup);
-          }
+          pMap = handleImpact(targetPiece, pMap);
         }
         pcPlayer.statusPending = PlayerStatuses.NORMAL;
         return pMap;

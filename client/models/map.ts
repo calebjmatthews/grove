@@ -114,6 +114,13 @@ export default class Map {
         this.collisionMap[(piece.gridPos[0] + ',' + piece.gridPos[1])] =
           {mapName: 'pieces', pieceName: pieceName};
       }
+      if (piece.special) {
+        let sparkleSpecial = piece.getSpecial('sparkle');
+        if (sparkleSpecial) {
+          this.sparkleMap[(piece.gridPos[0] + ',' + piece.gridPos[1])] =
+            {mapName: 'pieces', pieceName: pieceName};
+        }
+      }
     });
   }
 
@@ -198,6 +205,11 @@ export default class Map {
         this.collisionMap[(piece.gridPos[0] + ',' + piece.gridPos[1])] =
           {mapName: 'pieces', pieceName: (pieceTypeName + ',' + id)};
       }
+      let specialSparkle = piece.getSpecial('sparkle');
+      if (specialSparkle) {
+        this.sparkleMap[(piece.gridPos[0] + ',' + piece.gridPos[1])] =
+          {mapName: 'pieces', pieceName: (pieceTypeName + ',' + id)};
+      }
     }
     return piece;
   }
@@ -253,6 +265,10 @@ export default class Map {
     if (piece.collidable) {
       delete this.collisionMap[piece.gridPos[0] + ',' + piece.gridPos[1]];
     }
+    let specialSparkle = piece.getSpecial('sparkle');
+    if (specialSparkle) {
+      delete this.sparkleMap[piece.gridPos[0] + ',' + piece.gridPos[1]];
+    }
     delete this.pieceMap[piece.gridPos[0] + ',' + piece.gridPos[1]];
   }
 
@@ -270,5 +286,21 @@ export default class Map {
       let piece = this.piecesAnimated[pieceName];
       this.destroyPiece(piece, containers, sprites);
     });
+  }
+
+  getNeighbors(gridPos: [number, number], offset: number) {
+    let neighbors: any[] = [];
+    for (let colOff = -offset; colOff <= offset; colOff++) {
+      for (let rowOff = -offset; rowOff <= offset; rowOff++) {
+        if (!(colOff == 0 && rowOff == 0)) {
+          let piece =
+            this.getPieceByGridPos([(gridPos[0] + colOff), (gridPos[1] + rowOff)]);
+          if (piece) {
+            neighbors.push(piece);
+          }
+        }
+      }
+    }
+    return neighbors;
   }
 }

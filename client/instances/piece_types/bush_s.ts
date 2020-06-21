@@ -7,7 +7,7 @@ export let bush_s = new PieceType({
   collidable: true,
   breakable: true,
   durability: 3,
-  special: [{ name: 'sparkle', value: 5 }],
+  special: [{ index: 0, name: 'sparkle', value: 20 }],
   animated: false,
   animationSteps: null,
   spriteNames: ["bush_s.png"]

@@ -39,6 +39,16 @@ export default class PieceType implements PieceTypeInterface {
       spriteNames: this.spriteNames
     });
 
+    if (this.special != undefined) {
+      piece.special = [];
+      this.special.map((special, index) => {
+        piece.special[index] = Object.assign({}, special);
+        if (piece.special[index].name == 'sparkle') {
+          piece.special[index].value = Math.floor(Math.random() * (special.value-1)) + 1;
+        }
+      });
+    }
+
     if (this.animated == true) {
       return new PieceAnimated(Object.assign({}, piece, {
         animationSteps: this.animationSteps,
