@@ -61,8 +61,11 @@ Drawing large maps:
 - Show/hide them respectively
 - If necessary, remove the sprites that leave and create the ones that enter
 
-Item pickup effect:
-- Item launched by
+Burst breaking:
+- One bush in five twinkles
+- With a set of five bush hits the twinkle with increase, then reset
+- If a twinkle bush is hit on five within the set it will burst, breaking it and any bushes next to it
+- If a twinkle bush is hit on one through four within the set the twinkles with dissipate, doing nothing
 
 Planes:
 - Dark, cozy forest with constant hunger

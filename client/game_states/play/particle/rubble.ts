@@ -19,17 +19,22 @@ export function rubbleParticlesCreate(numParticles: number, xy: [number, number]
     let spriteFilename = spriteFilenames
       [Math.floor((Math.random() * spriteFilenames.length))];
     let spriteName = (spriteFilename + ',' + spriteId);
+    let x = -(TILE_SIZE / 3) + (Math.random() * (TILE_SIZE/2));
     let vx = (0.5 + (Math.random() * 1.5));
     if (Math.random() < 0.5) {vx = -vx};
-    let vy = (0.5 + (Math.random() * 1.5));
-    if (Math.random() < 0.5) {vy = -vy};
+    let y = -(TILE_SIZE / 3) + (Math.random() * (TILE_SIZE/2));
+    let vy = -(0.5 + (Math.random() * 1.5));
     let spriteProp: any = {
-      x: -(TILE_SIZE / 3) + (Math.random() * (TILE_SIZE/2)),
+      x: x,
       vx: vx,
-      y: -(TILE_SIZE / 3) + (Math.random() * (TILE_SIZE/2)),
-      vy: vy
+      y: y,
+      originY: y,
+      vy: vy,
+      lastVY: vy
     }
     let particleSprite = new PIXI.Sprite(PIXI.utils.TextureCache[spriteFilename]);
+    particleSprite.x = spriteProp.x;
+    particleSprite.y = spriteProp.y;
     container.addChild(particleSprite);
     spriteNames.push(spriteName);
     spriteProps[spriteName] = spriteProp;
@@ -51,15 +56,21 @@ export function rubbleParticlesCreate(numParticles: number, xy: [number, number]
     animate: (pg: ParticleGroup, delta: number) => {
       pixiContainers[ParticleTypes.RUBBLE_WOOD + ',' + pg.id].alpha -= .01 * delta;
       pg.spriteNames.map((spriteName: string, index) => {
-        sprites[spriteName].x += (pg.spriteProps[spriteName].vx * delta);
+        pg.spriteProps[spriteName].x += (pg.spriteProps[spriteName].vx * delta);
+        sprites[spriteName].x = pg.spriteProps[spriteName].x;
         pg.spriteProps[spriteName].vx *= 0.9;
         if (Math.abs(pg.spriteProps[spriteName].vx) < 0.1) {
           pg.spriteProps[spriteName].vx = 0;
         }
-        sprites[spriteName].y += (pg.spriteProps[spriteName].vy * delta);
-        pg.spriteProps[spriteName].vy *= 0.9;
-        if (Math.abs(pg.spriteProps[spriteName].vy) < 0.1) {
-          pg.spriteProps[spriteName].vy = 0;
+        pg.spriteProps[spriteName].y += (pg.spriteProps[spriteName].vy * delta);
+        sprites[spriteName].y = pg.spriteProps[spriteName].y;
+
+        if (pg.spriteProps[spriteName].y > pg.spriteProps[spriteName].originY) {
+          pg.spriteProps[spriteName].vy = (pg.spriteProps[spriteName].lastVY * 0.8);
+          pg.spriteProps[spriteName].lastVY = pg.spriteProps[spriteName].vy;
+        }
+        else {
+          pg.spriteProps[spriteName].vy += 0.1;
         }
       });
     }
