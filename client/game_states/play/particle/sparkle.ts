@@ -11,7 +11,8 @@ var seed = 1337 ^ 0xDEADBEEF; // 32-bit seed with optional XOR value
 // https://en.wikipedia.org/wiki/Nothing-up-my-sleeve_number
 var rand = sfc32(0x9E3779B9, 0x243F6A88, 0xB7E15162, seed);
 
-export function sparkleParticlesCreate(numParticles: number, xy: [number, number]) {
+export function sparkleParticlesCreate(numParticles: number, xy: [number, number],
+  spread: number = 1, direction: string = 'up') {
   let spriteFilenames = ['sparklepcl1.png', 'sparklepcl2.png', 'sparklepcl3.png'];
 
   let container = new PIXI.ParticleContainer(1000, { tint: true });
@@ -25,12 +26,17 @@ export function sparkleParticlesCreate(numParticles: number, xy: [number, number
       [Math.floor((Math.random() * spriteFilenames.length))];
     let spriteName = (spriteFilename + ',' + spriteId);
     let vy = -(Math.random() * 1.5);
+    if (direction == 'down') {
+      vy = -vy
+    }
     let spriteProp: any = {
-      x: -(TILE_SIZE / 3) + (rand() * (TILE_SIZE/2)),
-      y: -(TILE_SIZE / 3) + (Math.random() * (TILE_SIZE/2)),
+      x: -((TILE_SIZE / 3) * spread) + (rand() * (TILE_SIZE/2) * spread),
+      y: -((TILE_SIZE / 3) * spread) + (rand() * (TILE_SIZE/2) * spread),
       vy: vy
     }
     let particleSprite = new PIXI.Sprite(PIXI.utils.TextureCache[spriteFilename]);
+    particleSprite.x = spriteProp.x;
+    particleSprite.y = spriteProp.y;
     container.addChild(particleSprite);
     spriteNames.push(spriteName);
     spriteProps[spriteName] = spriteProp;
@@ -51,8 +57,10 @@ export function sparkleParticlesCreate(numParticles: number, xy: [number, number
     age: 0,
     animate: (pg: ParticleGroup, delta: number) => {
       pg.spriteNames.map((spriteName: string, index) => {
-        sprites[spriteName].alpha = rand()
-          * ((pg.maxAge - pg.age) / pg.maxAge);
+        sprites[spriteName].alpha *= (1 - (0.2 * rand()));
+        if (sprites[spriteName].alpha <= 0.05) {
+          sprites[spriteName].alpha = ((pg.maxAge - pg.age) / pg.maxAge);
+        }
         sprites[spriteName].x = pg.spriteProps[spriteName].x;
         sprites[spriteName].y += (pg.spriteProps[spriteName].vy * delta);
         pg.spriteProps[spriteName].vy *= 0.9;

@@ -75,9 +75,17 @@ function checkSparkleBlast(targetPiece: Piece, pMap: Map) {
             destroyTarget(nPiece, pMap);
           }
         });
+        let particleGroup = sparkleParticlesCreate(20,
+          [(targetPiece.box.x + targetPiece.box.width/2),
+            (targetPiece.box.y + targetPiece.box.height/2)], 3);
+        pMap.particleGroups.push(particleGroup);
       }
       else {
-        console.log('Fizzle.');
+        targetPiece.special[sparkleSpecial.index].value = null;
+        let particleGroup = sparkleParticlesCreate(3,
+          [(targetPiece.box.x + targetPiece.box.width/2),
+            (targetPiece.box.y + targetPiece.box.height/2)], 1, 'down');
+        pMap.particleGroups.push(particleGroup);
       }
     }
   }
@@ -103,7 +111,7 @@ function incrementSparkles(pMap: Map) {
       pMap.particleGroups.push(particleGroup);
       piece.special[sparkleSpecial.index].value++;
     }
-    else {
+    else if (sparkleSpecial.value != null) {
       piece.special[sparkleSpecial.index].value++;
     }
   });
