@@ -126,17 +126,20 @@ export default class Map {
 
   detectCollision(box: Box) : Collision[] {
     let collisions: Collision[] = [];
-    Object.keys(this.collisionMap).map((coords) => {
-      let mapObj = this.collisionMap[coords];
-      let tBox = this[mapObj.mapName][mapObj.pieceName].box;
-      if (box.x < tBox.x + tBox.width &&
-        box.x + box.width > tBox.x &&
-        box.y < tBox.y + tBox.height &&
-        box.y + box.height > tBox.y) {
-        collisions.push(new Collision({
-          direction: box.compareCenters(tBox),
-          collidesWith: tBox
-        }))
+    let gridPos = this.getGridPos([(box.x), (box.y)]);
+    let neighbors = this.getNeighbors(gridPos, 1);
+    neighbors.map((neighbor) => {
+      if (neighbor.collidable) {
+        let tBox = neighbor.box;
+        if (box.x < tBox.x + tBox.width &&
+          box.x + box.width > tBox.x &&
+          box.y < tBox.y + tBox.height &&
+          box.y + box.height > tBox.y) {
+          collisions.push(new Collision({
+            direction: box.compareCenters(tBox),
+            collidesWith: tBox
+          }))
+        }
       }
     });
     if (collisions.length > 0) {
