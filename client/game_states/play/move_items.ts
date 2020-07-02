@@ -1,23 +1,31 @@
 import { map } from '../../instances/map';
 import { sprites } from '../../instances/sprites';
 
-export function moveItems() {
+export function moveItems(delta: number) {
   Object.keys(map.piecesItem).map((pieceName) => {
     let piece = map.piecesItem[pieceName];
     let posChanged = false;
-    if (piece.box.x > 0) {
-      piece.box.x += piece.box.vx;
-      piece.box.vx *= 0.9;
+    if (Math.abs(piece.box.vx) > 0) {
+      piece.box.x += (piece.box.vx * delta);
+      piece.box.vx *= 0.95;
       if (Math.abs(piece.box.vx) < 0.1) {
         piece.box.vx = 0;
       }
       posChanged = true;
     }
-    if (piece.box.y > 0) {
-      piece.box.y += piece.box.vy;
-      piece.box.vy *= 0.9;
-      if (Math.abs(piece.box.vy) < 0.1) {
-        piece.box.vy = 0;
+    if (piece.box.vy != 0) {
+      piece.box.y += (piece.box.vy * delta);
+      if (piece.box.y > piece.box.originY) {
+        if (piece.box.lastVY < -0.45) {
+          piece.box.vy = (piece.box.lastVY * 0.7);
+          piece.box.lastVY = piece.box.vy;
+        }
+        else {
+          piece.box.vy = 0;
+        }
+      }
+      else {
+        piece.box.vy += 0.3;
       }
       posChanged = true;
     }

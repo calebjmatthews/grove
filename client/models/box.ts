@@ -5,12 +5,20 @@ export default class Box {
   vx: number;
   y: number;
   vy: number;
+  lastVY?: number;
+  originY?: number;
   width: number;
   height: number;
   boxName: string;
 
   constructor(box: BoxInterface) {
     Object.assign(this, box);
+    if (box.lastVY == undefined) {
+      this.lastVY = box.vy;
+    }
+    if (box.originY == undefined) {
+      this.originY = box.y;
+    }
   }
 
   getCenter() {
@@ -47,6 +55,8 @@ interface BoxInterface {
   vx: number;
   y: number;
   vy: number;
+  lastVY?: number;
+  originY?: number;
   width: number;
   height: number;
   boxName: string;

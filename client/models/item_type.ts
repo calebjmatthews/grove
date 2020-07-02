@@ -13,14 +13,11 @@ export default class ItemType implements ItemTypeInterface {
   }
 
   createPiece(id: number, gridPos: [number, number], xy: [number, number]): any {
-    let vx = 0.5 + (utils.rand() * 4.5);
+    let vx = 1.5 + (utils.rand() * 4.5);
     if (utils.rand() < 0.5) {
       vx = -vx;
     }
-    let vy = 0.5 + (utils.rand() * 4.5);
-    if (utils.rand() < 0.5) {
-      vy = -vy;
-    }
+    let vy = -(3 + (utils.rand() * 3));
     if (utils.rand() < 0.5) {vx = -vx};
     let piece = new Piece({
       typeName: this.name,
@@ -30,7 +27,9 @@ export default class ItemType implements ItemTypeInterface {
         x: xy[0],
         vx: vx,
         y: xy[1],
+        originY: xy[1],
         vy: vy,
+        lastVY: vy,
         width: ITEM_SIZE,
         height: ITEM_SIZE,
         boxName: this.name

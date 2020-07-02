@@ -18,7 +18,7 @@ export default function play(delta: number) {
   // animate();
   determineOffset(window.innerWidth, window.innerHeight);
   applyOffset(delta);
-  moveItems()
+  moveItems(delta);
   map.agePlayEvents();
   map.animateParticleGroups(delta);
   particleAgeOut();
