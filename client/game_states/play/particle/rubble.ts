@@ -2,6 +2,7 @@ import * as PIXI from 'pixi.js';
 import ParticleGroup from '../../../models/particle_group';
 import { sprites } from '../../../instances/sprites';
 import { pixiContainers } from '../../../instances/pixi_containers';
+import { utils } from '../../../instances/utils';
 import { ParticleTypes } from '../../../enums/particle_types';
 import { PieceTypeNames } from '../../../enums/piece_type_names';
 import { TILE_SIZE } from '../../../constants';
@@ -10,20 +11,20 @@ export function rubbleParticlesCreate(numParticles: number, xy: [number, number]
   let spriteFilenames = ['forestpcl1.png', 'forestpcl2.png', 'forestpcl3.png'];
 
   let container = new PIXI.ParticleContainer();
-  let containerId = Math.floor(Math.random() * 10000000);
+  let containerId = Math.floor(utils.rand() * 10000000);
   let spriteNames: string[] = [];
   let spriteProps: { [spriteName: string] : any } = {};
 
   for (let index = 0; index < numParticles; index++) {
-    let spriteId = Math.floor(Math.random() * 10000000);
+    let spriteId = Math.floor(utils.rand() * 10000000);
     let spriteFilename = spriteFilenames
-      [Math.floor((Math.random() * spriteFilenames.length))];
+      [Math.floor((utils.rand() * spriteFilenames.length))];
     let spriteName = (spriteFilename + ',' + spriteId);
-    let x = -(TILE_SIZE / 3) + (Math.random() * (TILE_SIZE/2));
-    let vx = (0.5 + (Math.random() * 1.5));
-    if (Math.random() < 0.5) {vx = -vx};
-    let y = -(TILE_SIZE / 3) + (Math.random() * (TILE_SIZE/2));
-    let vy = -(0.5 + (Math.random() * 1.5));
+    let x = -(TILE_SIZE / 3) + (utils.rand() * (TILE_SIZE/2));
+    let vx = (0.5 + (utils.rand() * 1.5));
+    if (utils.rand() < 0.5) {vx = -vx};
+    let y = -(TILE_SIZE / 3) + (utils.rand() * (TILE_SIZE/2));
+    let vy = -(0.5 + (utils.rand() * 1.5));
     let spriteProp: any = {
       x: x,
       vx: vx,

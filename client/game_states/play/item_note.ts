@@ -1,5 +1,5 @@
 import { player } from '../../instances/player';
-import { items } from '../../instances/items';
+import { itemTypes } from '../../instances/item_types';
 
 class ItemNote {
   imageURL: string;
@@ -32,7 +32,7 @@ export function noteItemPickup(itemName: string, quantity: number) {
 
 function createItemNote(itemName: string, quantity: number) {
   let newItemNote = new ItemNote({
-    imageURL: items[itemName].sprite,
+    imageURL: itemTypes[itemName].menuSprite,
     itemName: itemName,
     quantity: quantity,
     delay: setTimeout(() => { fadeItemNote(itemName) }, 4000)

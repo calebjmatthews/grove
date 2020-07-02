@@ -8,6 +8,8 @@ import Offset from '../models/offset';
 import PlayEvent from '../models/play_event';
 import ParticleGroup from '../models/particle_group';
 import PieceType from '../models/piece_type';
+import ItemType from '../models/item_type';
+import { utils } from '../instances/utils';
 import { PieceTypeNames } from '../enums/piece_type_names';
 import { TILE_SIZE } from '../constants';
 
@@ -16,6 +18,7 @@ export default class Map {
   gridHeight: number = null;
   offset: Offset = null;
   piecePlayer: PiecePlayer = null;
+  piecesItem: { [pieceName: string] : Piece } = {};
   piecesAnimated: { [pieceName: string] : PieceAnimated } = {};
   pieces: { [pieceName: string] : Piece } = {};
   pieceMap: { [coords: string] : { mapName: string, pieceName: string} } = {};
@@ -61,7 +64,7 @@ export default class Map {
   getOpenGridLocation(): { xy: [number, number], gridPos: [number, number] } {
     let coords = Object.keys(this.getOpenGridSpaces());
     if (coords.length > 0) {
-      let coord = coords[Math.floor(coords.length * Math.random())];
+      let coord = coords[Math.floor(coords.length * utils.rand())];
       let x = (Math.floor(parseInt(coord.split(',')[0])) * TILE_SIZE);
       let y = (Math.floor(parseInt(coord.split(',')[1])) * TILE_SIZE);
       return {xy: [x, y], gridPos: [Math.floor(parseInt(coord.split(',')[0])),
@@ -238,6 +241,29 @@ export default class Map {
       containers.tilemap.addFrame(PIXI.utils.TextureCache[piece.spriteNames[0]],
         (piece.box.x/3), (piece.box.y/3));
     }
+  }
+
+  createAndDisplayPieceItem(itemTypeName: string, coord: string, id: number,
+    itemTypes: { [typeName: string] : ItemType }, containers: {
+      main: PIXI.Container,
+      tilemap: PIXI.tilemap.CompositeRectTileLayer;
+      player: PIXI.Container;
+    },
+    sprites: { [spriteName: string] : PIXI.Sprite }) {
+    let x = (Math.floor(parseInt(coord.split(',')[0])) * TILE_SIZE);
+    let y = (Math.floor(parseInt(coord.split(',')[1])) * TILE_SIZE);
+    let piece = itemTypes[itemTypeName].createPiece(id,
+      [parseInt(coord.split(',')[0]), parseInt(coord.split(',')[1])], [x, y]);
+    this.piecesItem[itemTypeName + ',' + id] = piece;
+    this.pieceMap[(piece.gridPos[0] + ',' + piece.gridPos[1])] =
+      {mapName: 'piecesItem', pieceName: (itemTypeName + ',' + id)};
+
+    let newSprite = new PIXI.Sprite(PIXI.utils
+      .TextureCache[itemTypes[itemTypeName].sceneSprite]);
+    newSprite.x = piece.box.x/3;
+    newSprite.y = piece.box.y/3;
+    sprites[itemTypes[itemTypeName].sceneSprite + ',' + id] = newSprite;
+    containers.main.addChild(newSprite);
   }
 
   hidePiece(piece: any,

@@ -26,6 +26,7 @@ import { pieceTypes } from '../../instances/piece_types/index';
 import { piecePlayer } from '../../instances/piece_types/player';
 import { pixiContainers } from '../../instances/pixi_containers';
 const pc = pixiContainers;
+import { utils } from '../../instances/utils';
 import { PieceTypeNames } from '../../enums/piece_type_names';
 import { TILE_SIZE } from '../../constants';
 
@@ -66,7 +67,7 @@ export default function init() {
 
 function loadPlayTextures() : Promise<boolean> {
   return new Promise((resolve) => {
-    pixiLoader.add(["player.json", "forestworld.json", "particles.json"])
+    pixiLoader.add(["player.json", "forestworld.json", "particles.json", "items.json"])
     .load(() => {
       createMainContainer();
       createPlayerContainer();
@@ -85,7 +86,7 @@ function loadPlayTextures() : Promise<boolean> {
 
 function loadEditTextures() {
   return new Promise((resolve) => {
-    pixiLoader.add(["player.json", "forestworld.json", "particles.json"])
+    pixiLoader.add(["player.json", "forestworld.json", "particles.json", "items.json"])
     .load(() => {
       createMainContainer();
       createTilemap();
@@ -108,7 +109,7 @@ function createPiecesDestructable(numDestr: number) {
   for (let index = 0; index < numDestr; index++) {
     let location = map.getOpenGridLocation();
     let pieceTypeName = PieceTypeNames.BUSH;
-    if (Math.random() < 0.25) {
+    if (utils.rand() < 0.25) {
       pieceTypeName = PieceTypeNames.STONE_SLATE_M;
     }
     map.createAndDisplayPiece(pieceTypeName,
@@ -120,7 +121,7 @@ function createPiecesDestructable(numDestr: number) {
 export function createPiecesBackgroundWhereEmpty() {
   let openCoords = Object.keys(map.getOpenGridSpaces());
   openCoords.map((coord, index) => {
-    if (Math.random() < 0.25) {
+    if (utils.rand() < 0.25) {
       map.createAndDisplayPiece(PieceTypeNames.DIRT_SM, coord, index, pieceTypes,
         pc, sprites);
     }

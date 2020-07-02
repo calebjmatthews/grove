@@ -2,36 +2,32 @@ import * as PIXI from 'pixi.js';
 import ParticleGroup from '../../../models/particle_group';
 import { sprites } from '../../../instances/sprites';
 import { pixiContainers } from '../../../instances/pixi_containers';
+import { utils } from '../../../instances/utils';
 import { ParticleTypes } from '../../../enums/particle_types';
 import { PieceTypeNames } from '../../../enums/piece_type_names';
 import { TILE_SIZE } from '../../../constants';
-
-var seed = 1337 ^ 0xDEADBEEF; // 32-bit seed with optional XOR value
-// Pad seed with Phi, Pi and E.
-// https://en.wikipedia.org/wiki/Nothing-up-my-sleeve_number
-var rand = sfc32(0x9E3779B9, 0x243F6A88, 0xB7E15162, seed);
 
 export function sparkleParticlesCreate(numParticles: number, xy: [number, number],
   spread: number = 1, direction: string = 'up') {
   let spriteFilenames = ['sparklepcl1.png', 'sparklepcl2.png', 'sparklepcl3.png'];
 
   let container = new PIXI.ParticleContainer(1000, { tint: true });
-  let containerId = Math.floor(Math.random() * 10000000);
+  let containerId = Math.floor(utils.rand() * 10000000);
   let spriteNames: string[] = [];
   let spriteProps: { [spriteName: string] : any } = {};
 
   for (let index = 0; index < numParticles; index++) {
-    let spriteId = Math.floor(Math.random() * 10000000);
+    let spriteId = Math.floor(utils.rand() * 10000000);
     let spriteFilename = spriteFilenames
-      [Math.floor((Math.random() * spriteFilenames.length))];
+      [Math.floor((utils.rand() * spriteFilenames.length))];
     let spriteName = (spriteFilename + ',' + spriteId);
-    let vy = -(Math.random() * 1.5);
+    let vy = -(utils.rand() * 1.5);
     if (direction == 'down') {
       vy = -vy
     }
     let spriteProp: any = {
-      x: -((TILE_SIZE / 3) * spread) + (rand() * (TILE_SIZE/2) * spread),
-      y: -((TILE_SIZE / 3) * spread) + (rand() * (TILE_SIZE/2) * spread),
+      x: -((TILE_SIZE / 3) * spread) + (utils.rand() * (TILE_SIZE/2) * spread),
+      y: -((TILE_SIZE / 3) * spread) + (utils.rand() * (TILE_SIZE/2) * spread),
       vy: vy
     }
     let particleSprite = new PIXI.Sprite(PIXI.utils.TextureCache[spriteFilename]);
@@ -57,7 +53,7 @@ export function sparkleParticlesCreate(numParticles: number, xy: [number, number
     age: 0,
     animate: (pg: ParticleGroup, delta: number) => {
       pg.spriteNames.map((spriteName: string, index) => {
-        sprites[spriteName].alpha *= (1 - (0.2 * rand()));
+        sprites[spriteName].alpha *= (1 - (0.2 * utils.rand()));
         if (sprites[spriteName].alpha <= 0.05) {
           sprites[spriteName].alpha = ((pg.maxAge - pg.age) / pg.maxAge);
         }
@@ -72,29 +68,4 @@ export function sparkleParticlesCreate(numParticles: number, xy: [number, number
   });
 
   return particleGroup;
-}
-
-function xmur3(str: string) {
-    for(var i = 0, h = 1779033703 ^ str.length; i < str.length; i++)
-        h = Math.imul(h ^ str.charCodeAt(i), 3432918353),
-        h = h << 13 | h >>> 19;
-    return function() {
-        h = Math.imul(h ^ h >>> 16, 2246822507);
-        h = Math.imul(h ^ h >>> 13, 3266489909);
-        return (h ^= h >>> 16) >>> 0;
-    }
-}
-
-function sfc32(a, b, c, d) {
-    return function() {
-      a >>>= 0; b >>>= 0; c >>>= 0; d >>>= 0;
-      var t = (a + b) | 0;
-      a = b ^ b >>> 9;
-      b = c + (c << 3) | 0;
-      c = (c << 21 | c >>> 11);
-      d = d + 1 | 0;
-      t = t + d | 0;
-      c = c + t | 0;
-      return (t >>> 0) / 4294967296;
-    }
 }

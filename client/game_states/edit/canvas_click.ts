@@ -5,6 +5,7 @@ import { sprites } from '../../instances/sprites';
 import { pixiContainers } from '../../instances/pixi_containers';
 import { pieceTypes } from '../../instances/piece_types';
 import { PieceTypeNames } from '../../enums/piece_type_names';
+import { utils } from '../../instances/utils';
 
 export function handleCanvasClick() {
   let canvas = document.getElementsByTagName('canvas')[0];
@@ -17,7 +18,7 @@ export function handleCanvasClick() {
         map.destroyPiece(selPiece, pixiContainers, sprites);
       }
       if (pieceTypeNameSel != 'Delete') {
-        let newId = Math.floor(Math.random() * 10000000);
+        let newId = Math.floor(utils.rand() * 10000000);
         map.createAndDisplayPiece(pieceTypeNameSel, (gridPos[0] + ',' + gridPos[1]),
           newId, pieceTypes, pixiContainers, sprites);
       }

@@ -1,6 +1,7 @@
 import Piece from './piece';
 import AnimationStep from './animation_step';
 import Box from './box';
+import { utils } from '../instances/utils';
 
 export default class PieceAnimated extends Piece implements PieceAnimatedInterface {
   animationSteps: AnimationStep[];
@@ -31,7 +32,7 @@ export default class PieceAnimated extends Piece implements PieceAnimatedInterfa
 
   setRandomAge() {
     let cAnimationStep = this.animationSteps[this.animationCurrrent];
-    this.animationAge = Math.floor(Math.random() * cAnimationStep.duration);
+    this.animationAge = Math.floor(utils.rand() * cAnimationStep.duration);
   }
 
   getCurrentSpriteName() {

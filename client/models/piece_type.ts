@@ -2,6 +2,7 @@ import Piece from './piece';
 import PieceAnimated from './piece_animated';
 import Box from './box';
 import AnimationStep from './animation_step';
+import { utils } from '../instances/utils';
 import { TILE_SIZE } from '../constants';
 
 export default class PieceType implements PieceTypeInterface {
@@ -44,7 +45,7 @@ export default class PieceType implements PieceTypeInterface {
       this.special.map((special, index) => {
         piece.special[index] = Object.assign({}, special);
         if (piece.special[index].name == 'sparkle') {
-          piece.special[index].value = Math.floor(Math.random() * (special.value-1)) + 1;
+          piece.special[index].value = Math.floor(utils.rand() * (special.value-1)) + 1;
         }
       });
     }

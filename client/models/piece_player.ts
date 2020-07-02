@@ -1,6 +1,7 @@
 import PieceDirectional from './piece_directional';
 import AnimationStep from './animation_step';
 import Box from './box';
+import { utils } from '../instances/utils';
 import { Directions } from '../enums/directions';
 import { PlayerStatuses } from '../enums/player_statuses';
 
@@ -69,10 +70,10 @@ export default class PiecePlayer extends PieceDirectional implements
       else {
         this.directionCurrent = direction;
         let newStepIndex = Math.floor(this.directionAnimMap[direction].length
-          * Math.random());
+          * utils.rand());
         this.animationCurrrent = newStepIndex
         this.animationAge = Math.floor(this.directionAnimMap[direction]
-          [newStepIndex].duration * Math.random());
+          [newStepIndex].duration * utils.rand());
         return newStepIndex;
       }
       break;
