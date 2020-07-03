@@ -37,6 +37,7 @@ export default class ItemType implements ItemTypeInterface {
       collidable: false,
       breakable: false,
       durability: null,
+      grabbable: false,
       animated: false,
       spriteNames: [this.sceneSprite]
     });

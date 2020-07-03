@@ -7,7 +7,6 @@ import { pixiContainers } from '../../instances/pixi_containers';
 import { pieceTypes } from '../../instances/piece_types';
 import { itemTypes } from '../../instances/item_types';
 import { utils } from '../../instances/utils';
-import { noteItemPickup } from './item_note';
 import { rubbleParticlesCreate } from './particle/rubble';
 import { sparkleParticlesCreate } from './particle/sparkle';
 import { PieceTypeNames } from '../../enums/piece_type_names';
@@ -51,11 +50,11 @@ function destroyTarget(targetPiece: Piece, pMap: Map) {
     || targetPiece.typeName == PieceTypeNames.BUSH_S) {
     let quantity = Math.floor(utils.rand()*3);
     if (quantity > 0) {
-      pMap.createAndDisplayPieceItem(ItemTypeNames.SCRAP_WOOD,
-        (targetPiece.gridPos[0] + ',' + targetPiece.gridPos[1]),
-        (utils.rand() * 10000000), itemTypes, pixiContainers, sprites);
-      player.addToInventory(ItemTypeNames.SCRAP_WOOD, quantity);
-      noteItemPickup(ItemTypeNames.SCRAP_WOOD, quantity);
+      for (let loop = 0; loop < quantity; loop++) {
+        pMap.createAndDisplayPieceItem(ItemTypeNames.SCRAP_WOOD,
+          (targetPiece.gridPos[0] + ',' + targetPiece.gridPos[1]),
+          (utils.rand() * 10000000), itemTypes, pixiContainers, sprites);
+      }
     }
     particleGroup = rubbleParticlesCreate(10,
       [(targetPiece.box.x + targetPiece.box.width/2),

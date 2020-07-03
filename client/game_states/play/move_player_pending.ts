@@ -13,7 +13,7 @@ export function movePlayerPending(delta: number) {
     && map.piecePlayer.statusCurrent == PlayerStatuses.NORMAL) {
     pendingBox.x += (pendingBox.vx * (1 + delta));
     pendingBox.y += (pendingBox.vy * (1 + delta));
-    let collisions = map.detectCollision(pendingBox);
+    let collisions = map.detectPieceCollision(pendingBox);
     if (collisions != null) {
       collisions.map((collision) => {
         switch(collision.direction) {
@@ -36,6 +36,6 @@ export function movePlayerPending(delta: number) {
       });
     }
   }
-  
+
   return pendingBox;
 }

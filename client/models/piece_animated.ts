@@ -49,6 +49,7 @@ interface PieceAnimatedInterface {
   collidable: boolean;
   breakable: boolean;
   durability: number;
+  grabbable: boolean;
   animated: boolean;
   spriteNames: string[];
 

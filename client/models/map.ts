@@ -127,7 +127,7 @@ export default class Map {
     });
   }
 
-  detectCollision(box: Box) : Collision[] {
+  detectPieceCollision(box: Box) : Collision[] {
     let collisions: Collision[] = [];
     let gridPos = this.getGridPos([(box.x), (box.y)]);
     let neighbors = this.getNeighbors(gridPos, 1);
@@ -149,6 +149,23 @@ export default class Map {
       return collisions
     }
     return null;
+  }
+
+  detectItemCollision(box: Box) {
+    let itemsGrabbed: Piece[] = [];
+    Object.keys(this.piecesItem).map((id) => {
+      let item = this.piecesItem[id];
+      if (item.grabbable) {
+        let tBox = item.box;
+        if (box.x < tBox.x + tBox.width &&
+          box.x + box.width > tBox.x &&
+          box.y < tBox.y + tBox.height &&
+          box.y + box.height > tBox.y) {
+          itemsGrabbed.push(item);
+        }
+      }
+    });
+    return itemsGrabbed;
   }
 
   agePlayEvents() {
