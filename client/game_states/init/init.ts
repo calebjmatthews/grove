@@ -6,8 +6,8 @@ import Piece from '../../models/piece';
 import edit from '../edit/edit';
 import play from '../play/play';
 import scene_select from '../scene_select/scene_select';
-import { createMainContainer, createPlayerContainer, createTilemap }
-  from './containers';
+import { createMainContainer, createPlayerContainer, createTilemap,
+  createItemContainer } from './containers';
 import { createKeyboardPlay } from './keyboard_play';
 import { createKeyboardEdit } from './keyboard_edit';
 import { createPalatte } from '../edit/palatte';
@@ -72,6 +72,7 @@ function loadPlayTextures() : Promise<boolean> {
       createMainContainer();
       createPlayerContainer();
       createTilemap();
+      createItemContainer();
       createPiecesDestructable((map.gridWidth * map.gridHeight) / 5);
       createPiecesBackgroundWhereEmpty();
       createPiecePlayer();

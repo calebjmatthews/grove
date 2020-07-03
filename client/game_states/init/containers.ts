@@ -39,3 +39,9 @@ export function createTilemap() {
   pixiContainers.tilemap = new PIXI.tilemap.CompositeRectTileLayer();
   pixiContainers.main.addChild(pixiContainers.tilemap);
 }
+
+export function createItemContainer() {
+  let itemContainer = new PIXI.ParticleContainer();
+  pixiContainers.item = itemContainer;
+  pixiContainers.main.addChild(pixiContainers.item);
+}

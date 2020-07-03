@@ -245,9 +245,7 @@ export default class Map {
 
   createAndDisplayPieceItem(itemTypeName: string, coord: string, id: number,
     itemTypes: { [typeName: string] : ItemType }, containers: {
-      main: PIXI.Container,
-      tilemap: PIXI.tilemap.CompositeRectTileLayer;
-      player: PIXI.Container;
+      item: PIXI.ParticleContainer;
     },
     sprites: { [spriteName: string] : PIXI.Sprite }) {
     let x = (Math.floor(parseInt(coord.split(',')[0])) * TILE_SIZE);
@@ -263,7 +261,7 @@ export default class Map {
     newSprite.x = piece.box.x/3;
     newSprite.y = piece.box.y/3;
     sprites[itemTypes[itemTypeName].sceneSprite + ',' + id] = newSprite;
-    containers.main.addChild(newSprite);
+    containers.item.addChild(newSprite);
   }
 
   hidePiece(piece: any,
