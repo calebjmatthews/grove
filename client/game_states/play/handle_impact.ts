@@ -33,7 +33,9 @@ export function handleImpact(targetPiece: Piece, pMap: Map) {
 function chipTarget(targetPiece: Piece, pMap: Map) {
   let particleGroup: ParticleGroup = null;
   if (targetPiece.typeName == PieceTypeNames.BUSH
-    || targetPiece.typeName == PieceTypeNames.BUSH_S) {
+    || targetPiece.typeName == PieceTypeNames.BUSH_S
+    || targetPiece.typeName == PieceTypeNames.GRASS_BUNCH
+    || targetPiece.typeName == PieceTypeNames.GRAIN_BUNCH) {
     particleGroup = rubbleParticlesCreate(3,
       [(targetPiece.box.x + targetPiece.box.width/2),
         (targetPiece.box.y + targetPiece.box.height/2)]);
@@ -47,7 +49,9 @@ function destroyTarget(targetPiece: Piece, pMap: Map) {
   pMap.destroyPiece(targetPiece, pixiContainers, sprites);
   let particleGroup: ParticleGroup = null;
   if (targetPiece.typeName == PieceTypeNames.BUSH
-    || targetPiece.typeName == PieceTypeNames.BUSH_S) {
+    || targetPiece.typeName == PieceTypeNames.BUSH_S
+    || targetPiece.typeName == PieceTypeNames.GRASS_BUNCH
+    || targetPiece.typeName == PieceTypeNames.GRAIN_BUNCH) {
     let quantity = Math.floor(utils.rand()*3);
     if (quantity > 0) {
       for (let loop = 0; loop < quantity; loop++) {

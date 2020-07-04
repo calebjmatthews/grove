@@ -6,17 +6,47 @@
 		"sourceSize": {"w":16,"h":16}
 	},
 	"blueberries_sm.png": {
-		"frame": {"x":17, "y":17, "w":12, "h":12},
+		"frame": {"x":47, "y":0, "w":12, "h":12},
 		"spriteSourceSize": {"x":0,"y":0,"w":12,"h":12},
 		"sourceSize": {"w":12,"h":12}
 	},
 	"grain.png": {
+		"frame": {"x":17, "y":34, "w":16, "h":16},
+		"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
+		"sourceSize": {"w":16,"h":16}
+	},
+	"grain_seed.png": {
+		"frame": {"x":17, "y":17, "w":16, "h":16},
+		"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
+		"sourceSize": {"w":16,"h":16}
+	},
+	"grain_seed_sm.png": {
+		"frame": {"x":34, "y":39, "w":12, "h":12},
+		"spriteSourceSize": {"x":0,"y":0,"w":12,"h":12},
+		"sourceSize": {"w":12,"h":12}
+	},
+	"grain_sm.png": {
+		"frame": {"x":34, "y":13, "w":12, "h":12},
+		"spriteSourceSize": {"x":0,"y":0,"w":12,"h":12},
+		"sourceSize": {"w":12,"h":12}
+	},
+	"grass_bundle.png": {
 		"frame": {"x":0, "y":17, "w":16, "h":16},
 		"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
 		"sourceSize": {"w":16,"h":16}
 	},
-	"grain_sm.png": {
-		"frame": {"x":30, "y":17, "w":12, "h":12},
+	"grass_bundle_sm.png": {
+		"frame": {"x":47, "y":13, "w":12, "h":12},
+		"spriteSourceSize": {"x":0,"y":0,"w":12,"h":12},
+		"sourceSize": {"w":12,"h":12}
+	},
+	"grass_seed.png": {
+		"frame": {"x":0, "y":34, "w":16, "h":16},
+		"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
+		"sourceSize": {"w":16,"h":16}
+	},
+	"grass_seed_sm.png": {
+		"frame": {"x":34, "y":0, "w":12, "h":12},
 		"spriteSourceSize": {"x":0,"y":0,"w":12,"h":12},
 		"sourceSize": {"w":12,"h":12}
 	},
@@ -26,7 +56,7 @@
 		"sourceSize": {"w":16,"h":16}
 	},
 	"wood_sm.png": {
-		"frame": {"x":17, "y":30, "w":12, "h":12},
+		"frame": {"x":34, "y":26, "w":12, "h":12},
 		"spriteSourceSize": {"x":0,"y":0,"w":12,"h":12},
 		"sourceSize": {"w":12,"h":12}
 	}
@@ -34,7 +64,7 @@
 },
 "meta": {
 	"image": "items.png",
-	"size": {"w": 43, "h": 43},
+	"size": {"w": 60, "h": 60},
 	"scale": "1"
 }
 }

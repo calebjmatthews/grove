@@ -12,5 +12,5 @@ export let bush = new PieceType({
     new AnimationStep({ spriteIndex: 0, duration: 400 }),
     new AnimationStep({ spriteIndex: 1, duration: 20 })
   ],
-  spriteNames: ["bush_u.png", "bush_d.png"]
+  spriteNames: ["bush_new.png", "bush_d.png"]
 })

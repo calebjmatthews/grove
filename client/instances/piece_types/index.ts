@@ -4,6 +4,8 @@ import { grass, dirtSm, dirtN, dirtNE, dirtE, dirtSE, dirtS, dirtSW, dirtW, dirt
   dirtM, dirtH, dirtV } from './ground';
 import { bush } from './bush';
 import { bush_s } from './bush_s';
+import { grassBunch } from './grass_bunch';
+import { grainBunch } from './grain_bunch';
 import { tree_nw, tree_sw, tree_ne, tree_se } from './tree';
 import { circleGlyphNE, circleGlyphSE, circleGlyphSW, circleGlyphNW }
   from './circle_glyph';
@@ -21,7 +23,8 @@ import { tileCracked, tileCrowns, tileFace, tileGlyphCracked, tileHatch, tileRec
 
 let pieceTypes: { [typeName: string] : PieceType } = {};
 [grass, dirtSm, dirtN, dirtNE, dirtE, dirtSE, dirtS, dirtSW, dirtW, dirtNW,
-  dirtM, dirtH, dirtV, bush, bush_s, tree_nw, tree_sw, tree_ne, tree_se, circleGlyphNE,
+  dirtM, dirtH, dirtV, bush, bush_s, grassBunch, grainBunch, tree_nw, tree_sw, tree_ne,
+  tree_se, circleGlyphNE,
   circleGlyphSE, circleGlyphSW, circleGlyphNW, barN, barS, doorwayNW, doorwayNE,
   doorwaySE, doorwaySW, stairsSmN, stairsSmS, stairsNW, stairsN, stairsNE, stairsSW,
   stairsS, stairsSE, stoneRailNW, stoneRailW, stoneRailSW, stoneRailNE, stoneRailE,

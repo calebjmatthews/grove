@@ -68,12 +68,12 @@ Burst breaking:
 - If a twinkle bush is hit on one through four within the set the twinkles with dissipate, doing nothing
 
 Planes:
-- Dark, cozy forest with constant hunger
+- Dark, cozy forest with constant hunger (Forest called Starving Darkness?)
 - Bright white and gold rocky land with flowing bright blue rivers and waterfalls
 - Neon city with creatures that attack, cannot bring anything in
 - Cloud-covered, floating sunset land where food grants flight
 - Nighttime desert with glowing sands where food gives exponential strength
 
 Other ideas:
-- Devas which can perform work (harvesting, breeding) in exchange for food and a place to live (statue)
+- Devas which can perform work (harvesting, breeding, watering, cooking) in exchange for food and a place to live (statue)
 - The "Rambling Linguist" whose work can be found scattered around the planes and translates Deva language
