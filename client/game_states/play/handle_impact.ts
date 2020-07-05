@@ -7,10 +7,10 @@ import { pixiContainers } from '../../instances/pixi_containers';
 import { pieceTypes } from '../../instances/piece_types';
 import { itemTypes } from '../../instances/item_types';
 import { utils } from '../../instances/utils';
-import { rubbleParticlesCreate } from './particle/rubble';
-import { sparkleParticlesCreate } from './particle/sparkle';
+import { particlesCreate } from './particle/index';
 import { PieceTypeNames } from '../../enums/piece_type_names';
 import { ItemTypeNames } from '../../enums/item_type_names';
+import { ParticleTypes } from '../../enums/particle_types';
 
 export function handleImpact(targetPiece: Piece, pMap: Map) {
   if (targetPiece.breakable == true) {
@@ -36,7 +36,7 @@ function chipTarget(targetPiece: Piece, pMap: Map) {
     || targetPiece.typeName == PieceTypeNames.BUSH_S
     || targetPiece.typeName == PieceTypeNames.GRASS_BUNCH
     || targetPiece.typeName == PieceTypeNames.GRAIN_BUNCH) {
-    particleGroup = rubbleParticlesCreate(3,
+    particleGroup = particlesCreate(ParticleTypes.RUBBLE_WOOD, 3,
       [(targetPiece.box.x + targetPiece.box.width/2),
         (targetPiece.box.y + targetPiece.box.height/2)]);
   }
@@ -60,7 +60,7 @@ function destroyTarget(targetPiece: Piece, pMap: Map) {
           (utils.rand() * 10000000), itemTypes, pixiContainers, sprites);
       }
     }
-    particleGroup = rubbleParticlesCreate(10,
+    particleGroup = particlesCreate(ParticleTypes.RUBBLE_WOOD, 10,
       [(targetPiece.box.x + targetPiece.box.width/2),
         (targetPiece.box.y + targetPiece.box.height/2)]);
   }
@@ -83,14 +83,14 @@ function checkSparkleBlast(targetPiece: Piece, pMap: Map) {
             destroyTarget(nPiece, pMap);
           }
         });
-        let particleGroup = sparkleParticlesCreate(20,
+        let particleGroup = particlesCreate(ParticleTypes.SPARKLE, 20,
           [(targetPiece.box.x + targetPiece.box.width/2),
             (targetPiece.box.y + targetPiece.box.height/2)], 3);
         pMap.particleGroups.push(particleGroup);
       }
       else {
         targetPiece.special[sparkleSpecial.index].value = null;
-        let particleGroup = sparkleParticlesCreate(3,
+        let particleGroup = particlesCreate(ParticleTypes.SPARKLE, 3,
           [(targetPiece.box.x + targetPiece.box.width/2),
             (targetPiece.box.y + targetPiece.box.height/2)], 1, 'down');
         pMap.particleGroups.push(particleGroup);
@@ -106,14 +106,14 @@ function incrementSparkles(pMap: Map) {
     let piece = pMap[mapObj.mapName][mapObj.pieceName];
     let sparkleSpecial = piece.getSpecial('sparkle');
     if (sparkleSpecial.value == 20) {
-      let particleGroup = sparkleParticlesCreate(5,
+      let particleGroup = particlesCreate(ParticleTypes.SPARKLE, 5,
         [(piece.box.x + piece.box.width/2),
           (piece.box.y + piece.box.height/2)]);
       pMap.particleGroups.push(particleGroup);
       piece.special[sparkleSpecial.index].value = 1;
     }
     else if (sparkleSpecial.value == 18) {
-      let particleGroup = sparkleParticlesCreate(1,
+      let particleGroup = particlesCreate(ParticleTypes.SPARKLE, 1,
         [(piece.box.x + piece.box.width/2),
           (piece.box.y + piece.box.height/2)]);
       pMap.particleGroups.push(particleGroup);
