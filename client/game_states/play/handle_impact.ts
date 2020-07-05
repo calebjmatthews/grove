@@ -13,11 +13,11 @@ import { ItemTypeNames } from '../../enums/item_type_names';
 import { ParticleTypes } from '../../enums/particle_types';
 
 export function handleImpact(targetPiece: Piece, pMap: Map) {
-  if (targetPiece.breakable == true) {
+  if (targetPiece.breakable != null) {
     let sparkleRes = checkSparkleBlast(targetPiece, pMap);
     if (sparkleRes == false) {
-      targetPiece.durability--;
-      if (targetPiece.durability <= 0) {
+      targetPiece.breakable.durability--;
+      if (targetPiece.breakable.durability <= 0) {
         pMap = destroyTarget(targetPiece, pMap);
       }
       else {

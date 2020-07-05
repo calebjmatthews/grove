@@ -53,8 +53,7 @@ let piecePlayer = new PiecePlayer({
     boxName: PieceTypeNames.PLAYER
   }),
   collidable: true,
-  breakable: false,
-  durability: null,
+  breakable: null,
   grabbable: false,
   animated: true,
   spriteNames: ["jplayer25.png", "jplayer1.png", "jplayer2.png", "jplayer8.png",

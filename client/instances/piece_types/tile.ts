@@ -6,8 +6,7 @@ const PTN = PieceTypeNames;
 let tt = new PieceType({
   name: 'Name missing',
   collidable: false,
-  breakable: false,
-  durability: 0,
+  breakable: null,
   animated: false,
   animationSteps: null,
   spriteNames: null

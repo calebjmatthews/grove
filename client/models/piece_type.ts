@@ -2,14 +2,14 @@ import Piece from './piece';
 import PieceAnimated from './piece_animated';
 import Box from './box';
 import AnimationStep from './animation_step';
+import Breakable from './breakable';
 import { utils } from '../instances/utils';
 import { TILE_SIZE } from '../constants';
 
 export default class PieceType implements PieceTypeInterface {
   name: string;
   collidable: boolean;
-  breakable: boolean;
-  durability: number;
+  breakable: Breakable;
   special?: any[];
   animated: boolean;
   animationSteps: AnimationStep[];
@@ -34,8 +34,7 @@ export default class PieceType implements PieceTypeInterface {
         boxName: this.name
       }),
       collidable: this.collidable,
-      breakable: this.breakable,
-      durability: this.durability,
+      breakable: Object.assign({}, this.breakable),
       grabbable: false,
       animated: this.animated,
       spriteNames: this.spriteNames
@@ -67,8 +66,7 @@ export default class PieceType implements PieceTypeInterface {
 interface PieceTypeInterface {
   name: string;
   collidable: boolean;
-  breakable: boolean;
-  durability: number;
+  breakable: Breakable;
   special?: any[];
   animated: boolean;
   animationSteps: AnimationStep[];

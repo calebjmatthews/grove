@@ -1,4 +1,5 @@
 import Box from './box';
+import Breakable from './breakable';
 
 // An object on the stage, represented by a bounding box and one or more sprites
 export default class Piece implements PieceInterface {
@@ -7,8 +8,7 @@ export default class Piece implements PieceInterface {
   gridPos: [number, number];
   box: Box;
   collidable: boolean;
-  breakable: boolean;
-  durability: number;
+  breakable: Breakable;
   grabbable: boolean;
   animated: boolean;
   special?: any[];
@@ -43,8 +43,7 @@ interface PieceInterface {
   gridPos: [number, number];
   box: Box;
   collidable: boolean;
-  breakable: boolean;
-  durability: number;
+  breakable: Breakable;
   grabbable: boolean;
   animated: boolean;
   special?: any;

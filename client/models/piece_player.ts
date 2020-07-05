@@ -1,6 +1,7 @@
 import PieceDirectional from './piece_directional';
 import AnimationStep from './animation_step';
 import Box from './box';
+import Breakable from './breakable';
 import { utils } from '../instances/utils';
 import { Directions } from '../enums/directions';
 import { PlayerStatuses } from '../enums/player_statuses';
@@ -100,8 +101,7 @@ interface PiecePlayerInterface {
   gridPos: [number, number];
   box: Box;
   collidable: boolean;
-  breakable: boolean;
-  durability: number;
+  breakable: Breakable;
   grabbable: boolean;
   animated: boolean;
   spriteNames: string[];

@@ -1,6 +1,7 @@
 import Piece from './piece';
 import AnimationStep from './animation_step';
 import Box from './box';
+import Breakable from './breakable';
 import { utils } from '../instances/utils';
 
 export default class PieceAnimated extends Piece implements PieceAnimatedInterface {
@@ -47,8 +48,7 @@ interface PieceAnimatedInterface {
   gridPos: [number, number];
   box: Box;
   collidable: boolean;
-  breakable: boolean;
-  durability: number;
+  breakable: Breakable;
   grabbable: boolean;
   animated: boolean;
   spriteNames: string[];
