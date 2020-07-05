@@ -5,7 +5,8 @@ import { ParticleTypes } from '../../enums/particle_types';
 import { ItemTypeNames } from '../../enums/item_type_names';
 
 let drops: {[ itemName: string] : [number, number]} = {};
-drops[ItemTypeNames.SCRAP_WOOD] = [0, 2];
+drops[ItemTypeNames.GRAIN_BUNDLE] = [0, 2];
+drops[ItemTypeNames.GRAIN_SEED] = [0, 0.5];
 export let grainBunch = new PieceType({
   name: PieceTypeNames.GRAIN_BUNCH,
   collidable: true,

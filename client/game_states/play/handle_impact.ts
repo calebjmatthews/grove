@@ -48,25 +48,49 @@ function chipTarget(targetPiece: Piece, pMap: Map) {
 function destroyTarget(targetPiece: Piece, pMap: Map) {
   pMap.destroyPiece(targetPiece, pixiContainers, sprites);
   let particleGroup: ParticleGroup = null;
-  if (targetPiece.typeName == PieceTypeNames.BUSH
-    || targetPiece.typeName == PieceTypeNames.BUSH_S
-    || targetPiece.typeName == PieceTypeNames.GRASS_BUNCH
-    || targetPiece.typeName == PieceTypeNames.GRAIN_BUNCH) {
-    let quantity = Math.floor(utils.rand()*3);
-    if (quantity > 0) {
-      for (let loop = 0; loop < quantity; loop++) {
-        pMap.createAndDisplayPieceItem(ItemTypeNames.SCRAP_WOOD,
+
+  let drops = determineDrops(targetPiece.breakable.drops);
+  if (drops != null) {
+    Object.keys(drops).map((itemName) => {
+      for (let loop = 0; loop < drops[itemName]; loop++) {
+        pMap.createAndDisplayPieceItem(itemName,
           (targetPiece.gridPos[0] + ',' + targetPiece.gridPos[1]),
           (utils.rand() * 10000000), itemTypes, pixiContainers, sprites);
       }
-    }
-    particleGroup = particlesCreate(ParticleTypes.RUBBLE_WOOD, 10,
-      [(targetPiece.box.x + targetPiece.box.width/2),
-        (targetPiece.box.y + targetPiece.box.height/2)]);
+    });
   }
 
+  particleGroup = particlesCreate(targetPiece.breakable.particleType, 10,
+    [(targetPiece.box.x + targetPiece.box.width/2),
+      (targetPiece.box.y + targetPiece.box.height/2)]);
   pMap.particleGroups.push(particleGroup);
   return pMap;
+}
+
+function determineDrops(dropProbs: {[ itemName: string] : [number, number]}) {
+  let drops: {[ itemName: string] : number} = {};
+  Object.keys(dropProbs).map((itemName) => {
+    let dropProb = dropProbs[itemName];
+    let rand = utils.rand();
+    let quantity = 0;
+    if (dropProb[0] == 0 && dropProb[1] < 1) {
+      if (rand <= dropProb[1]) {
+        quantity = 1;
+      }
+    }
+    else {
+      quantity = Math.round(utils.rand() * (dropProb[1] - dropProb[0])) + dropProb[0];
+    }
+    if (quantity > 0) {
+      drops[itemName] = quantity;
+    }
+  });
+  if (Object.keys(drops).length > 0) {
+    return drops;
+  }
+  else {
+    return null;
+  }
 }
 
 function checkSparkleBlast(targetPiece: Piece, pMap: Map) {

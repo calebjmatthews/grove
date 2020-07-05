@@ -10,7 +10,7 @@
 		"spriteSourceSize": {"x":0,"y":0,"w":12,"h":12},
 		"sourceSize": {"w":12,"h":12}
 	},
-	"grain.png": {
+	"grain_bundle.png": {
 		"frame": {"x":17, "y":34, "w":16, "h":16},
 		"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
 		"sourceSize": {"w":16,"h":16}
@@ -25,7 +25,7 @@
 		"spriteSourceSize": {"x":0,"y":0,"w":12,"h":12},
 		"sourceSize": {"w":12,"h":12}
 	},
-	"grain_sm.png": {
+	"grain_bundle_sm.png": {
 		"frame": {"x":34, "y":13, "w":12, "h":12},
 		"spriteSourceSize": {"x":0,"y":0,"w":12,"h":12},
 		"sourceSize": {"w":12,"h":12}
