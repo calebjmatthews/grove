@@ -25,13 +25,10 @@ export default class Box {
     return [(this.x + (this.width/2)), (this.y + (this.height/2))]
   }
 
-  compareCenters(box: Box) {
-    let tCenter = this.getCenter();
-    let bCenter = box.getCenter();
-    let xDiff = tCenter[0] - bCenter[0];
-    let yDiff = tCenter[1] - bCenter[1];
-    if (Math.abs(xDiff) > Math.abs(yDiff)) {
-      if (xDiff < 0) {
+  directionBetweenCenters(box: Box) {
+    let diffs = this.distanceBetweenCenters(box);
+    if (Math.abs(diffs[0]) > Math.abs(diffs[1])) {
+      if (diffs[0] < 0) {
         return Directions.LEFT;
       }
       else {
@@ -39,7 +36,7 @@ export default class Box {
       }
     }
     else {
-      if (yDiff < 0) {
+      if (diffs[1] < 0) {
         return Directions.UP;
       }
       else {
@@ -47,6 +44,14 @@ export default class Box {
       }
     }
     return Directions.UP;
+  }
+
+  distanceBetweenCenters(box: Box) {
+    let tCenter = this.getCenter();
+    let bCenter = box.getCenter();
+    let xDiff = tCenter[0] - bCenter[0];
+    let yDiff = tCenter[1] - bCenter[1];
+    return [xDiff, yDiff];
   }
 }
 

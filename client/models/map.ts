@@ -24,6 +24,7 @@ export default class Map {
   pieceMap: { [coords: string] : { mapName: string, pieceName: string} } = {};
   collisionMap: { [coords: string] : { mapName: string, pieceName: string} } = {};
   sparkleMap: { [coords: string] : { mapName: string, pieceName: string} } = {};
+  itemMap: { [coords: string] : { mapName: string, pieceName: string} } = {};
   playEvents: PlayEvent[] = [];
   particleGroups: ParticleGroup[] = [];
 
@@ -97,6 +98,16 @@ export default class Map {
     }
   }
 
+  getItemByGridPos(gridPos: [number, number]) {
+    let itemMapObj = this.itemMap[gridPos[0] + ',' + gridPos[1]];
+    if (itemMapObj) {
+      return this[itemMapObj.mapName][itemMapObj.pieceName];
+    }
+    else {
+      return null;
+    }
+  }
+
   createPieceMap() {
     this.pieceMap = {};
     this.collisionMap = {};
@@ -139,7 +150,7 @@ export default class Map {
           box.y < tBox.y + tBox.height &&
           box.y + box.height > tBox.y) {
           collisions.push(new Collision({
-            direction: box.compareCenters(tBox),
+            direction: box.directionBetweenCenters(tBox),
             collidesWith: tBox
           }))
         }
@@ -332,15 +343,24 @@ export default class Map {
     });
   }
 
-  getNeighbors(gridPos: [number, number], offset: number) {
+  getNeighbors(gridPos: [number, number], offset: number, type: string = 'piece') {
     let neighbors: any[] = [];
     for (let colOff = -offset; colOff <= offset; colOff++) {
       for (let rowOff = -offset; rowOff <= offset; rowOff++) {
         if (!(colOff == 0 && rowOff == 0)) {
-          let piece =
-            this.getPieceByGridPos([(gridPos[0] + colOff), (gridPos[1] + rowOff)]);
-          if (piece) {
-            neighbors.push(piece);
+          if (type == 'piece') {
+            let piece =
+              this.getPieceByGridPos([(gridPos[0] + colOff), (gridPos[1] + rowOff)]);
+            if (piece) {
+              neighbors.push(piece);
+            }
+          }
+          else if (type == 'item') {
+            let item =
+              this.getItemByGridPos([(gridPos[0] + colOff), (gridPos[1] + rowOff)]);
+            if (item) {
+              neighbors.push(item);
+            }
           }
         }
       }

@@ -55,7 +55,7 @@ function destroyTarget(targetPiece: Piece, pMap: Map) {
       for (let loop = 0; loop < drops[itemName]; loop++) {
         pMap.createAndDisplayPieceItem(itemName,
           (targetPiece.gridPos[0] + ',' + targetPiece.gridPos[1]),
-          (utils.rand() * 10000000), itemTypes, pixiContainers, sprites);
+          (Math.floor(utils.rand() * 10000000)), itemTypes, pixiContainers, sprites);
       }
     });
   }
