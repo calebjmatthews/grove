@@ -7,12 +7,14 @@ let pixiContainers: {
   tilemap: PIXI.tilemap.CompositeRectTileLayer;
   player: PIXI.Container;
   item: PIXI.ParticleContainer;
+  ui: PIXI.ParticleContainer;
 } = {
   all: null,
   main: null,
   tilemap: null,
   player: null,
-  item: null
+  item: null,
+  ui: null
 };
 
 export { pixiContainers };

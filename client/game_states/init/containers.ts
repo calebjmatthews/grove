@@ -2,8 +2,10 @@ import * as PIXI from 'pixi.js';
 import 'pixi-tilemap';
 
 import { pixiApp } from '../../instances/pixi_app';
+import { sprites } from '../../instances/sprites';
 import { pixiContainers } from '../../instances/pixi_containers';
 import { PieceTypeNames } from '../../enums/piece_type_names';
+import { UINames } from '../../enums/ui_names';
 import { TILE_SIZE } from '../../constants';
 
 export function createPlayerContainer() {
@@ -44,4 +46,22 @@ export function createItemContainer() {
   let itemContainer = new PIXI.ParticleContainer();
   pixiContainers.item = itemContainer;
   pixiContainers.main.addChild(pixiContainers.item);
+}
+
+export function createUIContainer() {
+  let uiContainer = new PIXI.ParticleContainer();
+  uiContainer.scale = new PIXI.Point(3, 3);
+  pixiContainers.ui = uiContainer;
+  pixiContainers.all.addChild(pixiContainers.ui);
+  let barSprite = new PIXI.Sprite(PIXI.utils.TextureCache['player_bar.png']);
+  barSprite.x = 1;
+  barSprite.y = 1;
+  sprites[UINames.FULLNESS_BAR];
+  pixiContainers.ui.addChild(barSprite);
+  let hideBarSprite = new PIXI.Sprite(PIXI.utils.TextureCache['hiding_bar.png']);
+  hideBarSprite.x = 5;
+  hideBarSprite.y = 5;
+  hideBarSprite.height = 0;
+  sprites[UINames.FULLNESS_HIDE];
+  pixiContainers.ui.addChild(hideBarSprite);
 }

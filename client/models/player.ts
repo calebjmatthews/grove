@@ -1,4 +1,5 @@
 export default class Player implements PlayerInterface {
+  fullness: number;
   inventory: { [itemName: string] : number };
 
   addToInventory(itemName: string, quantity: number) {
@@ -26,6 +27,7 @@ export default class Player implements PlayerInterface {
       Object.assign(this, player);
     }
     else {
+      this.fullness = 100;
       this.inventory = {};
     }
   }

@@ -7,7 +7,7 @@ import edit from '../edit/edit';
 import play from '../play/play';
 import scene_select from '../scene_select/scene_select';
 import { createMainContainer, createPlayerContainer, createTilemap,
-  createItemContainer } from './containers';
+  createItemContainer, createUIContainer } from './containers';
 import { createKeyboardPlay } from './keyboard_play';
 import { createKeyboardEdit } from './keyboard_edit';
 import { createPalatte } from '../edit/palatte';
@@ -67,7 +67,8 @@ export default function init() {
 
 function loadPlayTextures() : Promise<boolean> {
   return new Promise((resolve) => {
-    pixiLoader.add(["player.json", "forestworld.json", "particles.json", "items.json"])
+    pixiLoader.add(["player.json", "forestworld.json", "particles.json", "items.json",
+    "ui.json"])
     .load(() => {
       createMainContainer();
       createPlayerContainer();
@@ -79,6 +80,7 @@ function loadPlayTextures() : Promise<boolean> {
       createKeyboardPlay();
       createSceneButtons();
       createItemNoteContainer();
+      createUIContainer();
       applyOffset(0, true);
       resolve(true);
     });
@@ -87,7 +89,8 @@ function loadPlayTextures() : Promise<boolean> {
 
 function loadEditTextures() {
   return new Promise((resolve) => {
-    pixiLoader.add(["player.json", "forestworld.json", "particles.json", "items.json"])
+    pixiLoader.add(["player.json", "forestworld.json", "particles.json", "items.json",
+    "ui.json"])
     .load(() => {
       createMainContainer();
       createTilemap();
