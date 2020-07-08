@@ -5,6 +5,7 @@ import { ITEM_SIZE } from '../constants';
 
 export default class ItemType implements ItemTypeInterface {
   name: string;
+  value: number;
   menuSprite: string;
   sceneSprite: string;
 
@@ -37,6 +38,7 @@ export default class ItemType implements ItemTypeInterface {
       collidable: false,
       breakable: null,
       grabbable: false,
+      value: this.value,
       animated: false,
       spriteNames: [this.sceneSprite]
     });
@@ -47,6 +49,7 @@ export default class ItemType implements ItemTypeInterface {
 
 interface ItemTypeInterface {
   name: string;
+  value: number;
   menuSprite: string;
   sceneSprite: string;
 }

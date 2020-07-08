@@ -10,6 +10,7 @@ export default class Piece implements PieceInterface {
   collidable: boolean;
   breakable: Breakable;
   grabbable: boolean;
+  value: number;
   animated: boolean;
   special?: any[];
   spriteNames: string[];
@@ -45,6 +46,7 @@ interface PieceInterface {
   collidable: boolean;
   breakable: Breakable;
   grabbable: boolean;
+  value: number;
   animated: boolean;
   special?: any;
   spriteNames: string[];

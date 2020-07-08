@@ -14,8 +14,6 @@ import { ParticleTypes } from '../../enums/particle_types';
 
 export function handleImpact(targetPiece: Piece, pMap: Map) {
   if (targetPiece.breakable != null) {
-    console.log('targetPiece');
-    console.log(targetPiece);
     let sparkleRes = checkSparkleBlast(targetPiece, pMap);
     if (sparkleRes == false) {
       targetPiece.breakable.durability--;

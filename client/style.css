@@ -7,6 +7,17 @@
   flex-direction: column;
   align-items: flex-end;
 }
+#center {
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vh;
+  height: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .button-container {
   padding: 0.5em;
 }

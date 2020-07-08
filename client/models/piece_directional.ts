@@ -76,6 +76,7 @@ interface PieceDirectionalInterface {
   collidable: boolean;
   breakable: Breakable;
   grabbable: boolean;
+  value: number;
   animated: boolean;
   spriteNames: string[];
   animationSteps: AnimationStep[];

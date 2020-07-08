@@ -7,6 +7,7 @@ let bt = new PieceType({
   name: null,
   collidable: true,
   breakable: null,
+  value: null,
   animated: false,
   animationSteps: null,
   spriteNames: null

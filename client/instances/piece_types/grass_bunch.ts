@@ -12,6 +12,7 @@ export let grassBunch = new PieceType({
   collidable: true,
   breakable: new Breakable({ durability: 1, particleType: ParticleTypes.RUBBLE_WOOD,
     drops: drops }),
+  value: null,
   animated: false,
   animationSteps: null,
   spriteNames: ["grass_bunch.png"]

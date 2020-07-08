@@ -13,6 +13,7 @@ export let bush_s = new PieceType({
   breakable: new Breakable({ durability: 3, particleType: ParticleTypes.RUBBLE_WOOD,
     drops: drops }),
   special: [{ index: 0, name: 'sparkle', value: 20 }],
+  value: null,
   animated: false,
   animationSteps: null,
   spriteNames: ["bush_s.png"]

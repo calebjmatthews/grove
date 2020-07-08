@@ -13,6 +13,7 @@ export let bush = new PieceType({
   collidable: true,
   breakable: new Breakable({ durability: 3, particleType: ParticleTypes.RUBBLE_WOOD,
     drops: drops }),
+  value: null,
   animated: true,
   animationSteps: [
     new AnimationStep({ spriteIndex: 0, duration: 400 }),
