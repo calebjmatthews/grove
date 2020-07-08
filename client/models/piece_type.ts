@@ -20,6 +20,7 @@ export default class PieceType implements PieceTypeInterface {
   }
 
   createPiece(id: number, gridPos: [number, number], xy: [number, number]): any {
+    let breakable = (this.breakable) ? Object.assign({}, this.breakable) : null;
     let piece = new Piece({
       typeName: this.name,
       id: id,
@@ -34,7 +35,7 @@ export default class PieceType implements PieceTypeInterface {
         boxName: this.name
       }),
       collidable: this.collidable,
-      breakable: Object.assign({}, this.breakable),
+      breakable: breakable,
       grabbable: false,
       animated: this.animated,
       spriteNames: this.spriteNames

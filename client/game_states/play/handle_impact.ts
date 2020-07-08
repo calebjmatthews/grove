@@ -14,6 +14,8 @@ import { ParticleTypes } from '../../enums/particle_types';
 
 export function handleImpact(targetPiece: Piece, pMap: Map) {
   if (targetPiece.breakable != null) {
+    console.log('targetPiece');
+    console.log(targetPiece);
     let sparkleRes = checkSparkleBlast(targetPiece, pMap);
     if (sparkleRes == false) {
       targetPiece.breakable.durability--;
@@ -32,14 +34,9 @@ export function handleImpact(targetPiece: Piece, pMap: Map) {
 
 function chipTarget(targetPiece: Piece, pMap: Map) {
   let particleGroup: ParticleGroup = null;
-  if (targetPiece.typeName == PieceTypeNames.BUSH
-    || targetPiece.typeName == PieceTypeNames.BUSH_S
-    || targetPiece.typeName == PieceTypeNames.GRASS_BUNCH
-    || targetPiece.typeName == PieceTypeNames.GRAIN_BUNCH) {
-    particleGroup = particlesCreate(ParticleTypes.RUBBLE_WOOD, 3,
-      [(targetPiece.box.x + targetPiece.box.width/2),
-        (targetPiece.box.y + targetPiece.box.height/2)]);
-  }
+  particleGroup = particlesCreate(targetPiece.breakable.particleType, 3,
+    [(targetPiece.box.x + targetPiece.box.width/2),
+      (targetPiece.box.y + targetPiece.box.height/2)]);
 
   pMap.particleGroups.push(particleGroup);
   return pMap;
