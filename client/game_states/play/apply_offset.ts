@@ -3,6 +3,7 @@ import { map } from '../../instances/map';
 import { sprites } from '../../instances/sprites';
 import { pixiContainers } from '../../instances/pixi_containers';
 import { PieceTypeNames } from '../../enums/piece_type_names';
+import { TILE_SIZE } from '../../constants';
 
 export function applyOffset(delta: number, run: boolean = false) {
   let oldOffset = new Offset(map.offset);
@@ -11,6 +12,12 @@ export function applyOffset(delta: number, run: boolean = false) {
     let newOffset = new Offset(map.offset);
     newOffset.x += Math.floor((oldOffset.vx * (1 + delta)));
     newOffset.y += Math.floor((oldOffset.vy * (1 + delta)));
+    if (newOffset.x > 0) { newOffset.x = 0; }
+    let mapWidth = map.gridWidth * TILE_SIZE;
+    if (newOffset.x < -mapWidth) { newOffset.x = -mapWidth; }
+    if (newOffset.y > 0) { newOffset.y = 0; }
+    let mapHeight = map.gridHeight * TILE_SIZE;
+    if (newOffset.y < -mapHeight) { newOffset.y = -mapHeight; }
     map.offset = newOffset;
 
     if (map.piecePlayer) {
