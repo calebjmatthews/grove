@@ -77,3 +77,5 @@ Planes:
 Other ideas:
 - Devas which can perform work (harvesting, breeding, watering, cooking) in exchange for food and a place to live (statue)
 - The "Rambling Linguist" whose work can be found scattered around the planes and translates Deva language
+
+Map size: 39 x 18

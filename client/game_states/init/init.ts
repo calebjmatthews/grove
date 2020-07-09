@@ -36,8 +36,6 @@ export default function init() {
   if (!initializing) {
     initializing = true;
 
-    map.createGrid((window.innerWidth/4), (window.innerHeight/4));
-
     let type = "WebGL";
     if (!PIXI.utils.isWebGLSupported()) {
       type = "canvas";
@@ -92,6 +90,7 @@ function loadEditTextures() {
     pixiLoader.add(["player.json", "forestworld.json", "particles.json", "items.json",
     "ui.json"])
     .load(() => {
+      map.createGrid((window.innerWidth/4), (window.innerHeight/4));
       createMainContainer();
       createTilemap();
       createKeyboardEdit();

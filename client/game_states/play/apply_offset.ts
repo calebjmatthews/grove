@@ -13,10 +13,10 @@ export function applyOffset(delta: number, run: boolean = false) {
     newOffset.x += Math.floor((oldOffset.vx * (1 + delta)));
     newOffset.y += Math.floor((oldOffset.vy * (1 + delta)));
     if (newOffset.x > 0) { newOffset.x = 0; }
-    let mapWidth = map.gridWidth * TILE_SIZE;
+    let mapWidth = ((map.gridWidth+1) * TILE_SIZE)  - window.innerWidth;
     if (newOffset.x < -mapWidth) { newOffset.x = -mapWidth; }
     if (newOffset.y > 0) { newOffset.y = 0; }
-    let mapHeight = map.gridHeight * TILE_SIZE;
+    let mapHeight = ((map.gridHeight+1) * TILE_SIZE) - window.innerHeight;
     if (newOffset.y < -mapHeight) { newOffset.y = -mapHeight; }
     map.offset = newOffset;
 

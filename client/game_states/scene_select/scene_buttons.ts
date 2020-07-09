@@ -1,9 +1,11 @@
+import Offset from '../../models/offset';
 import { map } from '../../instances/map';
 import { pieceTypes } from '../../instances/piece_types';
 import { pixiState } from '../../instances/pixi_state';
 import { pixiContainers } from '../../instances/pixi_containers';
 import { sprites } from '../../instances/sprites';
 import play from '../play/play';
+import { TILE_SIZE } from '../../constants';
 
 let scenes = [
   require("../../editing/scene1.json"),
@@ -22,6 +24,11 @@ export function createSceneButtons() {
     loadButton.appendChild(document.createTextNode('Load scene ' + (index+1)));
     loadButton.addEventListener("click", () => {
       map.destroyAllPieces(pixiContainers, sprites);
+      map.gridWidth = scene.gridWidth;
+      map.gridHeight = scene.gridHeight;
+      map.offset = new Offset({
+        x: -((map.gridWidth * TILE_SIZE)/2), vx: 0,
+        y: -((map.gridHeight * TILE_SIZE)/2), vy: 0});
       Object.keys(scene.pieceMap).map((coord) => {
         let mapObj = scene.pieceMap[coord];
         let nameSplit = mapObj.pieceName.split(',');
