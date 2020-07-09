@@ -13,6 +13,7 @@ export function movePlayerPending(delta: number) {
     && map.piecePlayer.statusCurrent == PlayerStatuses.NORMAL) {
     pendingBox.x += (pendingBox.vx * (1 + delta));
     pendingBox.y += (pendingBox.vy * (1 + delta));
+
     let collisions = map.detectPieceCollision(pendingBox);
     if (collisions != null) {
       collisions.map((collision) => {
@@ -35,6 +36,13 @@ export function movePlayerPending(delta: number) {
         }
       });
     }
+
+    if (pendingBox.x < 0) { pendingBox.x = 0; }
+    let mapWidth = (map.gridWidth+1) * TILE_SIZE * 3;
+    if (pendingBox.x > mapWidth) { pendingBox.x = mapWidth; }
+    if (pendingBox.y < 0) { pendingBox.y = 0; }
+    let mapHeight = map.gridHeight * TILE_SIZE * 3;
+    if (pendingBox.y > mapHeight) { pendingBox.y = mapHeight; }
   }
 
   return pendingBox;
