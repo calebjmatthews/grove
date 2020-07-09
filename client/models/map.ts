@@ -179,6 +179,24 @@ export default class Map {
     return itemsGrabbed;
   }
 
+  pieceInsideViewport(piece: Piece, screenWidth: number, screenHeight: number) {
+    let leftBound = -(this.offset.x / TILE_SIZE);
+    let rightBound = -(this.offset.x / TILE_SIZE) + (screenWidth / TILE_SIZE);
+    let topBound = -(this.offset.y / TILE_SIZE);
+    let bottomBound = -(this.offset.y / TILE_SIZE) + (screenHeight / TILE_SIZE);
+    console.log('this.piecePlayer.gridPos');
+    console.log(this.piecePlayer.gridPos);
+    console.log("leftBound + ', ' + rightBound + ', ' + topBound + ', ' + bottomBound");
+    console.log(leftBound + ', ' + rightBound + ', ' + topBound + ', ' + bottomBound);
+    if ((piece.gridPos[0] >= leftBound) && (piece.gridPos[0] <= rightBound)
+      && (piece.gridPos[1] >= topBound) && (piece.gridPos[1] <= bottomBound)) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
   agePlayEvents() {
     for (let index = this.playEvents.length-1; index >= 0; index--) {
       let playEvent = this.playEvents[index];

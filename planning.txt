@@ -68,11 +68,11 @@ Burst breaking:
 - If a twinkle bush is hit on one through four within the set the twinkles with dissipate, doing nothing
 
 Planes:
-- Dark, cozy forest with constant hunger (Forest called Starving Darkness?)
-- Bright white and gold rocky land with flowing bright blue rivers and waterfalls
-- Neon city with creatures that attack, cannot bring anything in
-- Cloud-covered, floating sunset land where food grants flight
-- Nighttime desert with glowing sands where food gives exponential strength
+- Dark, cozy forest with constant hunger (Forest of Starving Darkness)
+- Bright white and gold rocky land with flowing bright blue rivers and waterfalls (Forest of Golden Pillars)
+- Neon city with creatures that attack, cannot bring anything in (Forest of Neon Terrors)
+- Cloud-covered, floating sunset land where food grants flight (Forest of Sunset Clouds)
+- Nighttime desert with glowing sands where food gives exponential strength (Forest of Glowing Sands)
 
 Other ideas:
 - Devas which can perform work (harvesting, breeding, watering, cooking) in exchange for food and a place to live (statue)

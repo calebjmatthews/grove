@@ -123,23 +123,25 @@ function incrementSparkles(pMap: Map) {
   Object.keys(pMap.sparkleMap).map((coords) => {
     let mapObj = pMap.sparkleMap[coords];
     let piece = pMap[mapObj.mapName][mapObj.pieceName];
-    let sparkleSpecial = piece.getSpecial('sparkle');
-    if (sparkleSpecial.value == 20) {
-      let particleGroup = particlesCreate(ParticleTypes.SPARKLE, 5,
-        [(piece.box.x + piece.box.width/2),
-          (piece.box.y + piece.box.height/2)]);
-      pMap.particleGroups.push(particleGroup);
-      piece.special[sparkleSpecial.index].value = 1;
-    }
-    else if (sparkleSpecial.value == 18) {
-      let particleGroup = particlesCreate(ParticleTypes.SPARKLE, 1,
-        [(piece.box.x + piece.box.width/2),
-          (piece.box.y + piece.box.height/2)]);
-      pMap.particleGroups.push(particleGroup);
-      piece.special[sparkleSpecial.index].value++;
-    }
-    else if (sparkleSpecial.value != null) {
-      piece.special[sparkleSpecial.index].value++;
+    if (pMap.pieceInsideViewport(piece, window.innerWidth, window.innerHeight)) {
+      let sparkleSpecial = piece.getSpecial('sparkle');
+      if (sparkleSpecial.value == 20) {
+        let particleGroup = particlesCreate(ParticleTypes.SPARKLE, 5,
+          [(piece.box.x + piece.box.width/2),
+            (piece.box.y + piece.box.height/2)]);
+        pMap.particleGroups.push(particleGroup);
+        piece.special[sparkleSpecial.index].value = 1;
+      }
+      else if (sparkleSpecial.value == 18) {
+        let particleGroup = particlesCreate(ParticleTypes.SPARKLE, 1,
+          [(piece.box.x + piece.box.width/2),
+            (piece.box.y + piece.box.height/2)]);
+        pMap.particleGroups.push(particleGroup);
+        piece.special[sparkleSpecial.index].value++;
+      }
+      else if (sparkleSpecial.value != null) {
+        piece.special[sparkleSpecial.index].value++;
+      }
     }
   });
   return pMap;
