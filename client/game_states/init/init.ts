@@ -3,6 +3,7 @@ import 'pixi-tilemap';
 
 import Box from '../../models/box';
 import Piece from '../../models/piece';
+import Offset from '../../models/offset';
 import edit from '../edit/edit';
 import play from '../play/play';
 import scene_select from '../scene_select/scene_select';
@@ -54,6 +55,12 @@ export default function init() {
         pixiState.s = edit;
       });
     }
+    else if (location.pathname.includes('gen')) {
+      loadGenTextures()
+      .then(() => {
+        pixiState.s = play;
+      });
+    }
     else {
       loadPlayTextures()
       .then(() => {
@@ -72,7 +79,32 @@ function loadPlayTextures() : Promise<boolean> {
       createPlayerContainer();
       createTilemap();
       createItemContainer();
+      createPiecePlayer();
+      createKeyboardPlay();
+      createSceneButtons();
+      createItemNoteContainer();
+      createUIContainer();
+      applyOffset(0, true);
+      resolve(true);
+    });
+  })
+}
+
+function loadGenTextures() {
+  return new Promise((resolve) => {
+    pixiLoader.add(["player.json", "forestworld.json", "particles.json", "items.json",
+    "ui.json"])
+    .load(() => {
+      map.gridWidth = 65;
+      map.gridHeight = 40;
+      map.offset = new Offset({ x: 0, vx: 0, y: 0, vy: 0 });
+      createMainContainer();
+      createPlayerContainer();
+      createTilemap();
+      createItemContainer();
+      console.log('Before createPiecesDestructable');
       createPiecesDestructable((map.gridWidth * map.gridHeight) / 5);
+      console.log('Before createPiecesBackgroundWhereEmpty');
       createPiecesBackgroundWhereEmpty();
       createPiecePlayer();
       createKeyboardPlay();
@@ -80,6 +112,7 @@ function loadPlayTextures() : Promise<boolean> {
       createItemNoteContainer();
       createUIContainer();
       applyOffset(0, true);
+      console.log('end');
       resolve(true);
     });
   })
@@ -113,7 +146,7 @@ function createPiecesDestructable(numDestr: number) {
     let location = map.getOpenGridLocation();
     let pieceTypeName = PieceTypeNames.BUSH;
     if (utils.rand() < 0.25) {
-      pieceTypeName = PieceTypeNames.STONE_SLATE_M;
+      pieceTypeName = PieceTypeNames.BUSH_S;
     }
     map.createAndDisplayPiece(pieceTypeName,
       (location.gridPos[0] + ',' + location.gridPos[1]), index, pieceTypes,

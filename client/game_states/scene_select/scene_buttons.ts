@@ -26,9 +26,7 @@ export function createSceneButtons() {
       map.destroyAllPieces(pixiContainers, sprites);
       map.gridWidth = scene.gridWidth;
       map.gridHeight = scene.gridHeight;
-      map.offset = new Offset({
-        x: -((map.gridWidth * TILE_SIZE)/2), vx: 0,
-        y: -((map.gridHeight * TILE_SIZE)/2), vy: 0});
+      map.offset = new Offset({ x: 0, vx: 0, y: 0, vy: 0 });
       Object.keys(scene.pieceMap).map((coord) => {
         let mapObj = scene.pieceMap[coord];
         let nameSplit = mapObj.pieceName.split(',');
@@ -36,6 +34,8 @@ export function createSceneButtons() {
           pixiContainers, sprites);
       });
       map.createPieceMap();
+      map.piecePlayer.box.x = (map.gridWidth * TILE_SIZE)/2;
+      map.piecePlayer.box.y = (map.gridHeight * TILE_SIZE)/2;
       pixiState.s = play;
     });
     buttonContainer.appendChild(loadButton);
