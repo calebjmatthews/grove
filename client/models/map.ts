@@ -184,10 +184,6 @@ export default class Map {
     let rightBound = -(this.offset.x / TILE_SIZE) + (screenWidth / TILE_SIZE);
     let topBound = -(this.offset.y / TILE_SIZE);
     let bottomBound = -(this.offset.y / TILE_SIZE) + (screenHeight / TILE_SIZE);
-    console.log('this.piecePlayer.gridPos');
-    console.log(this.piecePlayer.gridPos);
-    console.log("leftBound + ', ' + rightBound + ', ' + topBound + ', ' + bottomBound");
-    console.log(leftBound + ', ' + rightBound + ', ' + topBound + ', ' + bottomBound);
     if ((piece.gridPos[0] >= leftBound) && (piece.gridPos[0] <= rightBound)
       && (piece.gridPos[1] >= topBound) && (piece.gridPos[1] <= bottomBound)) {
       return true;
@@ -283,9 +279,44 @@ export default class Map {
         containers.player.addChild(newSprite);
       });
     }
+    else if (piece.typeName == PieceTypeNames.DIRT) {
+      this.displayDirt(piece, containers, sprites);
+    }
     else {
       containers.tilemap.addFrame(PIXI.utils.TextureCache[piece.spriteNames[0]],
         (piece.box.x/3), (piece.box.y/3));
+    }
+  }
+
+  displayDirt(p: Piece,
+    containers: {
+      main: PIXI.Container,
+      tilemap: PIXI.tilemap.CompositeRectTileLayer;
+      player: PIXI.Container;
+    },
+    sprites: { [spriteName: string] : PIXI.Sprite }) {
+    let neighborDirt = { north: false, east: false, south: false, west: false };
+    neighborDirt.north = isNeighborDirt(0, -1);
+    neighborDirt.east = isNeighborDirt(1, 0);
+    neighborDirt.south = isNeighborDirt(0, 1);
+    neighborDirt.west = isNeighborDirt(-1, 0);
+    let spriteMapRef = ((neighborDirt.north ? 1: 0) + ','
+      + (neighborDirt.east ? 1: 0) + ',' + (neighborDirt.south ? 1: 0) + ','
+      + (neighborDirt.west ? 1: 0));
+    let spriteName = p.getSpecial('sprite_map')[spriteMapRef];
+    containers.tilemap.addFrame(PIXI.utils.TextureCache[spriteName],
+      (p.box.x/3), (p.box.y/3));
+
+    function isNeighborDirt(offsetX: number, offsetY: number) {
+      let nPiece: Piece = this.getPieceByGridPos(
+        [(p.gridPos[0] + offsetX), (p.gridPos[1] + offsetY)]
+      );
+      if (nPiece) {
+        if (nPiece.typeName == PieceTypeNames.DIRT) {
+          return true;
+        }
+      }
+      return false;
     }
   }
 

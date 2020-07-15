@@ -9,6 +9,7 @@ export enum PieceTypeNames {
   TREE_NE = 'Tree (NE)',
   TREE_SE = 'Tree (SE)',
   GRASS = 'Grass',
+  DIRT = 'Dirt',
   DIRT_SM = 'Dirt (small)',
   DIRT_N = 'Dirt (N)',
   DIRT_NE = 'Dirt (NE)',
