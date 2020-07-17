@@ -283,8 +283,6 @@ export default class Map {
       this.displayDirt(piece, containers, sprites);
     }
     else {
-      console.log('piece.spriteNames[0]');
-      console.log(piece.spriteNames[0]);
       containers.tilemap.addFrame(PIXI.utils.TextureCache[piece.spriteNames[0]],
         (piece.box.x/3), (piece.box.y/3));
     }
@@ -296,28 +294,35 @@ export default class Map {
       tilemap: PIXI.tilemap.CompositeRectTileLayer;
       player: PIXI.Container;
     },
-    sprites: { [spriteName: string] : PIXI.Sprite }) {
-    let neighborDirt = { north: false, east: false, south: false, west: false };
-    neighborDirt.north = this.isNeighborDirt(p, 0, -1);
-    neighborDirt.east = this.isNeighborDirt(p, 1, 0);
-    neighborDirt.south = this.isNeighborDirt(p, 0, 1);
-    neighborDirt.west = this.isNeighborDirt(p, -1, 0);
-    let spriteMapRef = ((neighborDirt.north ? 1: 0) + ','
-      + (neighborDirt.east ? 1: 0) + ',' + (neighborDirt.south ? 1: 0) + ','
-      + (neighborDirt.west ? 1: 0));
+    sprites: { [spriteName: string] : PIXI.Sprite }, redraw = true) {
+    let nDirt = { north: false, east: false, south: false, west: false };
+    nDirt.north = this.isNeighborDirtAndRedraw(0, -1, p, containers, sprites, redraw);
+    nDirt.east = this.isNeighborDirtAndRedraw(1, 0, p, containers, sprites, redraw);
+    nDirt.south = this.isNeighborDirtAndRedraw(0, 1, p, containers, sprites, redraw);
+    nDirt.west = this.isNeighborDirtAndRedraw(-1, 0, p, containers, sprites, redraw);
+    let spriteMapRef = ((nDirt.north ? 1: 0) + ','
+      + (nDirt.east ? 1: 0) + ',' + (nDirt.south ? 1: 0) + ','
+      + (nDirt.west ? 1: 0));
     let spriteName = p.getSpecial('sprite_map').value[spriteMapRef];
-    console.log('spriteName');
-    console.log(spriteName);
     containers.tilemap.addFrame(PIXI.utils.TextureCache[spriteName],
       (p.box.x/3), (p.box.y/3));
   }
 
-  isNeighborDirt(p: Piece, offsetX: number, offsetY: number) {
+  isNeighborDirtAndRedraw(offsetX: number, offsetY: number, p: Piece,
+      containers: {
+        main: PIXI.Container,
+        tilemap: PIXI.tilemap.CompositeRectTileLayer;
+        player: PIXI.Container;
+      },
+      sprites: { [spriteName: string] : PIXI.Sprite }, redraw: boolean) {
     let nPiece: Piece = this.getPieceByGridPos(
       [(p.gridPos[0] + offsetX), (p.gridPos[1] + offsetY)]
     );
     if (nPiece) {
       if (nPiece.typeName == PieceTypeNames.DIRT) {
+        if (redraw) {
+          this.displayDirt(nPiece, containers, sprites, false);
+        }
         return true;
       }
     }
