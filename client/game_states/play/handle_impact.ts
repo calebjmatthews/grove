@@ -42,6 +42,11 @@ function chipTarget(targetPiece: Piece, pMap: Map) {
 
 function destroyTarget(targetPiece: Piece, pMap: Map) {
   pMap.destroyPiece(targetPiece, pixiContainers, sprites);
+  if (targetPiece.typeName == PieceTypeNames.GRASS) {
+    pMap.createAndDisplayPiece(PieceTypeNames.DIRT,
+      (targetPiece.gridPos[0] + ',' + targetPiece.gridPos[1]), utils.rand(),
+      pieceTypes, pixiContainers, sprites);
+  }
   let particleGroup: ParticleGroup = null;
 
   let drops = determineDrops(targetPiece.breakable.drops);

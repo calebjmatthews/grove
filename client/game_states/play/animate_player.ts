@@ -8,9 +8,12 @@ import { map } from '../../instances/map';
 import { player } from '../../instances/player';
 import { sprites } from '../../instances/sprites';
 import { pixiContainers } from '../../instances/pixi_containers';
+import { pieceTypes } from '../../instances/piece_types';
+import { utils } from '../../instances/utils';
 import { handleImpact } from './handle_impact';
 import { Directions } from '../../enums/directions';
 import { PlayerStatuses } from '../../enums/player_statuses';
+import { PieceTypeNames } from '../../enums/piece_type_names';
 
 export function actAndAnimatePlayer(pendingBox: Box) {
   let pcPlayer = map.piecePlayer;
@@ -63,6 +66,13 @@ export function actAndAnimatePlayer(pendingBox: Box) {
         }
         let targetPiece = pMap.getPieceByGridPos(targetPos);
         if (targetPiece) {
+          pMap = handleImpact(targetPiece, pMap);
+        }
+        else {
+          pMap.createAndDisplayPiece(PieceTypeNames.GRASS,
+            (targetPos[0] + ',' + targetPos[1]), utils.rand(), pieceTypes,
+            pixiContainers, sprites);
+          targetPiece = pMap.getPieceByGridPos(targetPos);
           pMap = handleImpact(targetPiece, pMap);
         }
         pcPlayer.statusPending = PlayerStatuses.NORMAL;

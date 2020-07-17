@@ -1,6 +1,6 @@
 import PieceType from '../../models/piece_type';
 import { PieceTypeNames } from '../../enums/piece_type_names';
-import { grass } from './ground';
+import { grass } from './grass';
 import { dirt } from './dirt';
 import { bush } from './bush';
 import { bush_s } from './bush_s';
