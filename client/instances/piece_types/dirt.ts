@@ -31,5 +31,5 @@ export let dirt = new PieceType({
   value: null,
   animated: false,
   animationSteps: null,
-  spriteNames: ["dirt_m.png"]
+  spriteNames: ["dirt_sm.png"]
 })

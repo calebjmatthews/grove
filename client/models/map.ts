@@ -283,6 +283,8 @@ export default class Map {
       this.displayDirt(piece, containers, sprites);
     }
     else {
+      console.log('piece.spriteNames[0]');
+      console.log(piece.spriteNames[0]);
       containers.tilemap.addFrame(PIXI.utils.TextureCache[piece.spriteNames[0]],
         (piece.box.x/3), (piece.box.y/3));
     }
@@ -296,28 +298,30 @@ export default class Map {
     },
     sprites: { [spriteName: string] : PIXI.Sprite }) {
     let neighborDirt = { north: false, east: false, south: false, west: false };
-    neighborDirt.north = isNeighborDirt(0, -1);
-    neighborDirt.east = isNeighborDirt(1, 0);
-    neighborDirt.south = isNeighborDirt(0, 1);
-    neighborDirt.west = isNeighborDirt(-1, 0);
+    neighborDirt.north = this.isNeighborDirt(p, 0, -1);
+    neighborDirt.east = this.isNeighborDirt(p, 1, 0);
+    neighborDirt.south = this.isNeighborDirt(p, 0, 1);
+    neighborDirt.west = this.isNeighborDirt(p, -1, 0);
     let spriteMapRef = ((neighborDirt.north ? 1: 0) + ','
       + (neighborDirt.east ? 1: 0) + ',' + (neighborDirt.south ? 1: 0) + ','
       + (neighborDirt.west ? 1: 0));
-    let spriteName = p.getSpecial('sprite_map')[spriteMapRef];
+    let spriteName = p.getSpecial('sprite_map').value[spriteMapRef];
+    console.log('spriteName');
+    console.log(spriteName);
     containers.tilemap.addFrame(PIXI.utils.TextureCache[spriteName],
       (p.box.x/3), (p.box.y/3));
+  }
 
-    function isNeighborDirt(offsetX: number, offsetY: number) {
-      let nPiece: Piece = this.getPieceByGridPos(
-        [(p.gridPos[0] + offsetX), (p.gridPos[1] + offsetY)]
-      );
-      if (nPiece) {
-        if (nPiece.typeName == PieceTypeNames.DIRT) {
-          return true;
-        }
+  isNeighborDirt(p: Piece, offsetX: number, offsetY: number) {
+    let nPiece: Piece = this.getPieceByGridPos(
+      [(p.gridPos[0] + offsetX), (p.gridPos[1] + offsetY)]
+    );
+    if (nPiece) {
+      if (nPiece.typeName == PieceTypeNames.DIRT) {
+        return true;
       }
-      return false;
     }
+    return false;
   }
 
   createAndDisplayPieceItem(itemTypeName: string, coord: string, id: number,

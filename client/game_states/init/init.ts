@@ -123,7 +123,9 @@ function loadEditTextures() {
     pixiLoader.add(["player.json", "forestworld.json", "particles.json", "items.json",
     "ui.json"])
     .load(() => {
-      map.createGrid((window.innerWidth/4), (window.innerHeight/4));
+      map.gridWidth = 65;
+      map.gridHeight = 40;
+      map.offset = new Offset({ x: 0, vx: 0, y: 0, vy: 0 });
       createMainContainer();
       createTilemap();
       createKeyboardEdit();

@@ -8,7 +8,7 @@ import { PieceTypeNames } from '../../enums/piece_type_names';
 import { utils } from '../../instances/utils';
 
 export function handleCanvasClick() {
-  let canvas = document.getElementsByTagName('canvas')[0];
+  let canvas = document.getElementById('center');
   canvas.addEventListener("click", (ev) => {
     if (pieceTypeNameSel != null) {
       let gridPos = map.getGridUpperLeftPos([(ev.x - map.offset.x),
