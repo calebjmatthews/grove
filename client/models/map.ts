@@ -339,7 +339,7 @@ export default class Map {
     let piece = itemTypes[itemTypeName].createPiece(id,
       [parseInt(coord.split(',')[0]), parseInt(coord.split(',')[1])], [x, y]);
     this.piecesItem[itemTypeName + ',' + id] = piece;
-    this.pieceMap[(piece.gridPos[0] + ',' + piece.gridPos[1])] =
+    this.itemMap[(piece.gridPos[0] + ',' + piece.gridPos[1])] =
       {mapName: 'piecesItem', pieceName: (itemTypeName + ',' + id)};
 
     let newSprite = new PIXI.Sprite(PIXI.utils

@@ -44,8 +44,9 @@ function destroyTarget(targetPiece: Piece, pMap: Map) {
   pMap.destroyPiece(targetPiece, pixiContainers, sprites);
   if (targetPiece.typeName == PieceTypeNames.GRASS) {
     pMap.createAndDisplayPiece(PieceTypeNames.DIRT,
-      (targetPiece.gridPos[0] + ',' + targetPiece.gridPos[1]), utils.rand(),
-      pieceTypes, pixiContainers, sprites);
+      (targetPiece.gridPos[0] + ',' + targetPiece.gridPos[1]),
+      Math.floor(utils.rand() * 10000000), pieceTypes, pixiContainers, sprites);
+    let testDirt = pMap.getPieceByGridPos(targetPiece.gridPos);
   }
   let particleGroup: ParticleGroup = null;
 

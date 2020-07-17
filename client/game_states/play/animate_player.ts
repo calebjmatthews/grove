@@ -70,8 +70,8 @@ export function actAndAnimatePlayer(pendingBox: Box) {
         }
         else {
           pMap.createAndDisplayPiece(PieceTypeNames.GRASS,
-            (targetPos[0] + ',' + targetPos[1]), utils.rand(), pieceTypes,
-            pixiContainers, sprites);
+            (targetPos[0] + ',' + targetPos[1]), Math.floor(utils.rand() * 10000000),
+            pieceTypes, pixiContainers, sprites);
           targetPiece = pMap.getPieceByGridPos(targetPos);
           pMap = handleImpact(targetPiece, pMap);
         }
