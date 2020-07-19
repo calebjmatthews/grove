@@ -296,14 +296,15 @@ export default class Map {
       player: PIXI.Container;
     },
     sprites: { [spriteName: string] : PIXI.Sprite }, redraw = true) {
-    let nDirt = { north: false, east: false, south: false, west: false };
-    nDirt.north = this.isNeighborMappedAndRedraw(0, -1, p, containers, sprites, redraw);
-    nDirt.east = this.isNeighborMappedAndRedraw(1, 0, p, containers, sprites, redraw);
-    nDirt.south = this.isNeighborMappedAndRedraw(0, 1, p, containers, sprites, redraw);
-    nDirt.west = this.isNeighborMappedAndRedraw(-1, 0, p, containers, sprites, redraw);
-    let spriteMapRef = ((nDirt.north ? 1: 0) + ','
-      + (nDirt.east ? 1: 0) + ',' + (nDirt.south ? 1: 0) + ','
-      + (nDirt.west ? 1: 0));
+    // nmp = neighboring mapped pieces
+    let nmp = { north: false, east: false, south: false, west: false };
+    nmp.north = this.isNeighborMappedAndRedraw(0, -1, p, containers, sprites, redraw);
+    nmp.east = this.isNeighborMappedAndRedraw(1, 0, p, containers, sprites, redraw);
+    nmp.south = this.isNeighborMappedAndRedraw(0, 1, p, containers, sprites, redraw);
+    nmp.west = this.isNeighborMappedAndRedraw(-1, 0, p, containers, sprites, redraw);
+    let spriteMapRef = ((nmp.north ? 1: 0) + ','
+      + (nmp.east ? 1: 0) + ',' + (nmp.south ? 1: 0) + ','
+      + (nmp.west ? 1: 0));
     let spriteName = p.getSpecial('sprite_map').value[spriteMapRef];
     containers.tilemap.addFrame(PIXI.utils.TextureCache[spriteName],
       (p.box.x/3), (p.box.y/3));

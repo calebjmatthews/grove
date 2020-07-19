@@ -46,7 +46,11 @@ function destroyTarget(targetPiece: Piece, pMap: Map) {
     pMap.createAndDisplayPiece(PieceTypeNames.DIRT,
       (targetPiece.gridPos[0] + ',' + targetPiece.gridPos[1]),
       Math.floor(utils.rand() * 10000000), pieceTypes, pixiContainers, sprites);
-    let testDirt = pMap.getPieceByGridPos(targetPiece.gridPos);
+  }
+  else if (targetPiece.typeName == PieceTypeNames.DIRT) {
+    pMap.createAndDisplayPiece(PieceTypeNames.TILLED,
+      (targetPiece.gridPos[0] + ',' + targetPiece.gridPos[1]),
+      Math.floor(utils.rand() * 10000000), pieceTypes, pixiContainers, sprites);
   }
   let particleGroup: ParticleGroup = null;
 
