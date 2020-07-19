@@ -3,24 +3,24 @@ import { setPieceTypeSelect } from './piece_type_select';
 
 export function createPalatte() {
   let ele = document.getElementById('foot');
-  let palatte = document.createElement("DIV");
-  palatte.setAttribute("class", "palette");
+  let palette = document.createElement("DIV");
+  palette.setAttribute("class", "toolbar");
 
   let div = document.createElement("DIV");
   div.setAttribute("id", 'Delete');
-  div.setAttribute("class", "palette-item");
+  div.setAttribute("class", "toolbar-item");
   let img = document.createElement("IMG");
-  div.appendChild(document.createTextNode('Delete'));
+  div.appendChild(document.createTextNode('DEL'));
   div.addEventListener("click", () => {
     setPieceTypeSelect('Delete');
   });
-  palatte.appendChild(div);
+  palette.appendChild(div);
 
   Object.keys(pieceTypes).map((pieceTypeName) => {
     let pieceType = pieceTypes[pieceTypeName];
     let div = document.createElement("DIV");
     div.setAttribute("id", pieceType.name);
-    div.setAttribute("class", "palette-item");
+    div.setAttribute("class", "toolbar-item");
     let img = document.createElement("IMG");
     img.setAttribute("src", ("dist/working/forest/" + pieceType.spriteNames[0]));
     // let textNode = document.createTextNode(pieceType.name);
@@ -28,7 +28,7 @@ export function createPalatte() {
     div.addEventListener("click", () => {
       setPieceTypeSelect(pieceType.name);
     });
-    palatte.appendChild(div);
+    palette.appendChild(div);
   });
-  ele.appendChild(palatte);
+  ele.appendChild(palette);
 }

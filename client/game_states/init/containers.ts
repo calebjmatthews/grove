@@ -53,6 +53,7 @@ export function createUIContainer() {
   uiContainer.scale = new PIXI.Point(3, 3);
   pixiContainers.ui = uiContainer;
   pixiContainers.all.addChild(pixiContainers.ui);
+
   let barSprite = new PIXI.Sprite(PIXI.utils.TextureCache['player_bar.png']);
   barSprite.x = 1;
   barSprite.y = 1;

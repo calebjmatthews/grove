@@ -1,8 +1,9 @@
 import Key from '../../models/key';
 import { map } from '../../instances/map';
+import { keySelect } from '../play/key_select';
 import { Directions } from '../../enums/directions';
 import { PlayerStatuses } from '../../enums/player_statuses';
-import { PLAYER_SPEED } from '../../constants';
+import { PLAYER_SPEED, TOOLBAR_KEYS } from '../../constants';
 
 let keyboard: { [keyName: string] : Key } = {};
 
@@ -69,6 +70,14 @@ export function createKeyboardPlay() {
   keyboard['up'] = up;
   keyboard['down'] = down;
   keyboard['z'] = z;
+
+  TOOLBAR_KEYS.map((keyName) => {
+    let toolbarKey = new Key(keyName);
+    toolbarKey.press = () => {
+      keySelect(keyName);
+    };
+    keyboard[keyName] = toolbarKey;
+  });
 }
 
 export function getKeyboardPlay() {

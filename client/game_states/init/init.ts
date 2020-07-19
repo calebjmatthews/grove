@@ -15,6 +15,7 @@ import { createPalatte } from '../edit/palatte';
 import { createMapButtons } from '../edit/map_buttons';
 import { createSceneButtons } from '../scene_select/scene_buttons';
 import { createItemNoteContainer } from '../play/item_note';
+import { createToolbar } from '../play/toolbar';
 import { handleCanvasClick } from '../edit/canvas_click';
 import { applyOffset } from '../play/apply_offset';
 import { pixiApp } from '../../instances/pixi_app';
@@ -84,6 +85,7 @@ function loadPlayTextures() : Promise<boolean> {
       createSceneButtons();
       createItemNoteContainer();
       createUIContainer();
+      createToolbar();
       applyOffset(0, true);
       resolve(true);
     });
