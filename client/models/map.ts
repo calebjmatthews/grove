@@ -269,6 +269,7 @@ export default class Map {
       player: PIXI.Container;
     },
     sprites: { [spriteName: string] : PIXI.Sprite }) {
+
     if (piece.typeName == PieceTypeNames.PLAYER) {
       piece.spriteNames.map((spriteName: string, index: number) => {
         let newSprite = new PIXI.Sprite(PIXI.utils.TextureCache[spriteName]);
@@ -279,8 +280,8 @@ export default class Map {
         containers.player.addChild(newSprite);
       });
     }
-    else if (piece.typeName == PieceTypeNames.DIRT) {
-      this.displayDirt(piece, containers, sprites);
+    else if (piece.getSpecial('sprite_map') != null) {
+      this.displayMappedPiece(piece, containers, sprites);
     }
     else {
       containers.tilemap.addFrame(PIXI.utils.TextureCache[piece.spriteNames[0]],
@@ -288,7 +289,7 @@ export default class Map {
     }
   }
 
-  displayDirt(p: Piece,
+  displayMappedPiece(p: Piece,
     containers: {
       main: PIXI.Container,
       tilemap: PIXI.tilemap.CompositeRectTileLayer;
@@ -296,10 +297,10 @@ export default class Map {
     },
     sprites: { [spriteName: string] : PIXI.Sprite }, redraw = true) {
     let nDirt = { north: false, east: false, south: false, west: false };
-    nDirt.north = this.isNeighborDirtAndRedraw(0, -1, p, containers, sprites, redraw);
-    nDirt.east = this.isNeighborDirtAndRedraw(1, 0, p, containers, sprites, redraw);
-    nDirt.south = this.isNeighborDirtAndRedraw(0, 1, p, containers, sprites, redraw);
-    nDirt.west = this.isNeighborDirtAndRedraw(-1, 0, p, containers, sprites, redraw);
+    nDirt.north = this.isNeighborMappedAndRedraw(0, -1, p, containers, sprites, redraw);
+    nDirt.east = this.isNeighborMappedAndRedraw(1, 0, p, containers, sprites, redraw);
+    nDirt.south = this.isNeighborMappedAndRedraw(0, 1, p, containers, sprites, redraw);
+    nDirt.west = this.isNeighborMappedAndRedraw(-1, 0, p, containers, sprites, redraw);
     let spriteMapRef = ((nDirt.north ? 1: 0) + ','
       + (nDirt.east ? 1: 0) + ',' + (nDirt.south ? 1: 0) + ','
       + (nDirt.west ? 1: 0));
@@ -308,20 +309,20 @@ export default class Map {
       (p.box.x/3), (p.box.y/3));
   }
 
-  isNeighborDirtAndRedraw(offsetX: number, offsetY: number, p: Piece,
+  isNeighborMappedAndRedraw(offsetX: number, offsetY: number, p: Piece,
       containers: {
         main: PIXI.Container,
         tilemap: PIXI.tilemap.CompositeRectTileLayer;
         player: PIXI.Container;
       },
-      sprites: { [spriteName: string] : PIXI.Sprite }, redraw: boolean) {
+      sprites: { [spriteName: string] : PIXI.Sprite }, redraw = true) {
     let nPiece: Piece = this.getPieceByGridPos(
       [(p.gridPos[0] + offsetX), (p.gridPos[1] + offsetY)]
     );
     if (nPiece) {
-      if (nPiece.typeName == PieceTypeNames.DIRT) {
+      if (nPiece.getSpecial('sprite_map') != null) {
         if (redraw) {
-          this.displayDirt(nPiece, containers, sprites, false);
+          this.displayMappedPiece(nPiece, containers, sprites, false);
         }
         return true;
       }

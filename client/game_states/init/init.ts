@@ -160,7 +160,7 @@ export function createPiecesBackgroundWhereEmpty() {
   let openCoords = Object.keys(map.getOpenGridSpaces());
   openCoords.map((coord, index) => {
     if (utils.rand() < 0.25) {
-      map.createAndDisplayPiece(PieceTypeNames.DIRT_SM, coord, index, pieceTypes,
+      map.createAndDisplayPiece(PieceTypeNames.DIRT, coord, index, pieceTypes,
         pc, sprites);
     }
     else {
