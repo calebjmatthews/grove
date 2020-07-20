@@ -16,7 +16,10 @@ export function createToolbar() {
     div.addEventListener("click", () => {
       keySelect(key);
     });
-    div.appendChild(document.createTextNode(key));
+    let keyName = document.createElement("DIV");
+    keyName.appendChild(document.createTextNode(key));
+    keyName.setAttribute("class", "key-name");
+    div.appendChild(keyName);
     toolbar.appendChild(div);
   });
   let ele = document.getElementById('foot');

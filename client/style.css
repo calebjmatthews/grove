@@ -75,10 +75,22 @@ body {
   image-rendering: crisp-edges;
 }
 .toolbar.keyboard .toolbar-item {
-  justify-content: flex-end;
-  align-items: flex-end;
+  justify-content: flex-start;
+  align-items: flex-start;
   height: 45px;
   width: 45px;
+}
+.key-name {
+  position: absolute;
+  opacity: 0.9;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 20px;
+  height: 20px;
+  font-size: 0.75em;
+  background: #fff;
+  box-shadow: 0px 0px 2px 1px #00000091;
 }
 
 .item-note-container {

@@ -104,5 +104,3 @@ Other ideas:
 - Currency is "influence", which you can use to ask the other villagers to make you things or withdraw items from storage, you receive influence by adding items to storage
 
 Map size: 39 x 18
-
-Dirt placement:
