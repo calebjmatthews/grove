@@ -14,7 +14,7 @@ export function keySelect(newKeyName: string) {
 
 export let keyActionMap: {[keyName : string]: KeyAction} = {};
 export function setKeyAction(keyName: string, newKeyAction: KeyAction) {
-  let gooetkRes: { keyName: string, type: string } = null;
+  let gooetkRes: { keyName: string, type: string } = { keyName: null, type: null};
   if (keyName == null) {
     gooetkRes = getOpenOrExistingToolbarKey(newKeyAction);
     if (gooetkRes.type == 'open') {
@@ -32,6 +32,13 @@ export function setKeyAction(keyName: string, newKeyAction: KeyAction) {
       newImg.setAttribute('src', newKeyAction.imgUrl);
       ele.appendChild(newImg);
     }
+    updateKeyQuantity(keyName, newKeyAction);
+    keyActionMap[keyName] = newKeyAction;
+  }
+  else if (gooetkRes.type == 'existing') {
+    let oldKeyAction = keyActionMap[gooetkRes.keyName];
+    newKeyAction.quantity += oldKeyAction.quantity;
+    updateKeyQuantity(gooetkRes.keyName, newKeyAction);
     keyActionMap[keyName] = newKeyAction;
   }
 }
@@ -55,4 +62,19 @@ function getOpenOrExistingToolbarKey(newKeyAction: KeyAction):
   }
 
   return null;
+}
+
+function updateKeyQuantity(keyName: string, newKeyAction: KeyAction) {
+  if (newKeyAction.quantity > 1) {
+    let ele = document.getElementById(keyName);
+    let oldQuantity = document.getElementById(keyName + '-quantity');
+    if (oldQuantity) {
+      ele.removeChild(oldQuantity);
+    }
+    let newQuantity = document.createElement("DIV");
+    newQuantity.setAttribute('id', keyName + '-quantity');
+    newQuantity.setAttribute('class', 'key-quantity');
+    newQuantity.appendChild(document.createTextNode(newKeyAction.quantity.toString()));
+    ele.appendChild(newQuantity);
+  }
 }

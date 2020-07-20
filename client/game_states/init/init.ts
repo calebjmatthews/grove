@@ -89,7 +89,7 @@ function loadPlayTextures() : Promise<boolean> {
       createUIContainer();
       createToolbar();
       applyOffset(0, true);
-      collectItems(ItemTypeNames.IRONWOOD_BRANCH, 1);
+      collectItems(ItemTypeNames.IRONWOOD_BRANCH, 1, true);
       resolve(true);
     });
   })
