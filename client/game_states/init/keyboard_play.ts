@@ -1,6 +1,6 @@
 import Key from '../../models/key';
 import { map } from '../../instances/map';
-import { keySelect } from '../play/key_select';
+import { keySelect, keyNameSel, keyActionMap } from '../play/key_select';
 import { Directions } from '../../enums/directions';
 import { PlayerStatuses } from '../../enums/player_statuses';
 import { PLAYER_SPEED, TOOLBAR_KEYS } from '../../constants';
@@ -60,9 +60,12 @@ export function createKeyboardPlay() {
 
   let z = new Key("z");
   z.press = () => {
-    if (player.statusPending != PlayerStatuses.STRIKING
-      && player.statusCurrent != PlayerStatuses.STRIKING)
-    player.statusPending = PlayerStatuses.STRIKING;
+    if (keyActionMap[keyNameSel].name == 'strike') {
+      if (player.statusPending != PlayerStatuses.STRIKING
+        && player.statusCurrent != PlayerStatuses.STRIKING)
+      player.statusPending = PlayerStatuses.STRIKING;
+    }
+
   };
 
   keyboard['left'] = left;

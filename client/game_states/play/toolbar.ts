@@ -1,4 +1,5 @@
-import { keySelect } from './key_select';
+import KeyAction from '../../models/key_action';
+import { keySelect, setKeyAction } from './key_select';
 import { TOOLBAR_KEYS } from '../../constants';
 
 export function createToolbar() {
@@ -11,6 +12,7 @@ export function createToolbar() {
     div.setAttribute("class", "toolbar-item");
     if (key == '1') {
       div.setAttribute("class", "toolbar-item selected");
+      setKeyAction('1', new KeyAction({name: 'strike', type: 'action'}));
     }
     div.addEventListener("click", () => {
       keySelect(key);
