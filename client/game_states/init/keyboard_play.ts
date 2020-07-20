@@ -3,6 +3,7 @@ import { map } from '../../instances/map';
 import { keySelect, keyNameSel, keyActionMap } from '../play/key_select';
 import { Directions } from '../../enums/directions';
 import { PlayerStatuses } from '../../enums/player_statuses';
+import { ItemTypeNames } from '../../enums/item_type_names';
 import { PLAYER_SPEED, TOOLBAR_KEYS } from '../../constants';
 
 let keyboard: { [keyName: string] : Key } = {};
@@ -60,12 +61,11 @@ export function createKeyboardPlay() {
 
   let z = new Key("z");
   z.press = () => {
-    if (keyActionMap[keyNameSel].name == 'strike') {
+    if (keyActionMap[keyNameSel].name == ItemTypeNames.IRONWOOD_BRANCH) {
       if (player.statusPending != PlayerStatuses.STRIKING
         && player.statusCurrent != PlayerStatuses.STRIKING)
       player.statusPending = PlayerStatuses.STRIKING;
     }
-
   };
 
   keyboard['left'] = left;

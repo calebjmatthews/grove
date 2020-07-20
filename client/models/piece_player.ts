@@ -103,6 +103,7 @@ interface PiecePlayerInterface {
   collidable: boolean;
   breakable: Breakable;
   grabbable: boolean;
+  usable: boolean;
   value: number;
   animated: boolean;
   spriteNames: string[];

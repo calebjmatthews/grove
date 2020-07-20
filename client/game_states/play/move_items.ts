@@ -1,9 +1,8 @@
 import Piece from '../../models/piece';
 import { map } from '../../instances/map';
 import { sprites } from '../../instances/sprites';
-import { player } from '../../instances/player';
 import { pixiContainers } from '../../instances/pixi_containers';
-import { noteItemPickup } from './item_note';
+import { collectItems } from './collect_items';
 import { ItemTypeNames } from '../../enums/item_type_names';
 
 export function moveItems(delta: number) {
@@ -84,8 +83,7 @@ function grabItems() {
     });
     Object.keys(typeCount).map((typeName) => {
       let count = typeCount[typeName];
-      player.addToInventory(typeName, count);
-      noteItemPickup(typeName, count);
+      collectItems(typeName, count);
     });
   }
   return idsGrabbed;

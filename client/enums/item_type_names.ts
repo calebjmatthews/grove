@@ -4,5 +4,6 @@ export enum ItemTypeNames {
   GRASS_SEED = 'Grass seed',
   GRAIN_BUNDLE = 'Grain bundle',
   GRAIN_SEED = 'Grain seed',
-  BLUEBERRIES = 'Blueberries'
+  BLUEBERRIES = 'Blueberries',
+  IRONWOOD_BRANCH = 'Ironwood branch'
 }

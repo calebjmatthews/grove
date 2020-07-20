@@ -38,6 +38,7 @@ export default class PieceType implements PieceTypeInterface {
       collidable: this.collidable,
       breakable: breakable,
       grabbable: false,
+      usable: false,
       value: this.value,
       animated: this.animated,
       spriteNames: this.spriteNames

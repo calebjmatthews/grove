@@ -18,6 +18,7 @@ import { createItemNoteContainer } from '../play/item_note';
 import { createToolbar } from '../play/toolbar';
 import { handleCanvasClick } from '../edit/canvas_click';
 import { applyOffset } from '../play/apply_offset';
+import { collectItems } from '../play/collect_items';
 import { pixiApp } from '../../instances/pixi_app';
 import { pixiRenderer } from '../../instances/pixi_renderer';
 import { pixiLoader } from '../../instances/pixi_loader';
@@ -30,6 +31,7 @@ import { pixiContainers } from '../../instances/pixi_containers';
 const pc = pixiContainers;
 import { utils } from '../../instances/utils';
 import { PieceTypeNames } from '../../enums/piece_type_names';
+import { ItemTypeNames } from '../../enums/item_type_names';
 import { TILE_SIZE } from '../../constants';
 
 let initializing = false;
@@ -87,6 +89,7 @@ function loadPlayTextures() : Promise<boolean> {
       createUIContainer();
       createToolbar();
       applyOffset(0, true);
+      collectItems(ItemTypeNames.IRONWOOD_BRANCH, 1);
       resolve(true);
     });
   })
