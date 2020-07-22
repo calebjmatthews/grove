@@ -1,6 +1,8 @@
 import Key from '../../models/key';
 import { map } from '../../instances/map';
+import { player } from '../../instances/player';
 import { keySelect, keyNameSel, keyActionMap } from '../play/key_select';
+import { expendItems } from '../play/expend_items';
 import { Directions } from '../../enums/directions';
 import { PlayerStatuses } from '../../enums/player_statuses';
 import { ItemTypeNames } from '../../enums/item_type_names';
@@ -9,14 +11,14 @@ import { PLAYER_SPEED, TOOLBAR_KEYS } from '../../constants';
 let keyboard: { [keyName: string] : Key } = {};
 
 export function createKeyboardPlay() {
-  let player = map.piecePlayer;
+  let pcPlayer = map.piecePlayer;
   let pBox = map.piecePlayer.box;
 
   let left = new Key("ArrowLeft");
   left.press = () => {
     // Change the pBox's velocity when the key is pressed
     pBox.vx = -PLAYER_SPEED;
-    player.directionPending = Directions.LEFT;
+    pcPlayer.directionPending = Directions.LEFT;
   };
   left.release = () => {
     // If the left arrow has been released, and the right arrow isn't down
@@ -29,7 +31,7 @@ export function createKeyboardPlay() {
   let right = new Key("ArrowRight");
   right.press = () => {
     pBox.vx = PLAYER_SPEED;
-    player.directionPending = Directions.RIGHT;
+    pcPlayer.directionPending = Directions.RIGHT;
   };
   right.release = () => {
     if (!left.isDown) {
@@ -40,7 +42,7 @@ export function createKeyboardPlay() {
   let up = new Key("ArrowUp");
   up.press = () => {
     pBox.vy = -PLAYER_SPEED;
-    player.directionPending = Directions.UP;
+    pcPlayer.directionPending = Directions.UP;
   };
   up.release = () => {
     if (!down.isDown) {
@@ -51,7 +53,7 @@ export function createKeyboardPlay() {
   let down = new Key("ArrowDown");
   down.press = () => {
     pBox.vy = PLAYER_SPEED;
-    player.directionPending = Directions.DOWN;
+    pcPlayer.directionPending = Directions.DOWN;
   };
   down.release = () => {
     if (!up.isDown) {
@@ -61,10 +63,22 @@ export function createKeyboardPlay() {
 
   let z = new Key("z");
   z.press = () => {
-    if (keyActionMap[keyNameSel].name == ItemTypeNames.IRONWOOD_BRANCH) {
-      if (player.statusPending != PlayerStatuses.STRIKING
-        && player.statusCurrent != PlayerStatuses.STRIKING)
-      player.statusPending = PlayerStatuses.STRIKING;
+    if (keyActionMap[keyNameSel]) {
+      switch (keyActionMap[keyNameSel].name) {
+        case ItemTypeNames.IRONWOOD_BRANCH:
+        if (pcPlayer.statusPending != PlayerStatuses.STRIKING
+          && pcPlayer.statusCurrent != PlayerStatuses.STRIKING)
+        pcPlayer.statusPending = PlayerStatuses.STRIKING;
+        break;
+
+        case ItemTypeNames.BLUEBERRIES:
+        player.fullness += 50;
+        if (player.fullness > 100) {
+          player.fullness = 100;
+        }
+        expendItems(ItemTypeNames.BLUEBERRIES, 1);
+        break;
+      }
     }
   };
 

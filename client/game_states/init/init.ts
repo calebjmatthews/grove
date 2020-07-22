@@ -90,6 +90,7 @@ function loadPlayTextures() : Promise<boolean> {
       createToolbar();
       applyOffset(0, true);
       collectItems(ItemTypeNames.IRONWOOD_BRANCH, 1, true);
+      collectItems(ItemTypeNames.BLUEBERRIES, 2);
       resolve(true);
     });
   })

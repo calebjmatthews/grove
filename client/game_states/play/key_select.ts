@@ -30,6 +30,7 @@ export function setKeyAction(keyName: string, newKeyAction: KeyAction) {
     if (newKeyAction) {
       let newImg = document.createElement("IMG");
       newImg.setAttribute('src', newKeyAction.imgUrl);
+      newImg.setAttribute('id', keyName + '-img');
       ele.appendChild(newImg);
     }
     updateKeyQuantity(keyName, newKeyAction);
@@ -61,20 +62,52 @@ function getOpenOrExistingToolbarKey(newKeyAction: KeyAction):
     }
   }
 
-  return null;
+  return { keyName: null, type: null};
 }
 
 function updateKeyQuantity(keyName: string, newKeyAction: KeyAction) {
+  let ele = document.getElementById(keyName);
+  let oldQuantity = document.getElementById(keyName + '-quantity');
+  if (oldQuantity) {
+    ele.removeChild(oldQuantity);
+  }
   if (newKeyAction.quantity > 1) {
-    let ele = document.getElementById(keyName);
-    let oldQuantity = document.getElementById(keyName + '-quantity');
-    if (oldQuantity) {
-      ele.removeChild(oldQuantity);
-    }
     let newQuantity = document.createElement("DIV");
     newQuantity.setAttribute('id', keyName + '-quantity');
     newQuantity.setAttribute('class', 'key-quantity');
     newQuantity.appendChild(document.createTextNode(newKeyAction.quantity.toString()));
     ele.appendChild(newQuantity);
+  }
+}
+
+export function unsetKeyAction(keyName: string, newKeyAction: KeyAction) {
+  let gooetkRes: { keyName: string, type: string } = { keyName: null, type: null};
+  if (keyName == null) {
+    gooetkRes = getOpenOrExistingToolbarKey(newKeyAction);
+    if (gooetkRes.type == 'existing') {
+      keyName = gooetkRes.keyName;
+    }
+  }
+
+  if (keyName != null) {
+    let oldKeyAction = keyActionMap[keyName];
+    if (oldKeyAction) {
+      oldKeyAction.quantity -= newKeyAction.quantity;
+      if (oldKeyAction.quantity <= 0) {
+        let ele = document.getElementById(keyName);
+        let oldImg = document.getElementById(keyName + '-img');
+        if (oldImg) {
+          ele.removeChild(oldImg);
+        }
+        let oldQuantity = document.getElementById(keyName + '-quantity');
+        if (oldQuantity) {
+          ele.removeChild(oldQuantity);
+        }
+        delete keyActionMap[keyName];
+      }
+      else {
+        updateKeyQuantity(keyName, oldKeyAction);
+      }
+    }
   }
 }
