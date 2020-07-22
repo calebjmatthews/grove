@@ -2,6 +2,7 @@ import * as PIXI from 'pixi.js';
 import Box from './box';
 import Piece from './piece';
 import PieceAnimated from './piece_animated';
+import PieceCrop from './piece_crop';
 import PiecePlayer from './piece_player';
 import Collision from '../models/collision';
 import Offset from '../models/offset';
@@ -19,6 +20,7 @@ export default class Map {
   offset: Offset = null;
   piecePlayer: PiecePlayer = null;
   piecesItem: { [pieceName: string] : Piece } = {};
+  piecesCrop: { [pieceName: string] : PieceCrop } = {};
   piecesAnimated: { [pieceName: string] : PieceAnimated } = {};
   pieces: { [pieceName: string] : Piece } = {};
   pieceMap: { [coords: string] : { mapName: string, pieceName: string} } = {};
@@ -111,6 +113,15 @@ export default class Map {
   createPieceMap() {
     this.pieceMap = {};
     this.collisionMap = {};
+    Object.keys(this.piecesCrop).map((pieceName, index) => {
+      let piece = this.piecesCrop[pieceName];
+      this.pieceMap[(piece.gridPos[0] + ',' + piece.gridPos[1])] =
+        {mapName: 'piecesCrop', pieceName: pieceName};
+      if (piece.collidable) {
+        this.collisionMap[(piece.gridPos[0] + ',' + piece.gridPos[1])] =
+          {mapName: 'piecesCrop', pieceName: pieceName};
+      }
+    });
     Object.keys(this.piecesAnimated).map((pieceName, index) => {
       let piece = this.piecesAnimated[pieceName];
       this.pieceMap[(piece.gridPos[0] + ',' + piece.gridPos[1])] =
@@ -253,7 +264,16 @@ export default class Map {
     let y = (Math.floor(parseInt(coord.split(',')[1])) * TILE_SIZE);
     let piece = pieceTypes[pieceTypeName].createPiece(id,
       [parseInt(coord.split(',')[0]), parseInt(coord.split(',')[1])], [x, y]);
-    if (piece.animated) {
+    if (piece.growthStages != undefined) {
+      this.piecesCrop[pieceTypeName + ',' + id] = piece;
+      this.pieceMap[(piece.gridPos[0] + ',' + piece.gridPos[1])] =
+        {mapName: 'piecesCrop', pieceName: (pieceTypeName + ',' + id)};
+      if (piece.collidable) {
+        this.collisionMap[(piece.gridPos[0] + ',' + piece.gridPos[1])] =
+          {mapName: 'piecesCrop', pieceName: (pieceTypeName + ',' + id)};
+      }
+    }
+    else if (piece.animated) {
       this.piecesAnimated[pieceTypeName + ',' + id] = piece;
       this.pieceMap[(piece.gridPos[0] + ',' + piece.gridPos[1])] =
         {mapName: 'piecesAnimated', pieceName: (pieceTypeName + ',' + id)};
