@@ -1,8 +1,10 @@
 import Piece from './piece';
 import PieceAnimated from './piece_animated';
+import PieceCrop from './piece_crop';
 import Box from './box';
 import AnimationStep from './animation_step';
 import Breakable from './breakable';
+import GrowthStage from './growth_stage';
 import { utils } from '../instances/utils';
 import { TILE_SIZE } from '../constants';
 
@@ -15,6 +17,8 @@ export default class PieceType implements PieceTypeInterface {
   animated: boolean;
   animationSteps: AnimationStep[];
   spriteNames: string[];
+  growthAge?: number;
+  growthStages?: GrowthStage[];
 
   constructor(pieceType: PieceTypeInterface) {
     Object.assign(this, pieceType);
@@ -54,7 +58,16 @@ export default class PieceType implements PieceTypeInterface {
       });
     }
 
-    if (this.animated == true) {
+    if (this.growthStages != undefined) {
+      return new PieceCrop(Object.assign({}, piece, {
+        growthAge: this.growthAge,
+        growthStages: this.growthStages,
+        animationSteps: this.animationSteps,
+        animationCurrrent: 0,
+        animationAge: 0
+      }))
+    }
+    else if (this.animated == true) {
       return new PieceAnimated(Object.assign({}, piece, {
         animationSteps: this.animationSteps,
         animationCurrrent: 0,
@@ -76,4 +89,6 @@ interface PieceTypeInterface {
   animated: boolean;
   animationSteps: AnimationStep[];
   spriteNames: string[];
+  growthAge?: number;
+  growthStages?: GrowthStage[];
 }

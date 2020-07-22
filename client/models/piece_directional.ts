@@ -7,7 +7,6 @@ import { Directions } from '../enums/directions';
 
 export default class PieceDirectional extends PieceAnimated implements
   PieceDirectionalInterface {
-  typeName: string;
   directionAnimMap: { [key: string] : AnimationStep[] };
   directionCurrent: string;
   directionPending: string;

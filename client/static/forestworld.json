@@ -1,7 +1,7 @@
 {
 "frames": {
 	"bush.png": {
-		"frame": {"x":119, "y":136, "w":16, "h":16},
+		"frame": {"x":136, "y":0, "w":16, "h":16},
 		"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
 		"sourceSize": {"w":16,"h":16}
 	},
@@ -11,121 +11,126 @@
 		"sourceSize": {"w":16,"h":16}
 	},
 	"circle_glyph_ne.png": {
-		"frame": {"x":119, "y":119, "w":16, "h":16},
+		"frame": {"x":119, "y":136, "w":16, "h":16},
 		"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
 		"sourceSize": {"w":16,"h":16}
 	},
 	"circle_glyph_nw.png": {
-		"frame": {"x":119, "y":102, "w":16, "h":16},
+		"frame": {"x":119, "y":119, "w":16, "h":16},
 		"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
 		"sourceSize": {"w":16,"h":16}
 	},
 	"circle_glyph_se.png": {
-		"frame": {"x":119, "y":85, "w":16, "h":16},
+		"frame": {"x":119, "y":102, "w":16, "h":16},
 		"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
 		"sourceSize": {"w":16,"h":16}
 	},
 	"circle_glyph_sw.png": {
-		"frame": {"x":119, "y":68, "w":16, "h":16},
+		"frame": {"x":119, "y":85, "w":16, "h":16},
 		"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
 		"sourceSize": {"w":16,"h":16}
 	},
 	"dirt_e.png": {
-		"frame": {"x":119, "y":51, "w":16, "h":16},
+		"frame": {"x":119, "y":68, "w":16, "h":16},
 		"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
 		"sourceSize": {"w":16,"h":16}
 	},
 	"dirt_ge.png": {
-		"frame": {"x":119, "y":34, "w":16, "h":16},
+		"frame": {"x":119, "y":51, "w":16, "h":16},
 		"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
 		"sourceSize": {"w":16,"h":16}
 	},
 	"dirt_gn.png": {
-		"frame": {"x":119, "y":17, "w":16, "h":16},
+		"frame": {"x":119, "y":34, "w":16, "h":16},
 		"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
 		"sourceSize": {"w":16,"h":16}
 	},
 	"dirt_gs.png": {
-		"frame": {"x":119, "y":0, "w":16, "h":16},
+		"frame": {"x":119, "y":17, "w":16, "h":16},
 		"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
 		"sourceSize": {"w":16,"h":16}
 	},
 	"dirt_gw.png": {
-		"frame": {"x":102, "y":136, "w":16, "h":16},
+		"frame": {"x":119, "y":0, "w":16, "h":16},
 		"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
 		"sourceSize": {"w":16,"h":16}
 	},
 	"dirt_h.png": {
-		"frame": {"x":102, "y":119, "w":16, "h":16},
+		"frame": {"x":102, "y":136, "w":16, "h":16},
 		"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
 		"sourceSize": {"w":16,"h":16}
 	},
 	"dirt_m.png": {
-		"frame": {"x":102, "y":102, "w":16, "h":16},
+		"frame": {"x":102, "y":119, "w":16, "h":16},
 		"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
 		"sourceSize": {"w":16,"h":16}
 	},
 	"dirt_n.png": {
-		"frame": {"x":102, "y":85, "w":16, "h":16},
+		"frame": {"x":102, "y":102, "w":16, "h":16},
 		"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
 		"sourceSize": {"w":16,"h":16}
 	},
 	"dirt_ne.png": {
-		"frame": {"x":102, "y":68, "w":16, "h":16},
+		"frame": {"x":102, "y":85, "w":16, "h":16},
 		"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
 		"sourceSize": {"w":16,"h":16}
 	},
 	"dirt_nw.png": {
-		"frame": {"x":102, "y":51, "w":16, "h":16},
+		"frame": {"x":102, "y":68, "w":16, "h":16},
 		"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
 		"sourceSize": {"w":16,"h":16}
 	},
 	"dirt_s.png": {
-		"frame": {"x":102, "y":34, "w":16, "h":16},
+		"frame": {"x":102, "y":51, "w":16, "h":16},
 		"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
 		"sourceSize": {"w":16,"h":16}
 	},
 	"dirt_se.png": {
-		"frame": {"x":102, "y":17, "w":16, "h":16},
+		"frame": {"x":102, "y":34, "w":16, "h":16},
 		"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
 		"sourceSize": {"w":16,"h":16}
 	},
 	"dirt_sm.png": {
-		"frame": {"x":102, "y":0, "w":16, "h":16},
+		"frame": {"x":102, "y":17, "w":16, "h":16},
 		"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
 		"sourceSize": {"w":16,"h":16}
 	},
 	"dirt_sw.png": {
-		"frame": {"x":85, "y":136, "w":16, "h":16},
+		"frame": {"x":102, "y":0, "w":16, "h":16},
 		"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
 		"sourceSize": {"w":16,"h":16}
 	},
 	"dirt_v.png": {
-		"frame": {"x":85, "y":119, "w":16, "h":16},
+		"frame": {"x":85, "y":136, "w":16, "h":16},
 		"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
 		"sourceSize": {"w":16,"h":16}
 	},
 	"dirt_w.png": {
+		"frame": {"x":85, "y":119, "w":16, "h":16},
+		"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
+		"sourceSize": {"w":16,"h":16}
+	},
+	"grain_grow0.png": {
 		"frame": {"x":85, "y":102, "w":16, "h":16},
 		"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
 		"sourceSize": {"w":16,"h":16}
 	},
-	"grain_bunch.png": {
+	"grain_grow1.png": {
 		"frame": {"x":85, "y":85, "w":16, "h":16},
 		"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
 		"sourceSize": {"w":16,"h":16}
 	},
-	"grain_grow1.png": {
+	"grain_grow2.png": {
 		"frame": {"x":85, "y":68, "w":16, "h":16},
 		"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
 		"sourceSize": {"w":16,"h":16}
 	},
-	"grain_grow2.png": {
+	"grain_grow3.png": {
 		"frame": {"x":85, "y":51, "w":16, "h":16},
 		"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
 		"sourceSize": {"w":16,"h":16}
 	},
-	"grain_grow3.png": {
+	"grain_grow4.png": {
 		"frame": {"x":85, "y":34, "w":16, "h":16},
 		"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
 		"sourceSize": {"w":16,"h":16}
@@ -181,7 +186,7 @@
 		"sourceSize": {"w":16,"h":16}
 	},
 	"stone_slate_e.png": {
-		"frame": {"x":136, "y":0, "w":16, "h":16},
+		"frame": {"x":136, "y":17, "w":16, "h":16},
 		"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
 		"sourceSize": {"w":16,"h":16}
 	},
