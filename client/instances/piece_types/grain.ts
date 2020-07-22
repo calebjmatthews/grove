@@ -20,6 +20,7 @@ export let grain = new PieceType({
   animationSteps: null,
   spriteNames: ["grain_grow0.png"],
   growthAge: 0,
+  growthStageIndex: 0,
   growthStages: [
     new GrowthStage({ duration: 500, spriteNames: ["grain_grow0.png"],
       animationSteps: null, drops: growingDrops }),
@@ -39,4 +40,6 @@ export let grainMature = Object.assign(grain, {
   breakable: new Breakable({ durability: 1, particleType: ParticleTypes.RUBBLE_WOOD,
     drops: matureDrops }),
   spriteNames: ["grain_grow4.png"],
-  })
+  growthAge: 10000,
+  growthStageIndex: 4
+});

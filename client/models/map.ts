@@ -24,6 +24,7 @@ export default class Map {
   piecesAnimated: { [pieceName: string] : PieceAnimated } = {};
   pieces: { [pieceName: string] : Piece } = {};
   pieceMap: { [coords: string] : { mapName: string, pieceName: string} } = {};
+  cropMap: { [coords: string] : { mapName: string, pieceName: string} } = {};
   collisionMap: { [coords: string] : { mapName: string, pieceName: string} } = {};
   sparkleMap: { [coords: string] : { mapName: string, pieceName: string} } = {};
   itemMap: { [coords: string] : { mapName: string, pieceName: string} } = {};
@@ -73,9 +74,7 @@ export default class Map {
       return {xy: [x, y], gridPos: [Math.floor(parseInt(coord.split(',')[0])),
         Math.floor(parseInt(coord.split(',')[1]))]};
     }
-    else {
-      return null;
-    }
+    return null;
   }
 
   getGridPos(xy: [number, number]): [number, number] {
@@ -95,9 +94,7 @@ export default class Map {
     if (pieceMapObj) {
       return this[pieceMapObj.mapName][pieceMapObj.pieceName];
     }
-    else {
-      return null;
-    }
+    return null;
   }
 
   getItemByGridPos(gridPos: [number, number]) {
@@ -105,9 +102,15 @@ export default class Map {
     if (itemMapObj) {
       return this[itemMapObj.mapName][itemMapObj.pieceName];
     }
-    else {
-      return null;
+    return null;
+  }
+
+  getCropByGridPos(gridPos: [number, number]) {
+    let cropMapObj = this.cropMap[gridPos[0] + ',' + gridPos[1]];
+    if (cropMapObj) {
+      return this[cropMapObj.mapName][cropMapObj.pieceName];
     }
+    return null;
   }
 
   createPieceMap() {
@@ -233,6 +236,15 @@ export default class Map {
     }
   }
 
+  ageCrops() {
+    Object.keys(this.piecesCrop).map((cropId) => {
+      let piece = this.piecesCrop[cropId];
+      if (piece.growthStages[piece.growthStageIndex].duration != null) {
+
+      }
+    });
+  }
+
   setMap(map: Map) {
     Object.keys(map).map((key) => {
       this[key] = map[key];
@@ -250,8 +262,8 @@ export default class Map {
     pieceTypes: { [typeName: string] : PieceType },
     containers: {
       main: PIXI.Container,
-      tilemap: PIXI.tilemap.CompositeRectTileLayer;
-      player: PIXI.Container;
+      tilemap: PIXI.tilemap.CompositeRectTileLayer,
+      player: PIXI.Container
     },
     sprites: { [spriteName: string] : PIXI.Sprite }) {
     let piece = this.createPiece(pieceTypeName, coord, id, pieceTypes);
@@ -266,7 +278,7 @@ export default class Map {
       [parseInt(coord.split(',')[0]), parseInt(coord.split(',')[1])], [x, y]);
     if (piece.growthStages != undefined) {
       this.piecesCrop[pieceTypeName + ',' + id] = piece;
-      this.pieceMap[(piece.gridPos[0] + ',' + piece.gridPos[1])] =
+      this.cropMap[(piece.gridPos[0] + ',' + piece.gridPos[1])] =
         {mapName: 'piecesCrop', pieceName: (pieceTypeName + ',' + id)};
       if (piece.collidable) {
         this.collisionMap[(piece.gridPos[0] + ',' + piece.gridPos[1])] =
@@ -302,8 +314,8 @@ export default class Map {
   displayPiece(piece: any,
     containers: {
       main: PIXI.Container,
-      tilemap: PIXI.tilemap.CompositeRectTileLayer;
-      player: PIXI.Container;
+      tilemap: PIXI.tilemap.CompositeRectTileLayer,
+      player: PIXI.Container
     },
     sprites: { [spriteName: string] : PIXI.Sprite }) {
 
@@ -316,6 +328,17 @@ export default class Map {
         sprites[spriteName] = newSprite;
         containers.player.addChild(newSprite);
       });
+    }
+    else if (piece.growthStages != undefined) {
+      let bgPiece = this.getPieceByGridPos(piece.gridPos);
+      if (bgPiece) {
+        containers.tilemap.addFrame(PIXI.utils.TextureCache["grass.png"],
+          (piece.box.x/3), (piece.box.y/3));
+        containers.tilemap.addFrame(PIXI.utils.TextureCache[bgPiece.spriteNames[0]],
+          (piece.box.x/3), (piece.box.y/3));
+      }
+      containers.tilemap.addFrame(PIXI.utils.TextureCache[piece.spriteNames[0]],
+        (piece.box.x/3), (piece.box.y/3));
     }
     else if (piece.getSpecial('sprite_map') != null) {
       this.displayMappedPiece(piece, containers, sprites);
@@ -368,6 +391,16 @@ export default class Map {
     return false;
   }
 
+  createAndDisplayPieceCrop(piece: PieceCrop,
+    containers: {
+      main: PIXI.Container,
+      tilemap: PIXI.tilemap.CompositeRectTileLayer,
+      player: PIXI.Container
+    },
+    sprites: { [spriteName: string] : PIXI.Sprite }) {
+
+  }
+
   createAndDisplayPieceItem(itemTypeName: string, coord: string, id: number,
     itemTypes: { [typeName: string] : ItemType }, containers: {
       item: PIXI.ParticleContainer;
@@ -392,19 +425,28 @@ export default class Map {
   hidePiece(piece: any,
     containers: {
       main: PIXI.Container,
-      tilemap: PIXI.tilemap.CompositeRectTileLayer;
-      player: PIXI.Container;
+      tilemap: PIXI.tilemap.CompositeRectTileLayer
     },
     sprites: { [spriteName: string] : PIXI.Sprite }) {
-    containers.tilemap.addFrame(PIXI.utils.TextureCache["grass.png"],
-      piece.box.x/3, piece.box.y/3);
+    if (piece.growthStages != undefined) {
+      let bgPiece = this.getPieceByGridPos(piece.gridPos);
+      console.log('bgPiece');
+      console.log(bgPiece);
+      containers.tilemap.addFrame(PIXI.utils.TextureCache["grass.png"],
+        piece.box.x/3, piece.box.y/3);
+      containers.tilemap.addFrame(PIXI.utils.TextureCache[bgPiece.spriteNames[0]],
+        piece.box.x/3, piece.box.y/3);
+    }
+    else {
+      containers.tilemap.addFrame(PIXI.utils.TextureCache["grass.png"],
+        piece.box.x/3, piece.box.y/3);
+    }
   }
 
   destroyPiece(piece: any,
     containers: {
       main: PIXI.Container,
-      tilemap: PIXI.tilemap.CompositeRectTileLayer;
-      player: PIXI.Container;
+      tilemap: PIXI.tilemap.CompositeRectTileLayer
     },
     sprites: { [spriteName: string] : PIXI.Sprite }) {
     this.hidePiece(piece, containers, sprites);
@@ -426,8 +468,7 @@ export default class Map {
 
   destroyAllPieces(containers: {
       main: PIXI.Container,
-      tilemap: PIXI.tilemap.CompositeRectTileLayer;
-      player: PIXI.Container;
+      tilemap: PIXI.tilemap.CompositeRectTileLayer
     },
     sprites: { [spriteName: string] : PIXI.Sprite }) {
     Object.keys(this.pieces).map((pieceName) => {

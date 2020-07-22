@@ -7,6 +7,7 @@ import { utils } from '../instances/utils';
 
 export default class PieceCrop extends PieceAnimated implements PieceCropInterface {
   growthAge: number;
+  growthStageIndex: number;
   growthStages: GrowthStage[];
 
   constructor(pieceCrop: PieceCropInterface) {
@@ -39,5 +40,6 @@ interface PieceCropInterface {
   animationAge: number;
 
   growthAge: number;
+  growthStageIndex: number;
   growthStages: GrowthStage[];
 }

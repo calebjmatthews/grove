@@ -38,7 +38,7 @@
 
 },
 "meta": {
-	"image": "ui.png",
+	"image": "sprites.png",
 	"size": {"w": 97, "h": 97},
 	"scale": "1"
 }

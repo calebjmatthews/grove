@@ -18,6 +18,7 @@ export default class PieceType implements PieceTypeInterface {
   animationSteps: AnimationStep[];
   spriteNames: string[];
   growthAge?: number;
+  growthStageIndex?: number;
   growthStages?: GrowthStage[];
 
   constructor(pieceType: PieceTypeInterface) {
@@ -61,6 +62,7 @@ export default class PieceType implements PieceTypeInterface {
     if (this.growthStages != undefined) {
       return new PieceCrop(Object.assign({}, piece, {
         growthAge: this.growthAge,
+        growthStageIndex: this.growthStageIndex,
         growthStages: this.growthStages,
         animationSteps: this.animationSteps,
         animationCurrrent: 0,
@@ -90,5 +92,6 @@ interface PieceTypeInterface {
   animationSteps: AnimationStep[];
   spriteNames: string[];
   growthAge?: number;
+  growthStageIndex?: number;
   growthStages?: GrowthStage[];
 }

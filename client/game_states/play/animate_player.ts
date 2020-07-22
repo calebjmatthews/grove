@@ -65,6 +65,9 @@ export function actAndAnimatePlayer(pendingBox: Box) {
           break;
         }
         let targetPiece = pMap.getPieceByGridPos(targetPos);
+        if (!targetPiece) {
+          pMap.getCropByGridPos(targetPos);
+        }
         if (targetPiece) {
           pMap = handleImpact(targetPiece, pMap);
         }
