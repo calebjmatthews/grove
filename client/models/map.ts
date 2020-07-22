@@ -205,6 +205,23 @@ export default class Map {
     }
   }
 
+  ageParticlesOut(containers: {
+    main: PIXI.Container,
+    tilemap: PIXI.tilemap.CompositeRectTileLayer;
+    player: PIXI.Container;
+  }) {
+    for (let index = this.particleGroups.length-1; index >= 0; index--) {
+      let pg = this.particleGroups[index];
+      if (pg.age < pg.maxAge) {
+        pg.age++;
+      }
+      else {
+        containers.main.removeChild(containers[pg.particleType + ',' + pg.id]);
+        this.particleGroups.splice(index, 1);
+      }
+    }
+  }
+
   setMap(map: Map) {
     Object.keys(map).map((key) => {
       this[key] = map[key];

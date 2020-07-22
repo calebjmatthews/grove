@@ -23,6 +23,7 @@ export default function play(delta: number) {
   handleHunger();
   map.agePlayEvents();
   map.animateParticleGroups(delta);
+  map.ageParticlesOut(pixiContainers);
   particleAgeOut();
   pixiRenderer.pr.render(pc.all);
 }
