@@ -65,6 +65,24 @@ export default class PieceDirectional extends PieceAnimated implements
     return this.spriteNames[this.directionAnimMap[this.directionCurrent]
       [this.animationCurrrent].spriteIndex];
   }
+
+  getGridPosInFront(targetPos: [number, number]) {
+    switch(this.directionCurrent) {
+      case (Directions.DOWN):
+      targetPos[1]++;
+      break;
+      case (Directions.LEFT):
+      targetPos[0]--;
+      break;
+      case (Directions.UP):
+      targetPos[1]--;
+      break;
+      case (Directions.RIGHT):
+      targetPos[0]++;
+      break;
+    }
+    return targetPos;
+  }
 }
 
 interface PieceDirectionalInterface {

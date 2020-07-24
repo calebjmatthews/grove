@@ -266,6 +266,10 @@ export default class Map {
       player: PIXI.Container
     },
     sprites: { [spriteName: string] : PIXI.Sprite }) {
+    console.log('pieceTypeName');
+    console.log(pieceTypeName);
+    console.log('pieceTypes');
+    console.log(pieceTypes);
     let piece = this.createPiece(pieceTypeName, coord, id, pieceTypes);
     this.displayPiece(piece, containers, sprites);
   }
@@ -388,16 +392,6 @@ export default class Map {
       }
     }
     return false;
-  }
-
-  createAndDisplayPieceCrop(piece: PieceCrop,
-    containers: {
-      main: PIXI.Container,
-      tilemap: PIXI.tilemap.CompositeRectTileLayer,
-      player: PIXI.Container
-    },
-    sprites: { [spriteName: string] : PIXI.Sprite }) {
-
   }
 
   createAndDisplayPieceItem(itemTypeName: string, coord: string, id: number,

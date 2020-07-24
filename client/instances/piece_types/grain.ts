@@ -35,7 +35,8 @@ export let grain = new PieceType({
   ]
 });
 
-export let grainMature = Object.assign(grain, {
+let grainClone = new PieceType(grain);
+export let grainMature = Object.assign(grainClone, {
   name: PieceTypeNames.GRAIN_MATURE,
   breakable: new Breakable({ durability: 1, particleType: ParticleTypes.RUBBLE_WOOD,
     drops: matureDrops }),

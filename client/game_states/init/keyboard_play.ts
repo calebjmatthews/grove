@@ -3,9 +3,11 @@ import { map } from '../../instances/map';
 import { player } from '../../instances/player';
 import { keySelect, keyNameSel, keyActionMap } from '../play/key_select';
 import { expendItems } from '../play/expend_items';
+import { placePiece } from '../play/place_piece';
 import { Directions } from '../../enums/directions';
 import { PlayerStatuses } from '../../enums/player_statuses';
 import { ItemTypeNames } from '../../enums/item_type_names';
+import { PieceTypeNames } from '../../enums/piece_type_names';
 import { PLAYER_SPEED, TOOLBAR_KEYS } from '../../constants';
 
 let keyboard: { [keyName: string] : Key } = {};
@@ -80,7 +82,7 @@ export function createKeyboardPlay() {
         break;
 
         case ItemTypeNames.GRAIN_SEED:
-
+        placePiece(PieceTypeNames.GRAIN);
         break;
       }
     }

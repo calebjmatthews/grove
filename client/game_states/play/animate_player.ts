@@ -49,21 +49,8 @@ export function actAndAnimatePlayer(pendingBox: Box) {
     else if (pcPlayer.statusPending == PlayerStatuses.STRIKING) {
       pcPlayer.statusCurrent = PlayerStatuses.STRIKING;
       map.playEvents.push(new PlayEvent((pMap) => {
-        let targetPos = pMap.getGridPos([pcPlayer.box.x, pcPlayer.box.y]);
-        switch(pcPlayer.directionCurrent) {
-          case (Directions.DOWN):
-          targetPos[1]++;
-          break;
-          case (Directions.LEFT):
-          targetPos[0]--;
-          break;
-          case (Directions.UP):
-          targetPos[1]--;
-          break;
-          case (Directions.RIGHT):
-          targetPos[0]++;
-          break;
-        }
+        let targetPos = pcPlayer.getGridPosInFront(pMap.getGridPos([pcPlayer.box.x,
+          pcPlayer.box.y]));
         let targetCrop = pMap.getCropByGridPos(targetPos);
         if (targetCrop) {
           pMap = handleImpact(targetCrop, pMap);
