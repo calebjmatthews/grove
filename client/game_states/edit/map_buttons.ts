@@ -25,7 +25,13 @@ export function createMapButtons() {
         let nameSplit = mapObj.pieceName.split(',');
         map.createAndDisplayPiece(nameSplit[0], coord, nameSplit[1], pieceTypes,
           pixiContainers, sprites);
-      })
+      });
+      Object.keys(scene.cropMap).map((coord) => {
+        let mapObj = scene.cropMap[coord];
+        let nameSplit = mapObj.pieceName.split(',');
+        map.createAndDisplayPiece(nameSplit[0], coord, nameSplit[1], pieceTypes,
+          pixiContainers, sprites);
+      });
     });
     buttonContainer.appendChild(loadButton);
   })
@@ -36,7 +42,10 @@ export function createMapButtons() {
   saveButton.appendChild(document.createTextNode('Save'));
   saveButton.addEventListener("click", () => {
     let expObj = {
-      "pieceMap": map.pieceMap
+      "gridWidth": map.gridWidth,
+      "gridHeight": map.gridHeight,
+      "pieceMap": map.pieceMap,
+      "cropMap": map.cropMap
     };
     let aEle = document.createElement("a");
     let file = new Blob([JSON.stringify(expObj)], {type : 'application/json'});

@@ -334,8 +334,7 @@ export default class Map {
       if (bgPiece) {
         containers.tilemap.addFrame(PIXI.utils.TextureCache["grass.png"],
           (piece.box.x/3), (piece.box.y/3));
-        containers.tilemap.addFrame(PIXI.utils.TextureCache[bgPiece.spriteNames[0]],
-          (piece.box.x/3), (piece.box.y/3));
+        this.displayMappedPiece(bgPiece, containers, sprites, false);
       }
       containers.tilemap.addFrame(PIXI.utils.TextureCache[piece.spriteNames[0]],
         (piece.box.x/3), (piece.box.y/3));
@@ -430,8 +429,6 @@ export default class Map {
     sprites: { [spriteName: string] : PIXI.Sprite }) {
     if (piece.growthStages != undefined) {
       let bgPiece = this.getPieceByGridPos(piece.gridPos);
-      console.log('bgPiece');
-      console.log(bgPiece);
       containers.tilemap.addFrame(PIXI.utils.TextureCache["grass.png"],
         piece.box.x/3, piece.box.y/3);
       containers.tilemap.addFrame(PIXI.utils.TextureCache[bgPiece.spriteNames[0]],
@@ -464,6 +461,20 @@ export default class Map {
       delete this.sparkleMap[piece.gridPos[0] + ',' + piece.gridPos[1]];
     }
     delete this.pieceMap[piece.gridPos[0] + ',' + piece.gridPos[1]];
+  }
+
+  destroyPieceCrop(piece: any,
+    containers: {
+      main: PIXI.Container,
+      tilemap: PIXI.tilemap.CompositeRectTileLayer
+    },
+    sprites: { [spriteName: string] : PIXI.Sprite }) {
+    this.hidePiece(piece, containers, sprites);
+    if (piece.collidable) {
+      delete this.collisionMap[piece.gridPos[0] + ',' + piece.gridPos[1]];
+    }
+    delete this.piecesCrop[piece.name + ',' + piece.id];
+    delete this.cropMap[piece.gridPos[0] + ',' + piece.gridPos[1]];
   }
 
   destroyAllPieces(containers: {

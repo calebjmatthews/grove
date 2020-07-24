@@ -13,19 +13,17 @@ import { ItemTypeNames } from '../../enums/item_type_names';
 import { ParticleTypes } from '../../enums/particle_types';
 
 export function handleImpact(targetPiece: Piece, pMap: Map) {
-  if (targetPiece.breakable != null) {
-    let sparkleRes = checkSparkleBlast(targetPiece, pMap);
-    if (sparkleRes == false) {
-      targetPiece.breakable.durability--;
-      if (targetPiece.breakable.durability <= 0) {
-        pMap = destroyTarget(targetPiece, pMap);
-      }
-      else {
-        pMap = chipTarget(targetPiece, pMap);
-      }
+  let sparkleRes = checkSparkleBlast(targetPiece, pMap);
+  if (sparkleRes == false) {
+    targetPiece.breakable.durability--;
+    if (targetPiece.breakable.durability <= 0) {
+      pMap = destroyTarget(targetPiece, pMap);
     }
-    pMap = incrementSparkles(pMap);
+    else {
+      pMap = chipTarget(targetPiece, pMap);
+    }
   }
+  pMap = incrementSparkles(pMap);
 
   return pMap;
 }
@@ -40,18 +38,24 @@ function chipTarget(targetPiece: Piece, pMap: Map) {
   return pMap;
 }
 
-function destroyTarget(targetPiece: Piece, pMap: Map) {
-  pMap.destroyPiece(targetPiece, pixiContainers, sprites);
-  if (targetPiece.typeName == PieceTypeNames.GRASS) {
-    pMap.createAndDisplayPiece(PieceTypeNames.DIRT,
-      (targetPiece.gridPos[0] + ',' + targetPiece.gridPos[1]),
-      Math.floor(utils.rand() * 10000000), pieceTypes, pixiContainers, sprites);
+function destroyTarget(targetPiece: any, pMap: Map) {
+  if (targetPiece.growthStages == undefined) {
+    pMap.destroyPiece(targetPiece, pixiContainers, sprites);
+    if (targetPiece.typeName == PieceTypeNames.GRASS) {
+      pMap.createAndDisplayPiece(PieceTypeNames.DIRT,
+        (targetPiece.gridPos[0] + ',' + targetPiece.gridPos[1]),
+        Math.floor(utils.rand() * 10000000), pieceTypes, pixiContainers, sprites);
+    }
+    else if (targetPiece.typeName == PieceTypeNames.DIRT) {
+      pMap.createAndDisplayPiece(PieceTypeNames.TILLED,
+        (targetPiece.gridPos[0] + ',' + targetPiece.gridPos[1]),
+        Math.floor(utils.rand() * 10000000), pieceTypes, pixiContainers, sprites);
+    }
   }
-  else if (targetPiece.typeName == PieceTypeNames.DIRT) {
-    pMap.createAndDisplayPiece(PieceTypeNames.TILLED,
-      (targetPiece.gridPos[0] + ',' + targetPiece.gridPos[1]),
-      Math.floor(utils.rand() * 10000000), pieceTypes, pixiContainers, sprites);
+  else {
+    pMap.destroyPieceCrop(targetPiece, pixiContainers, sprites);
   }
+
   let particleGroup: ParticleGroup = null;
 
   let drops = determineDrops(targetPiece.breakable.drops);

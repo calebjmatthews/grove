@@ -11,11 +11,18 @@ export function handleCanvasClick() {
   let canvas = document.getElementById('center');
   canvas.addEventListener("click", (ev) => {
     if (pieceTypeNameSel != null) {
+      let pieceTypeSel: any = {};
+      if (pieceTypeNameSel != 'Delete') {
+        pieceTypeSel = pieceTypes[pieceTypeNameSel];
+      }
       let gridPos = map.getGridUpperLeftPos([(ev.x - map.offset.x),
         (ev.y - map.offset.y)])
       let selPiece = map.getPieceByGridPos(gridPos);
-      if (selPiece) {
+      if (selPiece && pieceTypeSel.growthStages == undefined) {
         map.destroyPiece(selPiece, pixiContainers, sprites);
+      }
+      else if (pieceTypeSel.growthStages != undefined) {
+        map.destroyPieceCrop(selPiece, pixiContainers, sprites);
       }
       if (pieceTypeNameSel != 'Delete') {
         let newId = Math.floor(utils.rand() * 10000000);

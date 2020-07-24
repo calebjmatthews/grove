@@ -64,19 +64,24 @@ export function actAndAnimatePlayer(pendingBox: Box) {
           targetPos[0]++;
           break;
         }
-        let targetPiece = pMap.getPieceByGridPos(targetPos);
-        if (!targetPiece) {
-          pMap.getCropByGridPos(targetPos);
-        }
-        if (targetPiece) {
-          pMap = handleImpact(targetPiece, pMap);
+        let targetCrop = pMap.getCropByGridPos(targetPos);
+        if (targetCrop) {
+          pMap = handleImpact(targetCrop, pMap);
         }
         else {
-          pMap.createAndDisplayPiece(PieceTypeNames.GRASS,
-            (targetPos[0] + ',' + targetPos[1]), Math.floor(utils.rand() * 10000000),
-            pieceTypes, pixiContainers, sprites);
-          targetPiece = pMap.getPieceByGridPos(targetPos);
-          pMap = handleImpact(targetPiece, pMap);
+          let targetPiece = pMap.getPieceByGridPos(targetPos);
+          if (targetPiece) {
+            if (targetPiece.breakable != null) {
+              pMap = handleImpact(targetPiece, pMap);
+            }
+          }
+          else {
+            pMap.createAndDisplayPiece(PieceTypeNames.GRASS,
+              (targetPos[0] + ',' + targetPos[1]), Math.floor(utils.rand() * 10000000),
+              pieceTypes, pixiContainers, sprites);
+            targetPiece = pMap.getPieceByGridPos(targetPos);
+            pMap = handleImpact(targetPiece, pMap);
+          }
         }
         pcPlayer.statusPending = PlayerStatuses.NORMAL;
         return pMap;

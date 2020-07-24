@@ -33,6 +33,12 @@ export function createSceneButtons() {
         map.createAndDisplayPiece(nameSplit[0], coord, nameSplit[1], pieceTypes,
           pixiContainers, sprites);
       });
+      Object.keys(scene.cropMap).map((coord) => {
+        let mapObj = scene.cropMap[coord];
+        let nameSplit = mapObj.pieceName.split(',');
+        map.createAndDisplayPiece(nameSplit[0], coord, nameSplit[1], pieceTypes,
+          pixiContainers, sprites);
+      });
       map.createPieceMap();
       map.piecePlayer.box.x = (map.gridWidth * TILE_SIZE)/2;
       map.piecePlayer.box.y = (map.gridHeight * TILE_SIZE)/2;

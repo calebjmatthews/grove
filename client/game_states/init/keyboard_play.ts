@@ -78,6 +78,10 @@ export function createKeyboardPlay() {
         }
         expendItems(ItemTypeNames.BLUEBERRIES, 1);
         break;
+
+        case ItemTypeNames.GRAIN_SEED:
+
+        break;
       }
     }
   };
