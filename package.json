@@ -11,7 +11,7 @@
   "author": "Caleb J. Matthews",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.18.2",
     "pixi.js": "^5.2.3"
   },
   "devDependencies": {
